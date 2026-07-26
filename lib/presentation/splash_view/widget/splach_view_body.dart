@@ -1,8 +1,11 @@
-import 'package:finora/presentation/screens/splash_view/widget/slidingAnimation.dart';
+import 'package:finora/presentation/welcome/view/welcome_screen.dart';
+import 'package:finora/presentation/splash_view/widget/sliding_animation.dart';
 
-import 'package:finora/presentation/screens/splash_view/widget/app_name_text.dart';
-import 'package:finora/presentation/screens/splash_view/widget/logo.dart';
-import 'package:flutter/widgets.dart' hide AnimatedWidget;
+import 'package:finora/presentation/splash_view/widget/app_name_text.dart';
+import 'package:finora/presentation/splash_view/widget/logo.dart';
+import 'package:flutter/widgets.dart';
+
+import 'package:get/route_manager.dart';
 
 class SplachViewBody extends StatefulWidget {
   const SplachViewBody({super.key});
@@ -21,6 +24,13 @@ class _SplachViewBodyState extends State<SplachViewBody>
   void initState() {
     super.initState();
     initSlidingAnimation();
+    Future.delayed(const Duration(seconds: 4), () {
+      Get.to(
+        () => const Welcome(),
+        transition: Transition.fadeIn,
+        duration: const Duration(seconds: 3),
+      );
+    });
   }
 
   @override
@@ -35,8 +45,11 @@ class _SplachViewBodyState extends State<SplachViewBody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AnimatedWidget(slidingAnimation: slidingAnimationLogo, widget: Logo()),
-        AnimatedWidget(
+        SlidingAnimatedWidget(
+          slidingAnimation: slidingAnimationLogo,
+          widget: Logo(),
+        ),
+        SlidingAnimatedWidget(
           slidingAnimation: slidingAnimationText,
           widget: AppNameText(),
         ),
@@ -47,7 +60,7 @@ class _SplachViewBodyState extends State<SplachViewBody>
   void initSlidingAnimation() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 3),
     );
     slidingAnimationLogo =
         Tween<Offset>(begin: const Offset(0, 5), end: Offset.zero).animate(

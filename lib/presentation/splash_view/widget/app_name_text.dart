@@ -8,7 +8,11 @@ class AppNameText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       appName,
-      style: TextStyle(fontSize: bigSizeFont, color: lightFontColor),
+      style: TextStyle(
+        fontSize: bigSizeFont,
+        color: lightFontColor,
+        fontWeight: FontWeight.bold,
+      ),
       textAlign: TextAlign.center,
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AnimatedWidget extends StatelessWidget {
-  const AnimatedWidget({
+class SlidingAnimatedWidget extends StatelessWidget {
+  const SlidingAnimatedWidget({
     super.key,
     required this.slidingAnimation,
     required this.widget,
