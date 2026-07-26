@@ -12,31 +12,13 @@ class SplachViewBody extends StatefulWidget {
 class _SplachViewBodyState extends State<SplachViewBody>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation<Offset> downTopAnimationLogo;
-  late Animation<Offset> downTopAnimationText;
+  late Animation<Offset> slidingAnimationLogo;
+  late Animation<Offset> slidingAnimationText;
 
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
-    downTopAnimationLogo =
-        Tween<Offset>(begin: const Offset(0, 5), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: animationController,
-            curve: const Interval(0.0, 1),
-          ),
-        );
-    downTopAnimationText =
-        Tween<Offset>(begin: const Offset(0, 5), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: animationController,
-            curve: const Interval(0.2, 1),
-          ),
-        );
-    animationController.forward();
+    initSlidingAnimation();
   }
 
   @override
@@ -51,9 +33,31 @@ class _SplachViewBodyState extends State<SplachViewBody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AnimatedLogo(downTopAnimationLogo: downTopAnimationLogo),
-        AnimatedText(downTopAnimationText: downTopAnimationText),
+        AnimatedLogo(slidingAnimationLogo: slidingAnimationLogo),
+        AnimatedText(slidingAnimationText: slidingAnimationText),
       ],
     );
+  }
+
+  void initSlidingAnimation() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+    slidingAnimationLogo =
+        Tween<Offset>(begin: const Offset(0, 5), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(0.0, 1),
+          ),
+        );
+    slidingAnimationText =
+        Tween<Offset>(begin: const Offset(0, 5), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(0.2, 1),
+          ),
+        );
+    animationController.forward();
   }
 }

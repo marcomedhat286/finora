@@ -3,11 +3,11 @@ import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/value_object/user_name.dart';
 import 'package:finora/domain/services/account_id_generator.dart';
 import 'package:finora/domain/services/user_name_generator.dart';
-import 'package:finora/domain/repositories/user_repository.dart';
+// import 'package:finora/domain/repositories/user_repository.dart';
 
 class RegisterUserUseCase {
-  final UserRepository _userRepository;
-  RegisterUserUseCase(this._userRepository);
+  // final UserRepository _userRepository;
+  RegisterUserUseCase();
 
   Future<User> excuteNewOne({
     String? user_name,
@@ -36,7 +36,7 @@ class RegisterUserUseCase {
       lastName: lastName,
       createdAt: DateTime.now(),
     );
-    await _userRepository.saveUser(user);
+    // await _userRepository.saveUser(user);
 
     return user;
   }

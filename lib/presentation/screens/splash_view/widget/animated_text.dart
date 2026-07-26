@@ -2,17 +2,17 @@ import 'package:finora/presentation/screens/splash_view/widget/app_name_text.dar
 import 'package:flutter/material.dart';
 
 class AnimatedText extends StatelessWidget {
-  const AnimatedText({super.key, required this.downTopAnimationText});
+  const AnimatedText({super.key, required this.slidingAnimationText});
 
-  final Animation<Offset> downTopAnimationText;
+  final Animation<Offset> slidingAnimationText;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: downTopAnimationText,
+      animation: slidingAnimationText,
       builder: (context, _) {
         return SlideTransition(
-          position: downTopAnimationText,
+          position: slidingAnimationText,
           child: const AppNameText(),
         );
       },

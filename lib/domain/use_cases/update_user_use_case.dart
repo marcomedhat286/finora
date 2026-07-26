@@ -1,11 +1,11 @@
 import 'package:finora/domain/entities/user.dart';
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/value_object/user_name.dart';
-import 'package:finora/domain/repositories/user_repository.dart';
+//import 'package:finora/domain/repositories/user_repository.dart';
 
 class UpdateUserUseCase {
-  final UserRepository _userRepository;
-  UpdateUserUseCase(this._userRepository);
+  //final UserRepository _userRepository;
+  UpdateUserUseCase();
 
   Future<User> excute({
     required User oldUser,
@@ -36,7 +36,7 @@ class UpdateUserUseCase {
       lastName: lastName,
       account: newAccount,
     );
-    await _userRepository.updateUser(updatedUser);
+    //await _userRepository.updateUser(updatedUser);
 
     return updatedUser;
   }
