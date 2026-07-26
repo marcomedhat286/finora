@@ -1,6 +1,8 @@
-import 'package:finora/presentation/screens/splash_view/widget/animated_logo.dart';
-import 'package:finora/presentation/screens/splash_view/widget/animated_text.dart';
-import 'package:flutter/widgets.dart';
+import 'package:finora/presentation/screens/splash_view/widget/slidingAnimation.dart';
+
+import 'package:finora/presentation/screens/splash_view/widget/app_name_text.dart';
+import 'package:finora/presentation/screens/splash_view/widget/logo.dart';
+import 'package:flutter/widgets.dart' hide AnimatedWidget;
 
 class SplachViewBody extends StatefulWidget {
   const SplachViewBody({super.key});
@@ -33,8 +35,11 @@ class _SplachViewBodyState extends State<SplachViewBody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AnimatedLogo(slidingAnimationLogo: slidingAnimationLogo),
-        AnimatedText(slidingAnimationText: slidingAnimationText),
+        AnimatedWidget(slidingAnimation: slidingAnimationLogo, widget: Logo()),
+        AnimatedWidget(
+          slidingAnimation: slidingAnimationText,
+          widget: AppNameText(),
+        ),
       ],
     );
   }
