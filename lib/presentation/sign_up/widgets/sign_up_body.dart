@@ -65,8 +65,8 @@ class SignUpBody extends StatelessWidget {
               borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
               boxShadow: [
                 BoxShadow(
-                  color: kPrimaryColor,
-                  blurRadius: 20,
+                  color: Colors.grey,
+                  blurRadius: 40,
                   spreadRadius: 5,
                   offset: Offset(0, 5),
                 ),

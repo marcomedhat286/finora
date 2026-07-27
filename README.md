@@ -1,6 +1,6 @@
 # finora
 
-A new Flutter project.
+A Flutter project that follow your expenses and incomes.
 
 ## Getting Started
 
