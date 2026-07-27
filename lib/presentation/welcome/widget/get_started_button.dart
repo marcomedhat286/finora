@@ -1,5 +1,7 @@
 import 'package:finora/core/constants.dart';
+import 'package:finora/presentation/sign_up/view/sign_up.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class GetStartedButton extends StatelessWidget {
   const GetStartedButton({super.key});
@@ -8,7 +10,11 @@ class GetStartedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        print("welcom to fionra");
+        Get.to(
+          const SignUp(),
+          transition: Transition.fade,
+          duration: const Duration(seconds: kTranstionDuration),
+        );
       },
 
       style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
@@ -27,7 +33,7 @@ class GetStartedButton extends StatelessWidget {
         // width: screenWidth - 100,
         child: const Text(
           "Get Started",
-          style: TextStyle(color: lightFontColor),
+          style: TextStyle(color: kSecondColor),
           textAlign: TextAlign.center,
         ),
       ),

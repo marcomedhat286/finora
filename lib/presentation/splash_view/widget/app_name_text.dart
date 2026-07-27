@@ -10,7 +10,7 @@ class AppNameText extends StatelessWidget {
       appName,
       style: TextStyle(
         fontSize: bigSizeFont,
-        color: lightFontColor,
+        color: kSecondColor,
         fontWeight: FontWeight.bold,
       ),
       textAlign: TextAlign.center,

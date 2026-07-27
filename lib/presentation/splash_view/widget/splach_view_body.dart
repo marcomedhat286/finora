@@ -1,3 +1,4 @@
+import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/welcome/view/welcome_screen.dart';
 import 'package:finora/presentation/splash_view/widget/sliding_animation.dart';
 
@@ -24,13 +25,7 @@ class _SplachViewBodyState extends State<SplachViewBody>
   void initState() {
     super.initState();
     initSlidingAnimation();
-    Future.delayed(const Duration(seconds: 4), () {
-      Get.to(
-        () => const Welcome(),
-        transition: Transition.fadeIn,
-        duration: const Duration(seconds: 3),
-      );
-    });
+    navigateToWelcome();
   }
 
   @override
@@ -77,5 +72,15 @@ class _SplachViewBodyState extends State<SplachViewBody>
           ),
         );
     animationController.forward();
+  }
+
+  void navigateToWelcome() {
+    Future.delayed(const Duration(seconds: 4), () {
+      Get.to(
+        () => const Welcome(),
+        transition: Transition.fadeIn,
+        duration: const Duration(seconds: kTranstionDuration),
+      );
+    });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:finora/core/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:finora/presentation/splash_view/view/splash_view.dart';
@@ -14,7 +15,7 @@ class FionarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData().copyWith(scaffoldBackgroundColor: kPrimaryColor),
+      theme: ThemeData.light(),
       home: const SplashView(),
     );
   }

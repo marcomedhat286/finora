@@ -59,7 +59,7 @@ class _WelcomeBodyState extends State<WelcomeBody>
 
         SlidingAnimatedWidget(
           slidingAnimation: slidingAnimationCircles,
-          widget: CircleContainer(screenWidth: screenWidth),
+          widget: CircleContainer(screenWidth: screenWidth - 50),
         ),
 
         SlidingAnimatedWidget(

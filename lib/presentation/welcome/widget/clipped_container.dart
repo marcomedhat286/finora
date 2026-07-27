@@ -22,7 +22,7 @@ class ClippedContainer extends StatelessWidget {
       child: ClipPath(
         clipper: const MyClipper(),
         child: Container(
-          color: lightFontColor,
+          color: kSecondColor,
           height: screenHeight - 450,
           width: screenWidth,
           child: const Column(
