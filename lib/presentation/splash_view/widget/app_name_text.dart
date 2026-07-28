@@ -9,7 +9,7 @@ class AppNameText extends StatelessWidget {
     return Text(
       appName,
       style: TextStyle(
-        fontSize: bigSizeFont,
+        fontSize: veryBigSizeFont,
         color: kSecondColor,
         fontWeight: FontWeight.bold,
       ),

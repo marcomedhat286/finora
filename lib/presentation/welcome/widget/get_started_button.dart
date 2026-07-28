@@ -10,22 +10,18 @@ class GetStartedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Get.to(
-          const SignUp(),
-          transition: Transition.fade,
-          duration: const Duration(seconds: kTranstionDuration),
-        );
+        navigateToSignUp();
       },
 
       style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.symmetric(horizontal: 100),
+        decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: kPrimaryColor,
-              blurRadius: 30,
-              spreadRadius: 13,
+              blurRadius: blurRadius,
+              spreadRadius: 8,
               offset: Offset(0, 10),
             ),
           ],
@@ -37,6 +33,14 @@ class GetStartedButton extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
+    );
+  }
+
+  void navigateToSignUp() {
+    Get.to(
+      const SignUp(),
+      transition: Transition.fade,
+      duration: const Duration(seconds: kTranstionDuration),
     );
   }
 }

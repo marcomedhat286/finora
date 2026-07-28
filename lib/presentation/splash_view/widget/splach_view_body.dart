@@ -42,11 +42,11 @@ class _SplachViewBodyState extends State<SplachViewBody>
       children: [
         SlidingAnimatedWidget(
           slidingAnimation: slidingAnimationLogo,
-          widget: Logo(),
+          widget: const Logo(),
         ),
         SlidingAnimatedWidget(
           slidingAnimation: slidingAnimationText,
-          widget: AppNameText(),
+          widget: const AppNameText(),
         ),
       ],
     );

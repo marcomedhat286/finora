@@ -9,7 +9,7 @@ class LogInButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           "Already have account?",
           style: TextStyle(fontSize: smallSizeFont),
         ),
@@ -17,7 +17,7 @@ class LogInButton extends StatelessWidget {
           onPressed: () {
             print("log in screen ");
           },
-          child: Text(
+          child: const Text(
             "Log In",
             style: TextStyle(
               fontSize: smallSizeFont,
