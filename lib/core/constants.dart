@@ -12,4 +12,4 @@ const blurRadius = 40.0;
 const horizontalWhiteBorder = Border(
   top: BorderSide(color: kSecondColor, width: 2),
 );
-final double opicatyValue = 0.15;
+final int alphaValue = 40;

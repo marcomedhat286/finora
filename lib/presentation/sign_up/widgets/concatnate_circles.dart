@@ -16,7 +16,7 @@ class ConcatnateCircles extends StatelessWidget {
           left: -45,
           child: CircleContainer(
             screenWidth: (screenWidth * 0.75),
-            borderColor: kSecondColor.withOpacity(opicatyValue),
+            borderColor: kSecondColor.withAlpha(alphaValue),
             borderWidth: 18,
           ),
         ),
@@ -25,7 +25,7 @@ class ConcatnateCircles extends StatelessWidget {
           left: 80,
           child: CircleContainer(
             screenWidth: (screenWidth * 0.5),
-            borderColor: kSecondColor.withOpacity(opicatyValue),
+            borderColor: kSecondColor.withAlpha(alphaValue),
             borderWidth: 13,
           ),
         ),
@@ -34,7 +34,7 @@ class ConcatnateCircles extends StatelessWidget {
           left: 140,
           child: CircleContainer(
             screenWidth: (screenWidth * 0.4),
-            borderColor: kSecondColor.withOpacity(opicatyValue),
+            borderColor: kSecondColor.withAlpha(alphaValue),
             borderWidth: 10,
           ),
         ),

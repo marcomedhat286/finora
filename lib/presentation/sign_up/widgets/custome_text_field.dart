@@ -1,0 +1,52 @@
+import 'package:finora/core/constants.dart';
+import 'package:flutter/material.dart';
+
+class CustomeTextField extends StatelessWidget {
+  const CustomeTextField({
+    super.key,
+    required this.dataName,
+    required this.hinitMessage,
+    required this.prefixIcon,
+    required this.textEditingController,
+  });
+  final String dataName;
+  final String hinitMessage;
+  final IconData prefixIcon;
+  final TextEditingController textEditingController;
+
+  @override
+  Widget build(BuildContext context) {
+    final BorderRadius circleBorder = BorderRadius.circular(10);
+    final textStyle = TextStyle(color: Colors.grey.withAlpha(alphaValue * 4));
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(dataName.toUpperCase(), style: textStyle),
+          const SizedBox(height: 10),
+          TextField(
+            controller: textEditingController,
+            style: const TextStyle(color: kPrimaryColor),
+            decoration: InputDecoration(
+              hintText: hinitMessage,
+              hintStyle: textStyle,
+              prefixIcon: Icon(prefixIcon),
+              prefixIconColor: kPrimaryColor,
+
+              border: OutlineInputBorder(
+                borderRadius: circleBorder,
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+
+              focusedBorder: OutlineInputBorder(
+                borderRadius: circleBorder,
+                borderSide: const BorderSide(color: kPrimaryColor),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
