@@ -58,7 +58,7 @@ class UserName {
   /// This constructor is intentionally private to guarantee that every
   /// instance is created through the factory constructor, where the
   /// required validation is performed.
-  const UserName._({required String value}) : _value = value;
+  const UserName._({required this._value});
 
   /// Creates a new validated [UserName].
   ///

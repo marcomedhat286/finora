@@ -54,8 +54,8 @@ abstract final class MoneyValidator {
 
     if (amount.isNaN ||
         amount.isInfinite ||
-        (exclusiveZero && amount <= 0) ||
-        (exclusiveZero && amount < 0)) {
+        (!exclusiveZero && amount.isNegative) ||
+        (exclusiveZero && amount <= 0)) {
       throw const InvalidAmountException(
         "Amount must be a finite value greater than or equal to zero.",
       );

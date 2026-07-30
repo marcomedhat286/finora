@@ -158,13 +158,11 @@ class Account {
     return copyWith(newCurrentBalance: updatedValue);
   }
 
-
   Account rollbackDeletedTransaction(Transaction tx) {
     final double updatedValue =
         currentBalance.value + tx.reversalFinancialEffect;
     return copyWith(newCurrentBalance: updatedValue);
   }
-
 
   Account recalculateFromLedger(List<Transaction> allTransactions) {
     double totalEffect = 0.0;

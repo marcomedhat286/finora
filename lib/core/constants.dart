@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const appName = "Fionra";
-const kPrimaryColor = Color.fromARGB(255, 156, 207, 203);
+const kPrimaryColor = Color.fromARGB(255, 77, 126, 122);
 const kSecondColor = Colors.white;
 const double veryBigSizeFont = 60;
 const double bigSizeFont = 40;
