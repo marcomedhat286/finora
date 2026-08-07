@@ -3,6 +3,7 @@ import 'package:finora/domain/exception/invalid_amount_exception.dart';
 import 'package:finora/domain/exception/invalid_converting_double.dart';
 import 'package:finora/domain/exception/invalid_format_exception.dart';
 import 'package:finora/domain/use_cases/register_user_use_case.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
 import 'package:get/get.dart';
 
 class SignUpViewModel extends GetxController {
@@ -24,14 +25,16 @@ class SignUpViewModel extends GetxController {
     _resetErrors();
     isLoading.value = true;
     try {
-      final user = await signUpUserUseCase.excuteNewOne(
+      final newUser = await signUpUserUseCase.excuteNewOne(
         user_name: user_name,
         firstName: firstName,
         initialBalance: initialBalance,
         middleName: middleName,
         lastName: lastName,
       );
-      print(user);
+      Get.find<AuthController>().setUser(newUser);
+      Get.offAllNamed('/home');
+
       isLoading.value = false;
     } on EmptyValueException catch (e) {
       setErrors(e);
@@ -42,8 +45,7 @@ class SignUpViewModel extends GetxController {
     } on InvalidFormatException catch (e) {
       setErrors(e);
     } catch (e) {
-      print(e);
-      print("catch");
+      userNameError.value = e.toString();
     } finally {
       isLoading.value = false;
     }

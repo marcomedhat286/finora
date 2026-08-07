@@ -3,12 +3,11 @@ import 'package:finora/presentation/welcome/widget/circle_container.dart';
 import 'package:flutter/material.dart';
 
 class ConcatnateCircles extends StatelessWidget {
-  const ConcatnateCircles({super.key, required this.screenWidth});
-
-  final double screenWidth;
+  const ConcatnateCircles({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Positioned(

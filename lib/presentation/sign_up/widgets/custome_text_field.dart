@@ -18,7 +18,7 @@ class CustomeTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BorderRadius circleBorder = BorderRadius.circular(10);
+    const double circleBorderRadius = 10;
     final textStyle = TextStyle(
       color: Colors.grey.withAlpha(alphaValue * 4),
       fontSize: smallSizeFont,
@@ -43,12 +43,12 @@ class CustomeTextField extends StatelessWidget {
               errorMaxLines: 3,
 
               border: OutlineInputBorder(
-                borderRadius: circleBorder,
+                borderRadius: BorderRadius.circular(circleBorderRadius),
                 borderSide: const BorderSide(color: Colors.grey),
               ),
 
               focusedBorder: OutlineInputBorder(
-                borderRadius: circleBorder,
+                borderRadius: BorderRadius.circular(circleBorderRadius),
                 borderSide: const BorderSide(color: kPrimaryColor),
               ),
             ),

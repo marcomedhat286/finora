@@ -19,21 +19,15 @@ class CustomeAppBar extends StatelessWidget {
             icon: const FaIcon(FontAwesomeIcons.angleLeft, color: kSecondColor),
           ),
           const Spacer(),
-          Text(
+          const Text(
             "Sign Up",
-            style: const TextStyle(
+            style: TextStyle(
               color: kSecondColor,
               fontSize: middleSizeFont,
               fontWeight: FontWeight.bold,
             ),
           ),
           const Spacer(),
-          IconButton(
-            onPressed: () {
-              print("options");
-            },
-            icon: const FaIcon(FontAwesomeIcons.ellipsis, color: kSecondColor),
-          ),
         ],
       ),
     );

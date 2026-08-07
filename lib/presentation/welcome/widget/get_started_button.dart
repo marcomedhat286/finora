@@ -12,7 +12,6 @@ class GetStartedButton extends StatelessWidget {
       onPressed: () {
         navigateToSignUp();
       },
-
       style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 100),
@@ -38,9 +37,9 @@ class GetStartedButton extends StatelessWidget {
 
   void navigateToSignUp() {
     Get.to(
-      const SignUp(),
+      () => const SignUp(),
       transition: Transition.fade,
-      duration: const Duration(seconds: kTranstionDuration),
+      duration: const Duration(seconds: kTranstionDuration + 1),
     );
   }
 }

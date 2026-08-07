@@ -8,16 +8,10 @@ class SignUpBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenheight = MediaQuery.of(context).size.height;
-    return Stack(
+    return const Stack(
       children: [
-        ManyCirclesContainer(
-          screenWidth: screenWidth,
-          screenheight: screenheight,
-          body: const WelcomeMessageForSignUp(),
-        ),
-        const CustomeSignUpDataContainer(),
+        ManyCirclesContainer(body: WelcomeMessageForSignUp()),
+        CustomeSignUpDataContainer(),
       ],
     );
   }

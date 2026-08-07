@@ -6,10 +6,10 @@ class WelcomeMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       textAlign: TextAlign.center,
       "Welcome to $appName 👋",
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: middleSizeFont,
         color: kSecondColor,
         fontWeight: FontWeight.bold,

@@ -7,9 +7,10 @@ const double veryBigSizeFont = 60;
 const double bigSizeFont = 40;
 const double middleSizeFont = 30;
 const double smallSizeFont = 15;
-const kTranstionDuration = 2;
+const kTranstionDuration = 3;
 const blurRadius = 40.0;
 const horizontalWhiteBorder = Border(
   top: BorderSide(color: kSecondColor, width: 2),
 );
 final int alphaValue = 40;
+const double circleBottonRadius = 80;
