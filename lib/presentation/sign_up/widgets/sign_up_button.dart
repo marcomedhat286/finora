@@ -35,11 +35,13 @@ class SignUpButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () async {
           await controller.submitSignUp(
-            user_name: (userName.text.isEmpty) ? null : userName.text,
-            firstName: firstName.text,
-            middleName: (middleName.text.isEmpty) ? null : middleName.text,
-            lastName: (lastName.text.isEmpty) ? null : lastName.text,
-            initialBalance: balance.text,
+            user_name: (userName.text.isEmpty) ? null : userName.text.trim(),
+            firstName: firstName.text.trim(),
+            middleName: (middleName.text.isEmpty)
+                ? null
+                : middleName.text.trim(),
+            lastName: (lastName.text.isEmpty) ? null : lastName.text.trim(),
+            initialBalance: balance.text.trim(),
           );
         },
 
