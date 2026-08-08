@@ -21,6 +21,8 @@ class HomeBody extends StatelessWidget {
         ManyCirclesContainer(body: const HomeBar()),
         const BalanceCard(),
         const CustomeBotttomAppBar(currentIndex: 0),
+        Positioned(child: Row(children: [Text("All Transaction")])),
+
         const CustomeFAB(),
       ],
     );
