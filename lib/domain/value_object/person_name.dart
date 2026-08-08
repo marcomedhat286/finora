@@ -1,3 +1,4 @@
+import 'package:finora/domain/Extensions/string_operations.dart';
 import 'package:finora/domain/validators/name_validator.dart';
 
 /// Immutable value object representing a person's name within the domain.
@@ -77,7 +78,7 @@ class PersonName {
       nameType: nameType,
     );
 
-    return PersonName._(value: cleanName);
+    return PersonName._(value: cleanName.capitalizeFirst());
   }
 
   /// Returns the normalized name.

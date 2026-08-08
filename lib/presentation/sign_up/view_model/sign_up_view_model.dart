@@ -37,13 +37,13 @@ class SignUpViewModel extends GetxController {
 
       isLoading.value = false;
     } on EmptyValueException catch (e) {
-      setErrors(e);
+      _setErrors(e);
     } on InvalidAmountException catch (e) {
       initialBalanceError.value = e.message;
     } on InvalidConvertingDouble catch (e) {
       initialBalanceError.value = e.message;
     } on InvalidFormatException catch (e) {
-      setErrors(e);
+      _setErrors(e);
     } catch (e) {
       userNameError.value = e.toString();
     } finally {
@@ -51,7 +51,7 @@ class SignUpViewModel extends GetxController {
     }
   }
 
-  void setErrors(Exception e) {
+  void _setErrors(Exception e) {
     final message = e.toString();
     if (message.contains("first")) {
       firstNameError.value = message;

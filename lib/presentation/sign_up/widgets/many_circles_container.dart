@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ManyCirclesContainer extends StatelessWidget {
   const ManyCirclesContainer({super.key, required this.body});
 
-  final Widget body;
+  final Widget? body;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,9 @@ class ManyCirclesContainer extends StatelessWidget {
             bottom: Radius.elliptical(screenWidth / 2, screenHeight * .05),
           ),
         ),
-        child: Stack(children: [const ConcatnateCircles(), body]),
+        child: Stack(
+          children: [const ConcatnateCircles(), body ?? const SizedBox()],
+        ),
       ),
     );
   }
