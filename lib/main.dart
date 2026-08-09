@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/home/view/home.dart';
+import 'package:finora/presentation/home/view/home_view.dart';
 import 'package:finora/presentation/sign_up/view/sign_up.dart';
 import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
 import 'package:finora/presentation/welcome/view/welcome_screen.dart';
@@ -22,7 +22,7 @@ class FionarApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-      initialRoute: '/splach',
+      initialRoute: '/splach/',
       getPages: [
         GetPage(
           name: '/splach',
@@ -45,7 +45,7 @@ class FionarApp extends StatelessWidget {
         ),
         GetPage(
           name: '/home',
-          page: () => const Home(),
+          page: () => HomeView(),
           transition: Transition.fade,
           transitionDuration: Duration(seconds: kTranstionDuration),
           // 💡 ممكن تدمج الـ Binding هنا كمان لو تحب

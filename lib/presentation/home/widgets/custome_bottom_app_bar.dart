@@ -6,9 +6,7 @@ import 'package:finora/presentation/home/widgets/options_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class CustomeBotttomAppBar extends StatelessWidget {
-  final int currentIndex;
-
-  const CustomeBotttomAppBar({super.key, required this.currentIndex});
+  const CustomeBotttomAppBar({super.key});
   @override
   Widget build(BuildContext context) {
     const double circuleRadius = 15;

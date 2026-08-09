@@ -3,7 +3,7 @@ import 'package:finora/presentation/sign_up/widgets/concatnate_circles.dart';
 import 'package:flutter/material.dart';
 
 class ManyCirclesContainer extends StatelessWidget {
-  const ManyCirclesContainer({super.key, required this.body});
+  const ManyCirclesContainer({super.key, this.body});
 
   final Widget? body;
 

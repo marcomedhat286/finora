@@ -14,7 +14,7 @@ class UserFullName extends StatelessWidget {
       children: [
         Text(
           "${getGreeting()},",
-          style: TextStyle(
+          style: const TextStyle(
             color: kSecondColor,
             fontSize: smallSizeFont,
             fontWeight: FontWeight.bold,
@@ -22,12 +22,16 @@ class UserFullName extends StatelessWidget {
         ),
         Obx(() {
           final String? fullName = AuthController.to.currentUser?.fullName;
-          return Text(
-            fullName ?? "No User",
-            style: TextStyle(
-              color: kSecondColor,
-              fontSize: middleSizeFont,
-              fontWeight: FontWeight.bold,
+          return SizedBox(
+            width: 200,
+            child: Text(
+              fullName ?? "No User",
+              style: const TextStyle(
+                color: kSecondColor,
+                fontSize: middleSizeFont,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.clip,
             ),
           );
         }),

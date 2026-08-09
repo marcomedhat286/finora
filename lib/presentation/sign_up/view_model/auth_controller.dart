@@ -13,6 +13,6 @@ class AuthController extends GetxController {
 
   void logout() {
     _currentUser.value = null;
-    Get.offAllNamed('/login');
+    Get.offAllNamed('/welcome');
   }
 }

@@ -1,6 +1,7 @@
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/validators/validate_date.dart';
 import 'package:finora/domain/value_object/person_name.dart';
+import 'package:finora/domain/value_object/profile_image_path.dart';
 import 'package:finora/domain/value_object/user_name.dart';
 
 ///               15/7
@@ -110,6 +111,8 @@ class User {
   /// Timestamp indicating when the user was created.
   final DateTime _createdAt;
 
+  final ProfileImage _image;
+
   /// Private constructor used internally after all domain
   /// validation has successfully completed.
   const User._({
@@ -117,6 +120,7 @@ class User {
     required this._firstName,
     required this._account,
     required this._createdAt,
+    required this._image,
     this._middleName,
     this._lastName,
   });
@@ -141,6 +145,7 @@ class User {
     required DateTime createdAt,
     String? middleName,
     String? lastName,
+    String? imagePath,
   }) {
     /// Convert the supplied first name into a validated
     /// domain Value Object.
@@ -172,6 +177,8 @@ class User {
     /// application's temporal business rules.
     CreatedAtValidator.validateOrThrow(createdAt);
 
+    final profileImage = ProfileImage.create(imagePath: imagePath);
+
     return User._(
       userName: userName,
       firstName: firstNamePerson,
@@ -179,6 +186,7 @@ class User {
       lastName: lastNamePerson,
       account: account,
       createdAt: createdAt,
+      image: profileImage,
     );
   }
 
@@ -195,6 +203,7 @@ class User {
 
     final accountMap = json['account'] as Map<String, Object?>;
     final dateTime = DateTime.parse(json['createdAt'] as String);
+    final ProfileImagePath = json['imagePath'] as String;
     return User.create(
       userName: UserName.create(value: userName),
       firstName: firstName,
@@ -202,6 +211,7 @@ class User {
       lastName: lastName,
       account: Account.fromJson(accountMap),
       createdAt: dateTime,
+      imagePath: ProfileImagePath,
     );
   }
 
@@ -223,6 +233,7 @@ class User {
     Object? middleName = sentinel,
     Object? lastName = sentinel,
     Account? account,
+    String? profileImagePath,
   }) {
     return User.create(
       userName: userName ?? _userName,
@@ -235,6 +246,7 @@ class User {
 
       lastName: lastName == sentinel ? _lastName?.value : (lastName as String?),
       createdAt: _createdAt,
+      imagePath: profileImagePath ?? _image.path,
     );
   }
 
@@ -249,6 +261,7 @@ class User {
     "lastName": _lastName?.value,
     "account": _account.toMap(),
     "createdAt": _createdAt.toIso8601String(),
+    "imagePath": _image.path,
   };
 
   UserName get userName => _userName;
@@ -262,6 +275,8 @@ class User {
   Account get account => _account;
 
   DateTime get createdAt => _createdAt;
+
+  ProfileImage get image => _image;
 
   /// Returns the user's complete display name.
   ///
@@ -297,5 +312,6 @@ class User {
   User name: ${_userName.value}
   Name: $fullName
   account: $_account
-  created at: $_createdAt""";
+  created at: $_createdAt
+  Image Path: ${_image.path}""";
 }

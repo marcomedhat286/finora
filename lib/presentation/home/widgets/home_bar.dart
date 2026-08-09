@@ -1,6 +1,7 @@
 import 'package:finora/core/constants.dart';
 
 import 'package:finora/presentation/home/widgets/user_full_name.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,12 +20,12 @@ class HomeBar extends StatelessWidget {
             const Spacer(),
             IconButton(
               onPressed: () {
-                print("notifications");
+                AuthController().logout();
               },
               icon: const FaIcon(
-                FontAwesomeIcons.bell,
+                FontAwesomeIcons.rightFromBracket,
                 color: kSecondColor,
-                size: 30,
+                size: 20,
               ),
             ),
           ],
