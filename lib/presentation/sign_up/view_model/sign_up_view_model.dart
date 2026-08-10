@@ -1,5 +1,6 @@
 import 'package:finora/domain/exception/empty_value_exception.dart';
 import 'package:finora/domain/exception/invalid_amount_exception.dart';
+import 'package:finora/domain/exception/invalid_birthdate_exception.dart';
 import 'package:finora/domain/exception/invalid_converting_double.dart';
 import 'package:finora/domain/exception/invalid_format_exception.dart';
 import 'package:finora/domain/use_cases/register_user_use_case.dart';
@@ -9,15 +10,18 @@ import 'package:get/get.dart';
 class SignUpViewModel extends GetxController {
   final RegisterUserUseCase signUpUserUseCase;
   SignUpViewModel({required this.signUpUserUseCase});
+  final birthDate = Rxn<DateTime>();
   var isLoading = false.obs;
   var firstNameError = RxnString();
   var middleNameError = RxnString();
   var lastNameError = RxnString();
   var initialBalanceError = RxnString();
   var userNameError = RxnString();
+  var birthDateError = RxnString();
   Future<void> submitSignUp({
     required String firstName,
     required String initialBalance,
+    required DateTime? birthDate,
     String? user_name,
     String? middleName,
     String? lastName,
@@ -28,6 +32,7 @@ class SignUpViewModel extends GetxController {
       final newUser = await signUpUserUseCase.excuteNewOne(
         user_name: user_name,
         firstName: firstName,
+        birthDate: birthDate,
         initialBalance: initialBalance,
         middleName: middleName,
         lastName: lastName,
@@ -44,11 +49,17 @@ class SignUpViewModel extends GetxController {
       initialBalanceError.value = e.message;
     } on InvalidFormatException catch (e) {
       _setErrors(e);
+    } on InvalidBirthdateException catch (e) {
+      birthDateError.value = e.message;
     } catch (e) {
       userNameError.value = e.toString();
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void setBirthDate(DateTime date) {
+    birthDate.value = date;
   }
 
   void _setErrors(Exception e) {
@@ -63,6 +74,8 @@ class SignUpViewModel extends GetxController {
       userNameError.value = message;
     } else if (message.contains("balance")) {
       initialBalanceError.value = message;
+    } else if (message.contains("birthday")) {
+      birthDateError.value = message;
     }
   }
 
@@ -72,5 +85,6 @@ class SignUpViewModel extends GetxController {
     lastNameError.value = null;
     userNameError.value = null;
     initialBalanceError.value = null;
+    birthDateError.value = null;
   }
 }

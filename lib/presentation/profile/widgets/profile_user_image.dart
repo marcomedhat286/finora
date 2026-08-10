@@ -11,7 +11,7 @@ class ProfileAndFullNameUserImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 220),
+      padding: EdgeInsets.only(top: 150),
       child: Obx(() {
         final user = AuthController.to.currentUser;
         final Widget profile;
@@ -41,7 +41,7 @@ class ProfileAndFullNameUserImage extends StatelessWidget {
             Column(
               children: [
                 profile,
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 Text(
                   user.fullName,
                   textAlign: TextAlign.center,

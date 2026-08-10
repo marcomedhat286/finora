@@ -1,5 +1,6 @@
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/validators/validate_date.dart';
+import 'package:finora/domain/value_object/birthday_date.dart';
 import 'package:finora/domain/value_object/person_name.dart';
 import 'package:finora/domain/value_object/profile_image_path.dart';
 import 'package:finora/domain/value_object/user_name.dart';
@@ -112,15 +113,17 @@ class User {
   final DateTime _createdAt;
 
   final ProfileImage _image;
+  final BirthdayDate _date;
 
   /// Private constructor used internally after all domain
   /// validation has successfully completed.
-  const User._({
+  const User({
     required this._userName,
     required this._firstName,
     required this._account,
     required this._createdAt,
     required this._image,
+    required this._date,
     this._middleName,
     this._lastName,
   });
@@ -139,14 +142,17 @@ class User {
   /// Throws any exception raised by the underlying
   /// domain validators or value objects.
   factory User.create({
-    required UserName userName,
+    required String userName,
     required String firstName,
     required Account account,
     required DateTime createdAt,
+    required DateTime birthDate,
+    required String? imagePath,
     String? middleName,
     String? lastName,
-    String? imagePath,
   }) {
+    final userNameInst = UserName.create(value: userName);
+
     /// Convert the supplied first name into a validated
     /// domain Value Object.
     final firstNamePerson = PersonName.create(
@@ -173,20 +179,22 @@ class User {
       );
     }
 
+    final birhtdayDate = BirthdayDate.create(birthDate);
+
     /// Ensure the supplied creation date satisfies the
     /// application's temporal business rules.
     CreatedAtValidator.validateOrThrow(createdAt);
 
     final profileImage = ProfileImage.create(imagePath: imagePath);
-
-    return User._(
-      userName: userName,
+    return User(
+      userName: userNameInst,
       firstName: firstNamePerson,
       middleName: middleNamePerson,
       lastName: lastNamePerson,
       account: account,
       createdAt: createdAt,
       image: profileImage,
+      date: birhtdayDate,
     );
   }
 
@@ -202,16 +210,23 @@ class User {
     final lastName = json['lastName'] as String?;
 
     final accountMap = json['account'] as Map<String, Object?>;
-    final dateTime = DateTime.parse(json['createdAt'] as String);
+    final createdAt = DateTime.parse(json['createdAt'] as String);
     final ProfileImagePath = json['imagePath'] as String;
+    final birthdayDate = DateTime.parse(json['birthdayDate'] as String);
+
+    /// Ensure the supplied creation date satisfies the
+    /// application's temporal business rules.
+    CreatedAtValidator.validateOrThrow(createdAt);
+
     return User.create(
-      userName: UserName.create(value: userName),
+      userName: userName,
       firstName: firstName,
       middleName: middleName,
       lastName: lastName,
       account: Account.fromJson(accountMap),
-      createdAt: dateTime,
+      createdAt: createdAt,
       imagePath: ProfileImagePath,
+      birthDate: birthdayDate,
     );
   }
 
@@ -229,24 +244,26 @@ class User {
   /// The returned instance is fully revalidated before creation.
   User copyWith({
     UserName? userName,
-    String? firstName,
+    PersonName? firstName,
     Object? middleName = sentinel,
     Object? lastName = sentinel,
     Account? account,
     String? profileImagePath,
+    DateTime? BirthdayDate,
   }) {
     return User.create(
-      userName: userName ?? _userName,
-      firstName: firstName ?? _firstName.value,
+      userName: (userName == null) ? _userName.value : userName.value,
+      firstName: (firstName == null) ? _firstName.value : firstName.value,
       account: account ?? _account,
 
       middleName: middleName == sentinel
-          ? _middleName?.value
-          : (middleName as String?),
+          ? _middleName!.value
+          : middleName as String,
 
-      lastName: lastName == sentinel ? _lastName?.value : (lastName as String?),
+      lastName: lastName == sentinel ? _lastName!.value : lastName as String,
       createdAt: _createdAt,
       imagePath: profileImagePath ?? _image.path,
+      birthDate: BirthdayDate ?? _date.value,
     );
   }
 
@@ -262,6 +279,7 @@ class User {
     "account": _account.toMap(),
     "createdAt": _createdAt.toIso8601String(),
     "imagePath": _image.path,
+    'birthdayDate': _date.formattedDate,
   };
 
   UserName get userName => _userName;
@@ -277,6 +295,8 @@ class User {
   DateTime get createdAt => _createdAt;
 
   ProfileImage get image => _image;
+
+  BirthdayDate get birthdayDate => _date;
 
   /// Returns the user's complete display name.
   ///

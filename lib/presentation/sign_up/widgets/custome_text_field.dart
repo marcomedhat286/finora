@@ -15,27 +15,27 @@ class CustomeTextField extends StatelessWidget {
   final String hinitMessage;
   final IconData prefixIcon;
   final TextEditingController textEditingController;
+  static final textStyleDataName = TextStyle(
+    color: Colors.grey.withAlpha(alphaValue * 4),
+    fontSize: smallSizeFont,
+  );
+  static const double circleBorderRadius = 10;
 
   @override
   Widget build(BuildContext context) {
-    const double circleBorderRadius = 10;
-    final textStyle = TextStyle(
-      color: Colors.grey.withAlpha(alphaValue * 4),
-      fontSize: smallSizeFont,
-    );
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(dataName.toUpperCase(), style: textStyle),
+          Text(dataName.toUpperCase(), style: textStyleDataName),
           const SizedBox(height: 10),
           TextField(
             controller: textEditingController,
             style: const TextStyle(color: kPrimaryColor),
             decoration: InputDecoration(
               hintText: hinitMessage,
-              hintStyle: textStyle,
+              hintStyle: textStyleDataName,
               hintMaxLines: 3,
               prefixIcon: Icon(prefixIcon),
               prefixIconColor: kPrimaryColor,

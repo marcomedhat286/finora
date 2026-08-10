@@ -1,18 +1,11 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/domain/repositories/user_repository.dart';
-
-import 'package:finora/domain/use_cases/register_user_use_case.dart';
 import 'package:finora/presentation/sign_up/view_model/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SignUpButton extends StatelessWidget {
-  final SignUpViewModel controller = Get.put(
-    SignUpViewModel(
-      signUpUserUseCase: RegisterUserUseCase(userRepository: UserRepository()),
-    ),
-  );
+  final controller = Get.find<SignUpViewModel>();
   SignUpButton({
     super.key,
     required this.firstName,
@@ -20,6 +13,7 @@ class SignUpButton extends StatelessWidget {
     required this.middleName,
     required this.userName,
     required this.balance,
+    required this.birthDate,
   });
 
   final TextEditingController firstName;
@@ -27,6 +21,7 @@ class SignUpButton extends StatelessWidget {
   final TextEditingController middleName;
   final TextEditingController userName;
   final TextEditingController balance;
+  final DateTime? birthDate;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +30,15 @@ class SignUpButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () async {
           await controller.submitSignUp(
-            user_name: (userName.text.isEmpty) ? null : userName.text.trim(),
             firstName: firstName.text.trim(),
+            initialBalance: balance.text.trim(),
+            birthDate: birthDate,
+            user_name: (userName.text.isEmpty) ? null : userName.text.trim(),
+
             middleName: (middleName.text.isEmpty)
                 ? null
                 : middleName.text.trim(),
             lastName: (lastName.text.isEmpty) ? null : lastName.text.trim(),
-            initialBalance: balance.text.trim(),
           );
         },
 

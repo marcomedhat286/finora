@@ -9,7 +9,7 @@ const double veryBigSizeFont = 60;
 const double bigSizeFont = 40;
 const double middleSizeFont = 25;
 const double smallSizeFont = 15;
-const kTranstionDuration = 3;
+const kTranstionDuration = 2;
 const blurRadius = 50.0;
 const horizontalWhiteBorder = Border(
   top: BorderSide(color: kSecondColor, width: 2),
