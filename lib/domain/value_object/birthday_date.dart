@@ -19,4 +19,19 @@ class BirthdayDate {
   }
 
   String get formattedDate => "${value.day}/${value.month}/${value.year}";
+
+  @override
+  String toString() => value.toIso8601String();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is BirthdayDate &&
+            other.value.year == value.year &&
+            other.value.month == value.month &&
+            other.value.day == value.day);
+  }
+
+  @override
+  int get hashCode => Object.hash(value.year, value.month, value.day);
 }
