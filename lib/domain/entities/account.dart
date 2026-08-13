@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:finora/domain/entities/transaction.dart';
+import 'package:finora/domain/exception/cannot_update_initial_balance_exception.dart';
 import 'package:finora/domain/exception/invalid_make_transaction.dart';
 import 'package:finora/domain/validators/account_id_validator.dart';
 import 'package:finora/domain/validators/validate_date.dart';
@@ -72,12 +73,14 @@ class Account {
 
   final DateTime _createdAt;
 
+  final List<Transaction> transactions = [];
+
   /// Creates a validated [Account].
   ///
   /// This constructor is intentionally private to guarantee that every
   /// instance is created through the factory constructors,
   /// where validation is enforced.
-  const Account._({
+  Account._({
     required this.id,
     required this._initialBalance,
     required this._currentBalance,
@@ -190,10 +193,27 @@ class Account {
     return identical(this, other) || (other is Account && other.id == id);
   }
 
-  Account copyWith({double? newInitialBalance, double? newCurrentBalance}) {
+  bool get canEditInitialBalance => transactions.isEmpty;
+
+  Account updateInitialBalance(double newInitialBalance) {
+    if (!canEditInitialBalance) {
+      throw CannotUpdateInitialBalanceException(
+        message: "Can not update the initial balance ",
+      );
+    }
+
     return Account.create(
       id: id,
-      initialBalance: newInitialBalance ?? _initialBalance.value,
+      initialBalance: newInitialBalance,
+      currentBalance: newInitialBalance,
+      createdAt: _createdAt,
+    );
+  }
+
+  Account copyWith({double? newCurrentBalance}) {
+    return Account.create(
+      id: id,
+      initialBalance: _initialBalance.value,
       currentBalance: newCurrentBalance ?? _currentBalance.value,
       createdAt: _createdAt,
     );

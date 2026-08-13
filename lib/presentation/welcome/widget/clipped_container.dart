@@ -6,25 +6,19 @@ import 'package:finora/presentation/welcome/widget/text_message.dart';
 import 'package:flutter/material.dart';
 
 class ClippedContainer extends StatelessWidget {
-  const ClippedContainer({
-    super.key,
-    required this.screenHeight,
-    required this.screenWidth,
-  });
-
-  final double screenHeight;
-  final double screenWidth;
+  const ClippedContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Align(
       alignment: AlignmentGeometry.bottomCenter,
       child: ClipPath(
         clipper: const MyClipper(),
         child: Container(
           color: kSecondColor,
-          height: screenHeight - 450,
-          width: screenWidth,
+          height: size.height - 450,
+
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

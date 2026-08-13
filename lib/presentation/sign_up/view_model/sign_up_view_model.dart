@@ -3,7 +3,7 @@ import 'package:finora/domain/exception/invalid_amount_exception.dart';
 import 'package:finora/domain/exception/invalid_birthdate_exception.dart';
 import 'package:finora/domain/exception/invalid_converting_double.dart';
 import 'package:finora/domain/exception/invalid_format_exception.dart';
-import 'package:finora/domain/use_cases/register_user_use_case.dart';
+import 'package:finora/domain/use_cases/register_new_user_use_case.dart';
 import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
 import 'package:get/get.dart';
 
@@ -37,9 +37,8 @@ class SignUpViewModel extends GetxController {
         middleName: middleName,
         lastName: lastName,
       );
-      Get.find<AuthController>().setUser(newUser);
+      AuthController.to.setUser(newUser);
       Get.offAllNamed('/home');
-
       isLoading.value = false;
     } on EmptyValueException catch (e) {
       _setErrors(e);

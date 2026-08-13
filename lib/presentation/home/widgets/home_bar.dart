@@ -20,7 +20,7 @@ class HomeBar extends StatelessWidget {
             const Spacer(),
             IconButton(
               onPressed: () {
-                AuthController().logout();
+                AuthController.to.logout();
               },
               icon: const FaIcon(
                 FontAwesomeIcons.rightFromBracket,

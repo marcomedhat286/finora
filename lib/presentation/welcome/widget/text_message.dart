@@ -6,7 +6,7 @@ class TextMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       "Spend Smarter\n\t\t\t\tSave More",
       style: TextStyle(
         color: kPrimaryColor,

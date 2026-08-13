@@ -16,7 +16,7 @@ class FakeUserRepository implements UserRepository {
 
   @override
   Future<void> updateUser(User user) async {
-    print("the  user has been updated");
+    print("the ${user.userName} user has been updated");
   }
 
   @override

@@ -113,7 +113,7 @@ class User {
   final DateTime _createdAt;
 
   final ProfileImage _image;
-  final BirthdayDate _date;
+  final BirthdayDate _birthdayDate;
 
   /// Private constructor used internally after all domain
   /// validation has successfully completed.
@@ -123,7 +123,7 @@ class User {
     required this._account,
     required this._createdAt,
     required this._image,
-    required this._date,
+    required this._birthdayDate,
     this._middleName,
     this._lastName,
   });
@@ -141,7 +141,7 @@ class User {
   ///
   /// Throws any exception raised by the underlying
   /// domain validators or value objects.
-  factory User.create({
+  factory User._create({
     required String userName,
     required String firstName,
     required Account account,
@@ -194,7 +194,7 @@ class User {
       account: account,
       createdAt: createdAt,
       image: profileImage,
-      date: birhtdayDate,
+      birthdayDate: birhtdayDate,
     );
   }
 
@@ -218,7 +218,7 @@ class User {
     /// application's temporal business rules.
     CreatedAtValidator.validateOrThrow(createdAt);
 
-    return User.create(
+    return User._create(
       userName: userName,
       firstName: firstName,
       middleName: middleName,
@@ -248,22 +248,20 @@ class User {
     Object? middleName = sentinel,
     Object? lastName = sentinel,
     Account? account,
-    String? profileImagePath,
-    DateTime? BirthdayDate,
+    ProfileImage? profileImagePath,
+    BirthdayDate? BirthdayDate,
   }) {
-    return User.create(
-      userName: (userName == null) ? _userName.value : userName.value,
-      firstName: (firstName == null) ? _firstName.value : firstName.value,
+    return User(
+      userName: (userName == null) ? _userName : userName,
+      firstName: (firstName == null) ? _firstName : firstName,
       account: account ?? _account,
-
-      middleName: middleName == sentinel
-          ? _middleName!.value
-          : middleName as String,
-
-      lastName: lastName == sentinel ? _lastName!.value : lastName as String,
       createdAt: _createdAt,
-      imagePath: profileImagePath ?? _image.path,
-      birthDate: BirthdayDate ?? _date.value,
+      birthdayDate: BirthdayDate ?? _birthdayDate,
+      image: profileImagePath ?? _image,
+      middleName: middleName == sentinel
+          ? _middleName
+          : middleName as PersonName?,
+      lastName: lastName == sentinel ? _lastName : lastName as PersonName?,
     );
   }
 
@@ -279,7 +277,7 @@ class User {
     "account": _account.toMap(),
     "createdAt": _createdAt.toIso8601String(),
     "imagePath": _image.path,
-    'birthdayDate': _date.formattedDate,
+    'birthdayDate': _birthdayDate.formattedDate,
   };
 
   UserName get userName => _userName;
@@ -294,9 +292,9 @@ class User {
 
   DateTime get createdAt => _createdAt;
 
-  ProfileImage get image => _image;
+  ProfileImage get profileImage => _image;
 
-  BirthdayDate get birthdayDate => _date;
+  BirthdayDate get birthdayDate => _birthdayDate;
 
   /// Returns the user's complete display name.
   ///
@@ -316,13 +314,30 @@ class User {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other is User && other.userName == _userName);
+        (other is User &&
+            other._userName == _userName &&
+            other._firstName == _firstName &&
+            other._middleName == _middleName &&
+            other._lastName == _lastName &&
+            other._account == _account &&
+            other._createdAt == _createdAt &&
+            other._image == _image &&
+            other._birthdayDate == _birthdayDate);
   }
 
-  /// Hash code derived from the user's identity.
+  // Hash code derived from the user's identity.
   @override
   int get hashCode {
-    return _userName.hashCode;
+    return Object.hash(
+      _userName,
+      _firstName,
+      _middleName,
+      lastName,
+      _account,
+      _createdAt,
+      _birthdayDate,
+      _image,
+    );
   }
 
   /// Returns a readable representation of the User.

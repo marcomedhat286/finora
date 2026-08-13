@@ -64,10 +64,7 @@ class _WelcomeBodyState extends State<WelcomeBody>
 
         SlidingAnimatedWidget(
           slidingAnimation: slidingAnimationClippedContainer,
-          widget: ClippedContainer(
-            screenHeight: screenHeight,
-            screenWidth: screenWidth,
-          ),
+          widget: const ClippedContainer(),
         ),
         SlidingAnimatedWidget(
           slidingAnimation: slidingAnimationHuman,

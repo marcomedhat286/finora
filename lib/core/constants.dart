@@ -17,4 +17,4 @@ const horizontalWhiteBorder = Border(
 final int alphaValue = 40;
 const double circleBottonSize = 80;
 const double bottomAppBarHeight = 120;
-const double circleAvatarRadius = 80;
+const double circleAvatarRadius = 100;

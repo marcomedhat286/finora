@@ -16,7 +16,6 @@ class CustomeBotttomAppBar extends StatelessWidget {
       child: Stack(
         children: [
           const CustomeBottomBarShadow(),
-          // const CustomeFAB(),
           ClipPath(
             clipper: const CustomeBottomAppBarClipper(),
             child: Container(

@@ -25,7 +25,6 @@ class GetStartedButton extends StatelessWidget {
             ),
           ],
         ),
-        // width: screenWidth - 100,
         child: const Text(
           "Get Started",
           style: TextStyle(color: kSecondColor),
@@ -39,7 +38,7 @@ class GetStartedButton extends StatelessWidget {
     Get.to(
       () => const SignUp(),
       transition: Transition.fade,
-      duration: const Duration(seconds: kTranstionDuration + 1),
+      duration: const Duration(seconds: kTranstionDuration + 2),
     );
   }
 }

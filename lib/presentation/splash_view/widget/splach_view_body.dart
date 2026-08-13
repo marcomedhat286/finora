@@ -55,7 +55,7 @@ class _SplachViewBodyState extends State<SplachViewBody>
   void initSlidingAnimation() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
     slidingAnimationLogo =
         Tween<Offset>(begin: const Offset(0, 5), end: Offset.zero).animate(

@@ -18,9 +18,9 @@ abstract final class BirthdateValidator {
             ? 1
             : 0);
 
-    if (age <= 16) {
+    if (age <= 16 || age > 90) {
       throw InvalidBirthdateException(
-        message: "Your age must be more than or equal 16.",
+        message: "Your age must be more than or equal 16,and less than 90.",
       );
     }
     return date;

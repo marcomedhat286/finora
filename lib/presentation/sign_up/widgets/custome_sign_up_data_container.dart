@@ -1,6 +1,4 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/domain/repositories/user_repository.dart';
-import 'package:finora/domain/use_cases/register_user_use_case.dart';
 import 'package:finora/presentation/sign_up/view_model/sign_up_view_model.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_date_picker.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_text_field.dart';
@@ -13,14 +11,6 @@ class CustomeSignUpDataContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SignUpViewModel controller = Get.put(
-      SignUpViewModel(
-        signUpUserUseCase: RegisterUserUseCase(
-          userRepository: UserRepository(),
-        ),
-      ),
-    );
-
     final firstName = TextEditingController();
     final middleName = TextEditingController();
     final lastName = TextEditingController();
@@ -45,49 +35,50 @@ class CustomeSignUpDataContainer extends StatelessWidget {
           ],
         ),
         child: SingleChildScrollView(
-          child: Obx(
-            () => Column(
+          child: Obx(() {
+            final signUpController = Get.find<SignUpViewModel>();
+            return Column(
               children: [
                 CustomeTextField(
                   dataName: "first name",
-                  hinitMessage: "eg. marco",
+                  hinitMessage: "EG. Marco",
                   prefixIcon: Icons.abc_outlined,
                   textEditingController: firstName,
-                  errorText: controller.firstNameError.value,
+                  errorText: signUpController.firstNameError.value,
                 ),
                 CustomeTextField(
                   dataName: "middle name",
-                  hinitMessage: "eg. medhat",
+                  hinitMessage: "EG. Medhat",
                   prefixIcon: Icons.abc_outlined,
                   textEditingController: middleName,
-                  errorText: controller.middleNameError.value,
+                  errorText: signUpController.middleNameError.value,
                 ),
                 CustomeTextField(
                   dataName: "last name",
-                  hinitMessage: "eg. moner",
+                  hinitMessage: "EG. Moner",
                   prefixIcon: Icons.abc_outlined,
                   textEditingController: lastName,
-                  errorText: controller.lastNameError.value,
+                  errorText: signUpController.lastNameError.value,
                 ),
                 DatePickerField(
                   dataName: "birthday",
-                  errorText: controller.birthDateError.value,
-                  onDateSelected: controller.setBirthDate,
+                  errorText: signUpController.birthDateError.value,
+                  onDateSelected: signUpController.setBirthDate,
                 ),
                 CustomeTextField(
                   dataName: "initial balance",
-                  hinitMessage: "eg. 20",
+                  hinitMessage: "EG. 1000",
                   prefixIcon: Icons.attach_money_outlined,
                   textEditingController: balance,
-                  errorText: controller.initialBalanceError.value,
+                  errorText: signUpController.initialBalanceError.value,
                 ),
                 CustomeTextField(
                   dataName: "user name",
                   hinitMessage:
-                      "eg. marco_1234 or Sign up and we will generate new one for u.",
+                      "EG. marco_1234 or Sign up and we will generate new one for u.",
                   prefixIcon: Icons.verified_user,
                   textEditingController: userName,
-                  errorText: controller.userNameError.value,
+                  errorText: signUpController.userNameError.value,
                 ),
                 SignUpButton(
                   firstName: firstName,
@@ -95,12 +86,12 @@ class CustomeSignUpDataContainer extends StatelessWidget {
                   middleName: middleName,
                   userName: userName,
                   balance: balance,
-                  birthDate: controller.birthDate.value,
+                  birthDate: signUpController.birthDate.value,
                 ),
                 const SizedBox(height: 30),
               ],
-            ),
-          ),
+            );
+          }),
         ),
       ),
     );

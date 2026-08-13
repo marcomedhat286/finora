@@ -6,7 +6,7 @@ class AppNameText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       appName,
       style: TextStyle(
         fontSize: veryBigSizeFont,

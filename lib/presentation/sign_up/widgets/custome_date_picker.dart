@@ -34,13 +34,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
           const SizedBox(height: 10),
           InkWell(
             onTap: () async {
-              final date = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1900),
-                lastDate: DateTime(2030),
-              );
-
+              final date = await pickDate();
               if (date != null) {
                 setState(() {
                   selectedDate = date;
@@ -71,19 +65,43 @@ class _DatePickerFieldState extends State<DatePickerField> {
                   borderSide: const BorderSide(color: kPrimaryColor),
                 ),
               ),
-              child: selectedDate == null
-                  ? Text(
-                      "eg. 28-1-2002",
-                      style: CustomeTextField.textStyleDataName,
-                    )
-                  : Text(
-                      "${selectedDate!.day}-${selectedDate!.month}-${selectedDate!.year}",
-                      style: const TextStyle(color: kPrimaryColor),
-                    ),
+              child: getInputDecorationChildState,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget get getInputDecorationChildState {
+    if (selectedDate == null) {
+      return Text("EG. 28-1-2002", style: CustomeTextField.textStyleDataName);
+    } else {
+      return Text(
+        "${selectedDate!.day}-${selectedDate!.month}-${selectedDate!.year}",
+        style: const TextStyle(color: kPrimaryColor),
+      );
+    }
+  }
+
+  Future<DateTime?> pickDate() {
+    return showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2030),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: kPrimaryColor,
+              surface: kSecondColor,
+              onSurface: kPrimaryColor,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
   }
 }

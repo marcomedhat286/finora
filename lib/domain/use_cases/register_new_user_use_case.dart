@@ -1,5 +1,6 @@
 import 'package:finora/domain/entities/user.dart';
 import 'package:finora/domain/entities/account.dart';
+import 'package:finora/domain/exception/taken_user_name_exception.dart';
 import 'package:finora/domain/repositories/user_repository.dart';
 import 'package:finora/domain/services/convert_string_todouble_balance.dart';
 import 'package:finora/domain/value_object/birthday_date.dart';
@@ -11,7 +12,9 @@ import 'package:finora/domain/services/user_name_generator.dart';
 
 class RegisterUserUseCase {
   final UserRepository _userRepository;
-  const RegisterUserUseCase({required this._userRepository});
+  const RegisterUserUseCase.RegisterNewUserUseCase({
+    required this._userRepository,
+  });
 
   Future<User> excuteNewOne({
     String? user_name,
@@ -52,7 +55,7 @@ class RegisterUserUseCase {
       createdAt: now,
     );
 
-    final newUserName = _getNewUserName(user_name, firstName);
+    final newUserName = await _getNewUserName(user_name, firstName);
 
     final user = User(
       userName: newUserName,
@@ -61,7 +64,7 @@ class RegisterUserUseCase {
       middleName: middleNamePerson,
       lastName: lastNamePerson,
       createdAt: now,
-      date: birthdayDate,
+      birthdayDate: birthdayDate,
       image: ProfileImage.create(imagePath: null),
     );
     await _userRepository.saveUser(user);
@@ -87,11 +90,21 @@ class RegisterUserUseCase {
     return initialAccount;
   }
 
-  UserName _getNewUserName(String? user_name, String firstName) {
-    if (user_name != null) {
-      return UserName.create(value: user_name);
+  Future<UserName> _getNewUserName(String? userName, String firstName) async {
+    if (userName != null) {
+      return isTaken(userName);
     } else {
-      return UserNameGenerator.generateUserName(name: firstName);
+      final newUserName = UserNameGenerator.generateUserName(name: firstName);
+      return isTaken(newUserName.value);
+    }
+  }
+
+  Future<UserName> isTaken(String userName) async {
+    final isTaken = await _userRepository.isUsernameTaken(userName);
+    if (!isTaken) {
+      return UserName.create(value: userName);
+    } else {
+      throw TakenUserNameException(message: "This Username is already taken.");
     }
   }
 }
