@@ -46,7 +46,7 @@ class ProfileAndFullNameUserImage extends StatelessWidget {
   }
 
   static Widget setStateUserProfile(User user) {
-    if (user.profileImage.path == null) {
+    if (user.profileImage == null) {
       return CircleAvatar(
         backgroundColor: Colors.grey[300],
         radius: circleAvatarRadius,
@@ -62,7 +62,7 @@ class ProfileAndFullNameUserImage extends StatelessWidget {
     } else {
       return CircleAvatar(
         radius: circleAvatarRadius,
-        backgroundImage: FileImage(File(user.profileImage.path!)),
+        backgroundImage: FileImage(File(user.profileImage!.path)),
       );
     }
   }

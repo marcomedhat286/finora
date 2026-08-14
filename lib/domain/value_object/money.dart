@@ -6,8 +6,12 @@ class Money {
   const Money._({required this.value});
 
   factory Money.create({required double value, bool exclusiveZero = true}) {
-    MoneyValidator.validateOrThrow(amount: value, exclusiveZero: exclusiveZero);
     final roundedValue = double.parse(value.toStringAsFixed(2));
+    MoneyValidator.validateOrThrow(
+      amount: roundedValue,
+      exclusiveZero: exclusiveZero,
+    );
+
     return Money._(value: roundedValue);
   }
 

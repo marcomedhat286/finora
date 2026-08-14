@@ -69,7 +69,7 @@ class InformationCard extends StatelessWidget {
         const SizedBox(height: 4),
         RowCardPresentationInfo(
           dataName: "Image Profile",
-          data: "${user.profileImage.path?.split("/").last}",
+          data: "${user.profileImage?.path.split("/").last}",
         ),
         const SizedBox(height: 4),
       ],

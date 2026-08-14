@@ -2,23 +2,35 @@ import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_text_field.dart';
 import 'package:flutter/material.dart';
 
-class DatePickerField extends StatefulWidget {
-  const DatePickerField({
+class CustomeDatePickerField extends StatefulWidget {
+  const CustomeDatePickerField({
     super.key,
     required this.dataName,
     required this.errorText,
     required this.onDateSelected,
+    this.initialDate,
   });
   final String dataName;
   final String? errorText;
   final void Function(DateTime date) onDateSelected;
+  final DateTime? initialDate;
 
   @override
-  State<DatePickerField> createState() => _DatePickerFieldState();
+  State<CustomeDatePickerField> createState() => _CustomeDatePickerFieldState();
 }
 
-class _DatePickerFieldState extends State<DatePickerField> {
+class _CustomeDatePickerFieldState extends State<CustomeDatePickerField> {
   DateTime? selectedDate;
+  @override
+  void initState() {
+    super.initState();
+    selectedDate = widget.initialDate;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +99,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
   Future<DateTime?> pickDate() {
     return showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2030),
       builder: (context, child) {

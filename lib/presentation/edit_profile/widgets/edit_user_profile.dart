@@ -1,6 +1,6 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/domain/entities/user.dart';
-import 'package:finora/presentation/edit_profile/view_model/view_model_change_profile.dart';
+import 'package:finora/presentation/edit_profile/view_model/update_user_profile_view_model.dart';
 import 'package:finora/presentation/profile/widgets/profile_user_image.dart';
 import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class EditProfileImage extends StatelessWidget {
   EditProfileImage({super.key, required this.user});
 
   final User user;
-  final editUserProfileImageController = Get.find<EditUserInfoViewModel>();
+  final editUserProfileImageController = Get.find<UpdateUserProfileViewModel>();
 
   @override
   Widget build(BuildContext context) {

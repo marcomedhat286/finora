@@ -5,7 +5,6 @@ import 'package:finora/domain/repositories/user_repository.dart';
 import 'package:finora/domain/services/convert_string_todouble_balance.dart';
 import 'package:finora/domain/value_object/birthday_date.dart';
 import 'package:finora/domain/value_object/person_name.dart';
-import 'package:finora/domain/value_object/profile_image_path.dart';
 import 'package:finora/domain/value_object/user_name.dart';
 import 'package:finora/domain/services/account_id_generator.dart';
 import 'package:finora/domain/services/user_name_generator.dart';
@@ -65,7 +64,7 @@ class RegisterUserUseCase {
       lastName: lastNamePerson,
       createdAt: now,
       birthdayDate: birthdayDate,
-      image: ProfileImage.create(imagePath: null),
+      image: null,
     );
     await _userRepository.saveUser(user);
 
@@ -92,14 +91,34 @@ class RegisterUserUseCase {
 
   Future<UserName> _getNewUserName(String? userName, String firstName) async {
     if (userName != null) {
-      return isTaken(userName);
+      return await _isTaken(userName);
     } else {
-      final newUserName = UserNameGenerator.generateUserName(name: firstName);
-      return isTaken(newUserName.value);
+      return await _retryGenerateUseraNameLoop(firstName);
     }
   }
 
-  Future<UserName> isTaken(String userName) async {
+  Future<UserName> _retryGenerateUseraNameLoop(String firstName) async {
+    final newUserName = UserNameGenerator.generate(name: firstName);
+    final isTaken = await _userRepository.isUsernameTaken(newUserName.value);
+    if (isTaken) {
+      for (int loopIndex = 0; loopIndex < 5; loopIndex++) {
+        final newUserNameInLoop = UserNameGenerator.generate(name: firstName);
+        final isTaken = await _userRepository.isUsernameTaken(
+          newUserNameInLoop.value,
+        );
+        if (isTaken) {
+          continue;
+        } else {
+          return newUserNameInLoop;
+        }
+      }
+      throw TakenUserNameException(message: "Sorry can u retry laiter.");
+    } else {
+      return newUserName;
+    }
+  }
+
+  Future<UserName> _isTaken(String userName) async {
     final isTaken = await _userRepository.isUsernameTaken(userName);
     if (!isTaken) {
       return UserName.create(value: userName);

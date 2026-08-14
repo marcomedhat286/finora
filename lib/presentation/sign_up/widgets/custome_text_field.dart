@@ -5,14 +5,14 @@ class CustomeTextField extends StatelessWidget {
   const CustomeTextField({
     super.key,
     required this.dataName,
-    required this.hinitMessage,
+    this.hinitMessage,
     required this.prefixIcon,
     required this.textEditingController,
     required this.errorText,
   });
   final String? errorText;
   final String dataName;
-  final String hinitMessage;
+  final String? hinitMessage;
   final IconData prefixIcon;
   final TextEditingController textEditingController;
   static final textStyleDataName = TextStyle(

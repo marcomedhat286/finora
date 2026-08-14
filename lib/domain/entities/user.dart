@@ -112,7 +112,7 @@ class User {
   /// Timestamp indicating when the user was created.
   final DateTime _createdAt;
 
-  final ProfileImage _image;
+  final ProfileImage? _image;
   final BirthdayDate _birthdayDate;
 
   /// Private constructor used internally after all domain
@@ -184,8 +184,10 @@ class User {
     /// Ensure the supplied creation date satisfies the
     /// application's temporal business rules.
     CreatedAtValidator.validateOrThrow(createdAt);
+    ProfileImage? profileImage = (imagePath != null)
+        ? ProfileImage.create(imagePath: imagePath)
+        : null;
 
-    final profileImage = ProfileImage.create(imagePath: imagePath);
     return User(
       userName: userNameInst,
       firstName: firstNamePerson,
@@ -211,7 +213,7 @@ class User {
 
     final accountMap = json['account'] as Map<String, Object?>;
     final createdAt = DateTime.parse(json['createdAt'] as String);
-    final ProfileImagePath = json['imagePath'] as String;
+    final ProfileImagePath = json['imagePath'] as String?;
     final birthdayDate = DateTime.parse(json['birthdayDate'] as String);
 
     /// Ensure the supplied creation date satisfies the
@@ -248,7 +250,7 @@ class User {
     Object? middleName = sentinel,
     Object? lastName = sentinel,
     Account? account,
-    ProfileImage? profileImagePath,
+    Object? profileImagePath = sentinel,
     BirthdayDate? BirthdayDate,
   }) {
     return User(
@@ -257,7 +259,9 @@ class User {
       account: account ?? _account,
       createdAt: _createdAt,
       birthdayDate: BirthdayDate ?? _birthdayDate,
-      image: profileImagePath ?? _image,
+      image: profileImagePath == sentinel
+          ? _image
+          : profileImagePath as ProfileImage?,
       middleName: middleName == sentinel
           ? _middleName
           : middleName as PersonName?,
@@ -276,7 +280,7 @@ class User {
     "lastName": _lastName?.value,
     "account": _account.toMap(),
     "createdAt": _createdAt.toIso8601String(),
-    "imagePath": _image.path,
+    "imagePath": _image?.path,
     'birthdayDate': _birthdayDate.formattedDate,
   };
 
@@ -292,7 +296,7 @@ class User {
 
   DateTime get createdAt => _createdAt;
 
-  ProfileImage get profileImage => _image;
+  ProfileImage? get profileImage => _image;
 
   BirthdayDate get birthdayDate => _birthdayDate;
 
@@ -348,5 +352,5 @@ class User {
   Name: $fullName
   account: $_account
   created at: $_createdAt
-  Image Path: ${_image.path}""";
+  Image Path: ${_image?.path}""";
 }

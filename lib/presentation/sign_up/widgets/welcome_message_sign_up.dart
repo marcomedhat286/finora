@@ -11,7 +11,7 @@ class WelcomeMessageForSignUp extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CustomeAppBar(),
+        CustomeAppBar(screenName: "Sign Up"),
         WelcomeMessage(),
         SmallTextMessage(
           message:

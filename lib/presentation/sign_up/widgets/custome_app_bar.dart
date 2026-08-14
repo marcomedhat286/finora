@@ -4,7 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class CustomeAppBar extends StatelessWidget {
-  const CustomeAppBar({super.key});
+  const CustomeAppBar({
+    super.key,
+    required this.screenName,
+    this.color = kSecondColor,
+  });
+  final String screenName;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +22,13 @@ class CustomeAppBar extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            icon: const FaIcon(FontAwesomeIcons.angleLeft, color: kSecondColor),
+            icon: FaIcon(FontAwesomeIcons.angleLeft, color: color),
           ),
           const Spacer(),
-          const Text(
-            "Sign Up",
+          Text(
+            screenName,
             style: TextStyle(
-              color: kSecondColor,
+              color: color,
               fontSize: middleSizeFont,
               fontWeight: FontWeight.bold,
             ),

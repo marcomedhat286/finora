@@ -1,8 +1,8 @@
-import 'package:finora/domain/services/random_digits_generator.dart';
+import 'package:uuid/uuid.dart';
 
 abstract final class TransactionIdGenerator {
+  static const _uuid = Uuid();
   static String generateTransactionId() {
-    final number = RandomDigitsGenerator.generate();
-    return "tx_$number";
+    return "tx_$_uuid";
   }
 }

@@ -18,27 +18,33 @@ class UpdateProfileInfoUseCase {
     Object? lastName = User.sentinel,
   }) async {
     final newFirstName = (firstName != null)
-        ? PersonName.create(value: firstName)
+        ? PersonName.create(value: firstName, nameType: "first name")
         : oldUser.firstName;
 
     final newMiddleName = (middleName == User.sentinel)
         ? oldUser.middleName
         : (middleName == null)
         ? null
-        : PersonName.create(value: middleName as String);
+        : PersonName.create(
+            value: middleName as String,
+            nameType: "middle name",
+          );
 
     final newLastName = (lastName == User.sentinel)
         ? oldUser.lastName
         : (lastName == null)
         ? null
-        : PersonName.create(value: lastName as String);
+        : PersonName.create(value: lastName as String, nameType: "last name");
 
     final newBirthdayDate = (birthdayDate != null)
         ? BirthdayDate.create(birthdayDate)
         : oldUser.birthdayDate;
+
     final newProfileImage = (imageProfilePath == User.sentinel)
         ? oldUser.profileImage
-        : ProfileImage.create(imagePath: imageProfilePath as String?);
+        : (imageProfilePath == null)
+        ? null
+        : ProfileImage.create(imagePath: imageProfilePath as String);
 
     final updatedUser = oldUser.copyWith(
       firstName: newFirstName,

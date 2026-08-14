@@ -16,11 +16,13 @@ class FakeUserRepository implements UserRepository {
 
   @override
   Future<void> updateUser(User user) async {
+    await Future.delayed(Duration(seconds: 5));
     print("the ${user.userName} user has been updated");
   }
 
   @override
   Future<bool> isUsernameTaken(String username) async {
-    return username == "marco_123";
+    final list = ['marco_123', 'marco_1', "marco_34342", "marco_1223"];
+    return (list.contains(username));
   }
 }

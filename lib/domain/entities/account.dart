@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:finora/domain/entities/transaction.dart';
 import 'package:finora/domain/exception/cannot_update_initial_balance_exception.dart';
 import 'package:finora/domain/exception/invalid_make_transaction.dart';
@@ -190,7 +189,11 @@ class Account {
   /// the same account identifier.
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other is Account && other.id == id);
+    return identical(this, other) ||
+        (other is Account &&
+            other.id == id &&
+            other._currentBalance == _currentBalance &&
+            other._initialBalance == _initialBalance);
   }
 
   bool get canEditInitialBalance => transactions.isEmpty;
@@ -198,7 +201,8 @@ class Account {
   Account updateInitialBalance(double newInitialBalance) {
     if (!canEditInitialBalance) {
       throw CannotUpdateInitialBalanceException(
-        message: "Can not update the initial balance ",
+        message:
+            "Can not update the initial balance, your account have transactions.",
       );
     }
 
@@ -238,7 +242,7 @@ class Account {
   /// This guarantees consistency with the overridden
   /// equality operator.
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => Object.hash(id, _initialBalance, _currentBalance);
 
   /// Returns a human-readable representation of the account.
   @override

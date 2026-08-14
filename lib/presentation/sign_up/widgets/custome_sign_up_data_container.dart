@@ -60,7 +60,7 @@ class CustomeSignUpDataContainer extends StatelessWidget {
                   textEditingController: lastName,
                   errorText: signUpController.lastNameError.value,
                 ),
-                DatePickerField(
+                CustomeDatePickerField(
                   dataName: "birthday",
                   errorText: signUpController.birthDateError.value,
                   onDateSelected: signUpController.setBirthDate,
