@@ -14,7 +14,7 @@ class SignUpBody extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(
       SignUpViewModel(
-        signUpUserUseCase: RegisterUserUseCase.RegisterNewUserUseCase(
+        signUpNewUserUseCase: RegisterUserUseCase.RegisterNewUserUseCase(
           userRepository: UserRepository(),
         ),
       ),

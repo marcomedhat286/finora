@@ -60,7 +60,10 @@ class InformationCard extends StatelessWidget {
           data: "${user.account.currentBalance.value}",
         ),
         const SizedBox(height: 4),
-        RowCardPresentationInfo(dataName: "Account ID", data: user.account.id),
+        RowCardPresentationInfo(
+          dataName: "Account ID",
+          data: user.account.id.value,
+        ),
         const SizedBox(height: 4),
         RowCardPresentationInfo(
           dataName: "Created At",

@@ -3,7 +3,6 @@ class InvalidConvertingDouble implements Exception {
 
   const InvalidConvertingDouble(this.message);
 
-  /// Returns the exception message.
   @override
   String toString() => message;
 }

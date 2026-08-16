@@ -8,8 +8,8 @@ import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
 import 'package:get/get.dart';
 
 class SignUpViewModel extends GetxController {
-  final RegisterUserUseCase signUpUserUseCase;
-  SignUpViewModel({required this.signUpUserUseCase});
+  final RegisterUserUseCase signUpNewUserUseCase;
+  SignUpViewModel({required this.signUpNewUserUseCase});
   final birthDate = Rxn<DateTime>();
   var isLoading = false.obs;
   var firstNameError = RxnString();
@@ -29,8 +29,8 @@ class SignUpViewModel extends GetxController {
     _resetErrors();
     isLoading.value = true;
     try {
-      final newUser = await signUpUserUseCase.excuteNewOne(
-        user_name: user_name,
+      final newUser = await signUpNewUserUseCase.execute(
+        userName: user_name,
         firstName: firstName,
         birthDate: birthDate,
         initialBalance: initialBalance,

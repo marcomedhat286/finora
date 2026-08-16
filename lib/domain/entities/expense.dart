@@ -27,7 +27,7 @@ class Expense extends Transaction {
     final cleanedTransactionId = TransactionIdValidator.validateOrThrow(id);
     final cleanedTitle = TitleValidator.validateOrThrow(title: title);
     final cleanedAccountId = AccountIdValidator.validateOrThrow(accountId);
-    final amountMoney = Money.create(value: amount, exclusiveZero: true);
+    final amountMoney = Money.create(value: amount, inclusiveZero: true);
     CreatedAtValidator.validateOrThrow(createdAt);
 
     return Expense._(

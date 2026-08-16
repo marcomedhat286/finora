@@ -1,32 +1,52 @@
-///             15/7
-/// Exception thrown when a supplied monetary amount violates
-/// the application's financial business rules.
+/// Exception thrown when a monetary amount violates the
+/// financial rules defined by the Domain Layer.
 ///
-/// This exception indicates that a monetary value was provided,
-/// but it cannot participate in business operations because it
-/// does not satisfy the domain's validation constraints.
+/// [InvalidAmountException] represents a domain-level validation
+/// failure related specifically to monetary values.
 ///
-/// Typical examples include:
+/// This exception can be thrown when an amount:
 ///
-/// - A negative amount.
-/// - `NaN` (Not-a-Number).
-/// - Positive or negative infinity.
+/// - Is `NaN`.
+/// - Is infinite.
+/// - Is negative when negative values are not allowed.
+/// - Is zero when the business rule requires the amount to be
+///   strictly greater than zero.
 ///
-/// The exception belongs to the Domain layer and should be thrown
-/// by validators responsible for validating monetary values.
+/// The actual validation is performed by [MoneyValidator].
+/// This exception only represents and communicates the validation
+/// failure to the upper layers of the application.
+///
+/// Example:
+///
+/// ```dart
+/// throw const InvalidAmountException(
+///   'Amount cannot be negative.',
+/// );
+/// ```
+///
+/// Keeping this exception inside the Domain Layer allows monetary
+/// validation failures to be communicated without creating a
+/// dependency on the Presentation Layer or any framework-specific
+/// implementation.
 final class InvalidAmountException implements Exception {
-  /// Human-readable description of the validation failure.
+  /// A descriptive message explaining why the monetary amount
+  /// was rejected by the Domain validation rules.
   ///
-  /// This message can be propagated to higher layers
-  /// (Application or Presentation) to provide meaningful
-  /// feedback to users or developers.
+  /// The message should provide enough information for the
+  /// upper layers to understand the reason for the validation failure.
   final String message;
 
-  /// Creates an [InvalidAmountException] with the supplied
-  /// error message.
+  /// Creates an [InvalidAmountException] with the specified [message].
+  ///
+  /// The constructor is constant because the exception contains
+  /// immutable data and does not require runtime initialization.
   const InvalidAmountException(this.message);
 
-  /// Returns the exception message.
+  /// Returns the exception message as the String representation
+  /// of this exception.
+  ///
+  /// This makes the exception convenient to use for logging,
+  /// debugging, and error handling.
   @override
   String toString() => message;
 }
