@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:finora/domain/entities/transaction.dart';
 import 'package:finora/domain/exception/cannot_update_initial_balance_exception.dart';
 import 'package:finora/domain/exception/invalid_make_transaction.dart';
-import 'package:finora/domain/validators/account_id_validator.dart';
+
 import 'package:finora/domain/validators/validate_date.dart';
 import 'package:finora/domain/value_object/account_id.dart';
 import 'package:finora/domain/value_object/money.dart';
@@ -46,22 +46,6 @@ class Account {
       initialBalance: initialBalanceMoney,
       currentBalance: initialcurrentMoney,
       createdAt: createdAt,
-    );
-  }
-
-  factory Account.fromJson(Map<String, dynamic> json) {
-    final id = json['id'] as String;
-
-    final initialBalance = (json['initialBalance'] as num).toDouble();
-
-    final currentBalance = (json['currentBalance'] as num).toDouble();
-    final createdAt = DateTime.parse(json['createdAt'] as String);
-
-    return Account.create(
-      id: AccountId.fromUniqueString(id),
-      initialBalance: initialBalance,
-      createdAt: createdAt,
-      currentBalance: currentBalance,
     );
   }
 

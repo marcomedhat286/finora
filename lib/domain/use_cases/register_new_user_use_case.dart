@@ -2,7 +2,7 @@ import 'package:finora/domain/entities/user.dart';
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/exception/taken_user_name_exception.dart';
 import 'package:finora/domain/repositories/user_repository.dart';
-import 'package:finora/presentation/helpers/convert_string_todouble_balance.dart';
+import 'package:finora/core/utils/parse/money_input_parser.dart';
 import 'package:finora/domain/value_object/birthday_date.dart';
 import 'package:finora/domain/value_object/person_name.dart';
 import 'package:finora/domain/value_object/user_name.dart';

@@ -1,7 +1,7 @@
 import 'package:finora/domain/exception/empty_value_exception.dart';
 import 'package:finora/domain/exception/invalid_amount_exception.dart';
 import 'package:finora/domain/exception/invalid_birthdate_exception.dart';
-import 'package:finora/presentation/helpers/invalid_double_format_exception.dart';
+import 'package:finora/domain/validators/invalid_double_format_exception.dart';
 import 'package:finora/domain/exception/invalid_format_exception.dart';
 import 'package:finora/domain/use_cases/register_new_user_use_case.dart';
 import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';

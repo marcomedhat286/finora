@@ -4,12 +4,12 @@ import 'package:finora/domain/exception/empty_value_exception.dart';
 import 'package:finora/domain/exception/invalid_amount_exception.dart';
 
 import 'package:finora/domain/exception/invalid_birthdate_exception.dart';
-import 'package:finora/presentation/helpers/invalid_double_format_exception.dart';
+import 'package:finora/domain/validators/invalid_double_format_exception.dart';
 
 import 'package:finora/domain/exception/invalid_format_exception.dart';
 import 'package:finora/domain/exception/invalid_image_path_exception.dart';
 import 'package:finora/domain/exception/taken_user_name_exception.dart';
-import 'package:finora/presentation/helpers/convert_string_todouble_balance.dart';
+import 'package:finora/core/utils/parse/money_input_parser.dart';
 import 'package:finora/domain/use_cases/update_initial_balance_use_case.dart';
 import 'package:finora/domain/use_cases/update_user_info_use_case.dart';
 import 'package:finora/domain/use_cases/update_username_usecase.dart';
