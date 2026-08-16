@@ -4,12 +4,12 @@ import 'package:finora/domain/exception/empty_value_exception.dart';
 import 'package:finora/domain/exception/invalid_amount_exception.dart';
 
 import 'package:finora/domain/exception/invalid_birthdate_exception.dart';
-import 'package:finora/domain/exception/invalid_converting_double.dart';
+import 'package:finora/presentation/helpers/invalid_double_format_exception.dart';
 
 import 'package:finora/domain/exception/invalid_format_exception.dart';
 import 'package:finora/domain/exception/invalid_image_path_exception.dart';
 import 'package:finora/domain/exception/taken_user_name_exception.dart';
-import 'package:finora/domain/services/convert_string_todouble_balance.dart';
+import 'package:finora/presentation/helpers/convert_string_todouble_balance.dart';
 import 'package:finora/domain/use_cases/update_initial_balance_use_case.dart';
 import 'package:finora/domain/use_cases/update_user_info_use_case.dart';
 import 'package:finora/domain/use_cases/update_username_usecase.dart';
@@ -112,9 +112,9 @@ class UpdateUserProfileViewModel extends GetxController {
     if (oldUser == null) return;
 
     try {
-      final initialBalanceDouble = ConvertStringTodoubleBalance.convert(
+      final initialBalanceDouble = MoneyInputParser.parseToDouble(
         value: initalBalance,
-        valueName: "initial balance",
+        fieldName: "initial balance",
       );
       if (oldUser.account.currentBalance.value != initialBalanceDouble) {
         final newUser = await updateInitialBalance.updateInitialBalance(
@@ -128,7 +128,7 @@ class UpdateUserProfileViewModel extends GetxController {
       initialBalanceError.value = e.message;
     } on InvalidAmountException catch (e) {
       initialBalanceError.value = e.message;
-    } on InvalidConvertingDouble catch (e) {
+    } on InvalidDoubleFormatException catch (e) {
       initialBalanceError.value = e.message;
     } on CannotUpdateInitialBalanceException catch (e) {
       initialBalanceError.value = e.message;
