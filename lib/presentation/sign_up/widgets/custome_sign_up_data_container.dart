@@ -2,6 +2,7 @@ import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/sign_up/view_model/sign_up_view_model.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_date_picker.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_text_field.dart';
+import 'package:finora/presentation/sign_up/widgets/next_button.dart';
 import 'package:finora/presentation/sign_up/widgets/sign_up_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,6 @@ class CustomeSignUpDataContainer extends StatelessWidget {
     final middleName = TextEditingController();
     final lastName = TextEditingController();
     final userName = TextEditingController();
-    final balance = TextEditingController();
 
     return Align(
       alignment: AlignmentGeometry.bottomCenter,
@@ -65,29 +65,7 @@ class CustomeSignUpDataContainer extends StatelessWidget {
                   errorText: signUpController.birthDateError.value,
                   onDateSelected: signUpController.setBirthDate,
                 ),
-                CustomeTextField(
-                  dataName: "initial balance",
-                  hinitMessage: "EG. 1000",
-                  prefixIcon: Icons.attach_money_outlined,
-                  textEditingController: balance,
-                  errorText: signUpController.initialBalanceError.value,
-                ),
-                CustomeTextField(
-                  dataName: "user name",
-                  hinitMessage:
-                      "EG. marco_1234 or Sign up and we will generate new one for u.",
-                  prefixIcon: Icons.verified_user,
-                  textEditingController: userName,
-                  errorText: signUpController.userNameError.value,
-                ),
-                SignUpButton(
-                  firstName: firstName,
-                  lastName: lastName,
-                  middleName: middleName,
-                  userName: userName,
-                  balance: balance,
-                  birthDate: signUpController.birthDate.value,
-                ),
+                const NextButton(),
                 const SizedBox(height: 30),
               ],
             );
