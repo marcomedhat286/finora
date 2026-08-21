@@ -3,7 +3,7 @@ import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/edit_profile/view_model/update_user_profile_view_model.dart';
 import 'package:finora/presentation/edit_profile/widgets/edit_user_profile.dart';
 import 'package:finora/presentation/edit_profile/widgets/save_changes_button.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_app_bar.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_date_picker.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_text_field.dart';
@@ -15,7 +15,7 @@ class EditUserInfoBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = AuthController.to.currentUser;
+    final user = AuthUserController.to.currentUser;
     if (user == null) return const SizedBox();
 
     final editInfoController = Get.find<UpdateUserProfileViewModel>();
@@ -29,9 +29,9 @@ class EditUserInfoBody extends StatelessWidget {
     final lastNameTextFeildController = TextEditingController(
       text: user.lastName?.value,
     );
-    final initialBalanceTextFeildController = TextEditingController(
-      text: "${user.account.initialBalance.value}",
-    );
+    // final initialBalanceTextFeildController = TextEditingController(
+    //   text: "${user.account.initialBalance.value}",
+    // );
     final userNameTextFeildController = TextEditingController(
       text: user.userName.value,
     );
@@ -71,26 +71,26 @@ class EditUserInfoBody extends StatelessWidget {
               errorText: editInfoController.birthDateError.value,
               onDateSelected: editInfoController.setBirthDate,
             ),
-            CustomeTextField(
-              dataName: "initial balance",
-              prefixIcon: Icons.attach_money_outlined,
-              textEditingController: initialBalanceTextFeildController,
-              errorText: editInfoController.initialBalanceError.value,
-            ),
+            // CustomeTextField(
+            //   dataName: "initial balance",
+            //   prefixIcon: Icons.attach_money_outlined,
+            //   textEditingController: initialBalanceTextFeildController,
+            //   errorText: editInfoController.initialBalanceError.value,
+            // ),
             CustomeTextField(
               dataName: "user name",
               prefixIcon: Icons.abc,
               textEditingController: userNameTextFeildController,
               errorText: editInfoController.userNameError.value,
             ),
-            SaveChangesButton(
-              firstName: firstNameTextFeildController,
-              middleName: middleNameTextFeildController,
-              lastName: lastNameTextFeildController,
-              birthdayDate: editInfoController.birthDate.value,
-              initialBalance: initialBalanceTextFeildController,
-              userName: userNameTextFeildController,
-            ),
+            // SaveChangesButton(
+            //   firstName: firstNameTextFeildController,
+            //   middleName: middleNameTextFeildController,
+            //   lastName: lastNameTextFeildController,
+            //   birthdayDate: editInfoController.birthDate.value,
+            //   initialBalance: initialBalanceTextFeildController,
+            //   userName: userNameTextFeildController,
+            // ),
             const SizedBox(height: 30),
           ],
         ),

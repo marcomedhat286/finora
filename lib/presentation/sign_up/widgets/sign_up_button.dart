@@ -6,22 +6,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SignUpButton extends StatelessWidget {
   final controller = Get.find<SignUpViewModel>();
-  SignUpButton({
-    super.key,
-    required this.firstName,
-    required this.lastName,
-    required this.middleName,
-    required this.userName,
-    required this.balance,
-    required this.birthDate,
-  });
-
-  final TextEditingController firstName;
-  final TextEditingController lastName;
-  final TextEditingController middleName;
-  final TextEditingController userName;
-  final TextEditingController balance;
-  final DateTime? birthDate;
+  SignUpButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +14,11 @@ class SignUpButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 50.0),
       child: ElevatedButton(
         onPressed: () async {
-          await controller.submitSignUp(
-            firstName: firstName.text.trim(),
-            initialBalance: balance.text.trim(),
-            birthDate: birthDate,
-            user_name: (userName.text.isEmpty) ? null : userName.text.trim(),
-
-            middleName: (middleName.text.isEmpty)
-                ? null
-                : middleName.text.trim(),
-            lastName: (lastName.text.isEmpty) ? null : lastName.text.trim(),
-          );
+          await controller.submitSignUp();
         },
-
         style: ElevatedButton.styleFrom(
           backgroundColor: kPrimaryColor,
-          fixedSize: const Size(250, 50),
+          fixedSize: const Size(150, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),

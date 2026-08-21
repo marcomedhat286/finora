@@ -1,7 +1,8 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/home/view/home_view.dart';
+import 'package:finora/presentation/sign_up/dependencies/signup_model_dependence.dart';
 import 'package:finora/presentation/sign_up/view/sign_up.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
 import 'package:finora/presentation/welcome/view/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,8 @@ import 'package:finora/presentation/splash_view/view/splash_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(AuthController(), permanent: true);
+  Get.put(AuthUserController(), permanent: true);
+  // Get.put(AuthAccountController(), permanent: true);
 
   runApp(const FionarApp());
 }
@@ -42,21 +44,15 @@ class FionarApp extends StatelessWidget {
           page: () => const SignUp(),
           transition: Transition.fade,
           transitionDuration: Duration(seconds: kTranstionDuration),
+          binding: SignUpBinding(),
         ),
         GetPage(
           name: '/home',
           page: () => HomeView(),
           transition: Transition.fade,
           transitionDuration: Duration(seconds: kTranstionDuration),
-          // 💡 ممكن تدمج الـ Binding هنا كمان لو تحب
         ),
       ],
     );
-
-    // GetMaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   theme: ThemeData.light(),
-    //   home: const SplashView(),
-    // );
   }
 }

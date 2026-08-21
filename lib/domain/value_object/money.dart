@@ -152,6 +152,24 @@ class Money {
   Money operator -(Money other) =>
       Money.create(value: _value - other.value, inclusiveZero: true);
 
+  /// Returns a new [Money] instance with the sign of the current value inverted.
+  ///
+  /// This unary minus operator allows a [Money] value to be negated while
+  /// preserving the validation and rounding rules enforced by [Money.create].
+  ///
+  /// For example:
+  ///
+  /// ```dart
+  /// final money = Money.create(value: 100);
+  /// final negativeMoney = -money;
+  ///
+  /// print(negativeMoney); // -100.00
+  /// ```
+  ///
+  /// [inclusiveZero] is set to `true` because zero remains a valid monetary
+  /// value when the sign is inverted.
+  Money operator -() => Money.create(value: -_value, inclusiveZero: true);
+
   /// Indicates whether the monetary value is exactly zero.
   ///
   /// Returns `true` when the stored value equals `0`.

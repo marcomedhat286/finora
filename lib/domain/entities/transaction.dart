@@ -17,9 +17,9 @@ abstract class Transaction {
     this.description,
   });
 
-  double get financialEffect;
+  Money get financialEffect;
 
-  double get reversalFinancialEffect;
+  Money get reversalFinancialEffect;
 
   String get displayData;
 }

@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
@@ -21,7 +21,7 @@ class UserFullName extends StatelessWidget {
           ),
         ),
         Obx(() {
-          final String? fullName = AuthController.to.currentUser?.fullName;
+          final String? fullName = AuthUserController.to.currentUser?.fullName;
           return SizedBox(
             width: 200,
             child: Text(

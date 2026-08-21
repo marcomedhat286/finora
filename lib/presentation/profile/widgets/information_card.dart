@@ -1,6 +1,6 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/profile/widgets/row_card_presentation_info.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +31,7 @@ class InformationCard extends StatelessWidget {
   }
 
   RenderObjectWidget setStateInformationCard() {
-    final user = AuthController.to.currentUser;
+    final user = AuthUserController.to.currentUser;
     if (user == null) return const SizedBox();
     return Column(
       children: [
@@ -50,20 +50,20 @@ class InformationCard extends StatelessWidget {
           data: user.birthdayDate.formattedDate,
         ),
         const SizedBox(height: 4),
-        RowCardPresentationInfo(
-          dataName: "Initial Balance",
-          data: "${user.account.initialBalance.value}",
-        ),
+        // RowCardPresentationInfo(
+        //   dataName: "Initial Balance",
+        //   data: "${user.account.initialBalance.value}",
+        // ),
         const SizedBox(height: 4),
-        RowCardPresentationInfo(
-          dataName: "Current Balance",
-          data: "${user.account.currentBalance.value}",
-        ),
+        // RowCardPresentationInfo(
+        //   dataName: "Current Balance",
+        //   data: "${user.account.currentBalance.value}",
+        // ),
         const SizedBox(height: 4),
-        RowCardPresentationInfo(
-          dataName: "Account ID",
-          data: user.account.id.value,
-        ),
+        // RowCardPresentationInfo(
+        //   dataName: "Account ID",
+        //   data: user.account.id.value,
+        // ),
         const SizedBox(height: 4),
         RowCardPresentationInfo(
           dataName: "Created At",

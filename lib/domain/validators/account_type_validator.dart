@@ -1,4 +1,5 @@
 import 'package:finora/domain/enum/account_type.dart';
+import 'package:finora/domain/exception/empty_value_exception.dart';
 import 'package:finora/domain/exception/invalid_account_type_exception.dart';
 
 /// Provides domain-level validation and parsing for [AccountType] values.
@@ -67,7 +68,10 @@ abstract final class AccountTypeValidator {
   ///
   /// This method ensures that raw external String values cannot
   /// directly enter the Domain as an unsupported account type.
-  static AccountType validateAndParse(String code) {
+  static AccountType validateAndParse(String? code) {
+    if (code == null) {
+      throw EmptyValueException("The account type must not be empty");
+    }
     // Normalize the incoming code before comparing it with
     // the predefined AccountType codes.
     //

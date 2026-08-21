@@ -10,13 +10,13 @@ abstract interface class UserRepository {
 class FakeUserRepository implements UserRepository {
   @override
   Future<void> saveUser(User user) async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 4));
     print("the new user has been saved : ${user.userName}");
   }
 
   @override
   Future<void> updateUser(User user) async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 4));
     print("the ${user.userName} user has been updated");
   }
 

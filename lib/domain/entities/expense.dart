@@ -40,9 +40,9 @@ class Expense extends Transaction {
     );
   }
   @override
-  double get financialEffect => -amount.value;
+  Money get financialEffect => -amount;
   @override
-  double get reversalFinancialEffect => amount.value;
+  Money get reversalFinancialEffect => amount;
 
   @override
   String get displayData =>

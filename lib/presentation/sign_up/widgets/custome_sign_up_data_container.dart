@@ -1,9 +1,8 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/sign_up/view_model/sign_up_view_model.dart';
-import 'package:finora/presentation/sign_up/widgets/custome_date_picker.dart';
-import 'package:finora/presentation/sign_up/widgets/custome_text_field.dart';
-import 'package:finora/presentation/sign_up/widgets/next_button.dart';
-import 'package:finora/presentation/sign_up/widgets/sign_up_button.dart';
+import 'package:finora/presentation/sign_up/widgets/account_info_step_widget.dart';
+import 'package:finora/presentation/sign_up/widgets/personal_info_step_widegt.dart';
+import 'package:finora/presentation/sign_up/widgets/username_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,16 +11,13 @@ class CustomeSignUpDataContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firstName = TextEditingController();
-    final middleName = TextEditingController();
-    final lastName = TextEditingController();
-    final userName = TextEditingController();
-
+    final controller = Get.find<SignUpViewModel>();
     return Align(
       alignment: AlignmentGeometry.bottomCenter,
       child: Container(
         height: 625,
         margin: const EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         decoration: const BoxDecoration(
           color: kSecondColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
@@ -36,39 +32,19 @@ class CustomeSignUpDataContainer extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Obx(() {
-            final signUpController = Get.find<SignUpViewModel>();
-            return Column(
-              children: [
-                CustomeTextField(
-                  dataName: "first name",
-                  hinitMessage: "EG. Marco",
-                  prefixIcon: Icons.abc_outlined,
-                  textEditingController: firstName,
-                  errorText: signUpController.firstNameError.value,
-                ),
-                CustomeTextField(
-                  dataName: "middle name",
-                  hinitMessage: "EG. Medhat",
-                  prefixIcon: Icons.abc_outlined,
-                  textEditingController: middleName,
-                  errorText: signUpController.middleNameError.value,
-                ),
-                CustomeTextField(
-                  dataName: "last name",
-                  hinitMessage: "EG. Moner",
-                  prefixIcon: Icons.abc_outlined,
-                  textEditingController: lastName,
-                  errorText: signUpController.lastNameError.value,
-                ),
-                CustomeDatePickerField(
-                  dataName: "birthday",
-                  errorText: signUpController.birthDateError.value,
-                  onDateSelected: signUpController.setBirthDate,
-                ),
-                const NextButton(),
-                const SizedBox(height: 30),
-              ],
-            );
+            switch (controller.currentStep.value) {
+              case 0:
+                return const PersonalInfoStepWidegt();
+
+              case 1:
+                return const AccountInfoStepWidget();
+
+              case 2:
+                return const UserNameInfoWidget();
+
+              default:
+                return const SizedBox();
+            }
           }),
         ),
       ),

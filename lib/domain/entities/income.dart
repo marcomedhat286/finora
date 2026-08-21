@@ -45,8 +45,8 @@ class Income extends Transaction {
           description: ${description ?? ""}}""";
 
   @override
-  double get financialEffect => amount.value;
+  Money get financialEffect => amount;
 
   @override
-  double get reversalFinancialEffect => -amount.value;
+  Money get reversalFinancialEffect => -amount;
 }

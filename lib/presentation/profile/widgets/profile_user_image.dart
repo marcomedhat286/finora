@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:finora/core/constants.dart';
 import 'package:finora/domain/Extensions/string_operations.dart';
 import 'package:finora/domain/entities/user.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +14,7 @@ class ProfileAndFullNameUserImage extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 150),
       child: Obx(() {
-        final currentUser = AuthController.to.currentUser;
+        final currentUser = AuthUserController.to.currentUser;
         if (currentUser == null) return const SizedBox();
         return _setTheImageAndTextState(currentUser);
       }),

@@ -1,14 +1,14 @@
-import 'package:finora/domain/entities/account.dart';
-import 'package:finora/domain/validators/validate_date.dart';
 import 'package:finora/domain/value_object/birthday_date.dart';
 import 'package:finora/domain/value_object/person_name.dart';
 import 'package:finora/domain/value_object/profile_image_path.dart';
+import 'package:finora/domain/value_object/user_id.dart';
 import 'package:finora/domain/value_object/user_name.dart';
 
 class User {
   static const Object sentinel = Object();
 
   final UserName _userName;
+  final UserId _id;
 
   final PersonName _firstName;
 
@@ -16,17 +16,17 @@ class User {
 
   final PersonName? _lastName;
 
-  final Account _account;
-
   final DateTime _createdAt;
 
   final ProfileImage? _image;
+
   final BirthdayDate _birthdayDate;
 
   const User({
     required this._userName,
+    required this._id,
     required this._firstName,
-    required this._account,
+
     required this._createdAt,
     required this._image,
     required this._birthdayDate,
@@ -34,72 +34,72 @@ class User {
     this._lastName,
   });
 
-  factory User._create({
-    required String userName,
-    required String firstName,
-    required Account account,
-    required DateTime createdAt,
-    required DateTime birthDate,
-    required String? imagePath,
-    String? middleName,
-    String? lastName,
-  }) {
-    final userNameInst = UserName.create(value: userName);
+  // factory User._create({
+  //   required String userName,
+  //   required String firstName,
+  //   required Account account,
+  //   required DateTime createdAt,
+  //   required DateTime birthDate,
+  //   required String? imagePath,
+  //   String? middleName,
+  //   String? lastName,
+  // }) {
+  //   final userNameInst = UserName.create(value: userName);
 
-    final firstNamePerson = PersonName.create(
-      value: firstName,
-      nameType: "first name",
-    );
+  //   final firstNamePerson = PersonName.create(
+  //     value: firstName,
+  //     nameType: "first name",
+  //   );
 
-    PersonName? middleNamePerson;
-    PersonName? lastNamePerson;
+  //   PersonName? middleNamePerson;
+  //   PersonName? lastNamePerson;
 
-    if (middleName != null) {
-      middleNamePerson = PersonName.create(
-        value: middleName,
-        nameType: "middle name",
-      );
-    }
+  //   if (middleName != null) {
+  //     middleNamePerson = PersonName.create(
+  //       value: middleName,
+  //       nameType: "middle name",
+  //     );
+  //   }
 
-    if (lastName != null) {
-      lastNamePerson = PersonName.create(
-        value: lastName,
-        nameType: "last name",
-      );
-    }
+  //   if (lastName != null) {
+  //     lastNamePerson = PersonName.create(
+  //       value: lastName,
+  //       nameType: "last name",
+  //     );
+  //   }
 
-    final birhtdayDate = BirthdayDate.create(birthDate);
+  //   final birhtdayDate = BirthdayDate.create(birthDate);
 
-    CreatedAtValidator.validateOrThrow(createdAt);
-    ProfileImage? profileImage = (imagePath != null)
-        ? ProfileImage.create(imagePath: imagePath)
-        : null;
+  //   CreatedAtValidator.validateOrThrow(createdAt);
+  //   ProfileImage? profileImage = (imagePath != null)
+  //       ? ProfileImage.create(imagePath: imagePath)
+  //       : null;
 
-    return User(
-      userName: userNameInst,
-      firstName: firstNamePerson,
-      middleName: middleNamePerson,
-      lastName: lastNamePerson,
-      account: account,
-      createdAt: createdAt,
-      image: profileImage,
-      birthdayDate: birhtdayDate,
-    );
-  }
+  //   return User(
+  //     userName: userNameInst,
+  //     firstName: firstNamePerson,
+  //     middleName: middleNamePerson,
+  //     lastName: lastNamePerson,
+  //     account: account,
+  //     createdAt: createdAt,
+  //     image: profileImage,
+  //     birthdayDate: birhtdayDate,
+  //   );
+  // }
 
   User copyWith({
     UserName? userName,
     PersonName? firstName,
     Object? middleName = sentinel,
     Object? lastName = sentinel,
-    Account? account,
     Object? profileImagePath = sentinel,
     BirthdayDate? BirthdayDate,
   }) {
     return User(
+      id: _id,
       userName: (userName == null) ? _userName : userName,
       firstName: (firstName == null) ? _firstName : firstName,
-      account: account ?? _account,
+
       createdAt: _createdAt,
       birthdayDate: BirthdayDate ?? _birthdayDate,
       image: profileImagePath == sentinel
@@ -117,21 +117,20 @@ class User {
     "firstName": _firstName.value,
     "middleName": _middleName?.value,
     "lastName": _lastName?.value,
-    "account": _account.toMap(),
+
     "createdAt": _createdAt.toIso8601String(),
     "imagePath": _image?.path,
     'birthdayDate': _birthdayDate.formattedDate,
   };
 
   UserName get userName => _userName;
+  UserId get id => _id;
 
   PersonName get firstName => _firstName;
 
   PersonName? get middleName => _middleName;
 
   PersonName? get lastName => _lastName;
-
-  Account get account => _account;
 
   DateTime get createdAt => _createdAt;
 
@@ -155,7 +154,6 @@ class User {
             other._firstName == _firstName &&
             other._middleName == _middleName &&
             other._lastName == _lastName &&
-            other._account == _account &&
             other._createdAt == _createdAt &&
             other._image == _image &&
             other._birthdayDate == _birthdayDate);
@@ -168,7 +166,7 @@ class User {
       _firstName,
       _middleName,
       lastName,
-      _account,
+
       _createdAt,
       _birthdayDate,
       _image,
@@ -180,7 +178,7 @@ class User {
       """
   User name: ${_userName.value}
   Name: $fullName
-  account: $_account
+ 
   created at: $_createdAt
   Image Path: ${_image?.path}""";
 }

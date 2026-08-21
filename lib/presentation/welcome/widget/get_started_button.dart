@@ -1,5 +1,4 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/sign_up/view/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,10 +34,6 @@ class GetStartedButton extends StatelessWidget {
   }
 
   void navigateToSignUp() {
-    Get.to(
-      () => const SignUp(),
-      transition: Transition.fade,
-      duration: const Duration(seconds: kTranstionDuration + 2),
-    );
+    Get.toNamed('/signup');
   }
 }

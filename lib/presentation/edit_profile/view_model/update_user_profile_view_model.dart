@@ -10,21 +10,21 @@ import 'package:finora/domain/exception/invalid_format_exception.dart';
 import 'package:finora/domain/exception/invalid_image_path_exception.dart';
 import 'package:finora/domain/exception/taken_user_name_exception.dart';
 import 'package:finora/core/utils/parse/money_input_parser.dart';
-import 'package:finora/domain/use_cases/update_initial_balance_use_case.dart';
-import 'package:finora/domain/use_cases/update_user_info_use_case.dart';
-import 'package:finora/domain/use_cases/update_username_usecase.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_controller.dart';
+// import 'package:finora/domain/usecases/update_initial_balance_use_case.dart';
+// import 'package:finora/domain/usecases/user/update_user_info_use_case.dart';
+// import 'package:finora/domain/usecases/user/update_username_usecase.dart';
+import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
 import 'package:get/get.dart';
 
 class UpdateUserProfileViewModel extends GetxController {
-  final UpdateProfileInfoUseCase editUserInfoUserCase;
-  final UpdateUsernameUsecase updateUserName;
-  final UpdateInitialBalanceUseCase updateInitialBalance;
-  UpdateUserProfileViewModel({
-    required this.editUserInfoUserCase,
-    required this.updateUserName,
-    required this.updateInitialBalance,
-  });
+  // final UpdateProfileInfoUseCase editUserInfoUserCase;
+  // final UpdateUsernameUsecase updateUserName;
+  //final UpdateInitialBalanceUseCase updateInitialBalance;
+  UpdateUserProfileViewModel(
+    // required this.editUserInfoUserCase,
+    // required this.updateUserName,
+    //  required this.updateInitialBalance,
+  );
   final birthDate = Rxn<DateTime>();
   var isLoading = false.obs;
 
@@ -46,25 +46,25 @@ class UpdateUserProfileViewModel extends GetxController {
     _resetErrors();
     isLoading.value = true;
 
-    final oldUser = AuthController.to.currentUser;
+    final oldUser = AuthUserController.to.currentUser;
     if (oldUser == null) return;
     try {
-      if (imageProfilePath != User.sentinel ||
-          oldUser.firstName.value != firstName ||
-          oldUser.middleName?.value != middleName ||
-          oldUser.lastName?.value != lastName ||
-          birthDate != null) {
-        final newUser = await editUserInfoUserCase.updateUserInfo(
-          oldUser: oldUser,
-          firstName: firstName,
-          middleName: middleName,
-          lastName: lastName,
-          birthdayDate: birthDate,
-          imageProfilePath: imageProfilePath,
-        );
-        AuthController.to.setUser(newUser);
-        Get.back();
-      }
+      // if (imageProfilePath != User.sentinel ||
+      //     oldUser.firstName.value != firstName ||
+      //     oldUser.middleName?.value != middleName ||
+      //     oldUser.lastName?.value != lastName ||
+      //     birthDate != null) {
+      //   final newUser = await editUserInfoUserCase.updateUserInfo(
+      //     oldUser: oldUser,
+      //     firstName: firstName,
+      //     middleName: middleName,
+      //     lastName: lastName,
+      //     birthdayDate: birthDate,
+      //     imageProfilePath: imageProfilePath,
+      //   );
+      //   AuthUserController.to.setUser(newUser);
+      //   Get.back();
+      // }
     } on EmptyValueException catch (e) {
       _setErrors(e);
     } on InvalidFormatException catch (e) {
@@ -81,17 +81,17 @@ class UpdateUserProfileViewModel extends GetxController {
   Future<void> sumbitChangeUserName({required String newUserName}) async {
     _resetErrors();
     isLoading.value = true;
-    final oldUser = AuthController.to.currentUser;
+    final oldUser = AuthUserController.to.currentUser;
     if (oldUser == null) return;
 
     try {
-      if (oldUser.userName.value != newUserName) {
-        final newUser = await updateUserName.changeUserUsername(
-          user: oldUser,
-          userName: newUserName,
-        );
-        AuthController.to.setUser(newUser);
-      }
+      // if (oldUser.userName.value != newUserName) {
+      //   final newUser = await updateUserName.changeUserUsername(
+      //     user: oldUser,
+      //     userName: newUserName,
+      //   );
+      //   AuthUserController.to.setUser(newUser);
+      // }
     } on EmptyValueException catch (e) {
       userNameError.value = e.message;
     } on InvalidFormatException catch (e) {
@@ -108,22 +108,22 @@ class UpdateUserProfileViewModel extends GetxController {
   }) async {
     _resetErrors();
     isLoading.value = true;
-    final oldUser = AuthController.to.currentUser;
+    final oldUser = AuthUserController.to.currentUser;
     if (oldUser == null) return;
 
     try {
-      final initialBalanceDouble = MoneyInputParser.parseToDouble(
-        value: initalBalance,
-        fieldName: "initial balance",
-      );
-      if (oldUser.account.currentBalance.value != initialBalanceDouble) {
-        final newUser = await updateInitialBalance.updateInitialBalance(
-          oldUser: oldUser,
-          initialBalance: initialBalanceDouble,
-        );
-        AuthController.to.setUser(newUser);
-        Get.back();
-      }
+      // final initialBalanceDouble = MoneyInputParser.parseToDouble(
+      //   value: initalBalance,
+      //   fieldName: "initial balance",
+      // );
+      // if (oldUser.account.currentBalance.value != initialBalanceDouble) {
+      //   // final newUser = await updateInitialBalance.updateInitialBalance(
+      //   //   oldUser: oldUser,
+      //   //   initialBalance: initialBalanceDouble,
+      //   // );
+      //   // AuthController.to.setUser(newUser);
+      //   Get.back();
+      // }
     } on EmptyValueException catch (e) {
       initialBalanceError.value = e.message;
     } on InvalidAmountException catch (e) {
