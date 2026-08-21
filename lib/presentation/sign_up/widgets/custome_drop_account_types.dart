@@ -23,7 +23,7 @@ class CustomrDropAccountTypes extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "account type".toUpperCase(),
+            dataName.toUpperCase(),
             style: CustomeTextField.textStyleDataName,
           ),
           const SizedBox(height: 10),
@@ -55,7 +55,7 @@ class CustomrDropAccountTypes extends StatelessWidget {
                 value: type,
                 child: Text(
                   type.displayName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: kSecondColor,
                     fontSize: smallSizeFont,
                     fontWeight: FontWeight.w400,

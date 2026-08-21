@@ -40,10 +40,10 @@ class AccountInfoStepWidget extends StatelessWidget {
             textEditingController: controller.initialBalanceController,
             errorText: controller.initialBalanceError.value,
           ),
-          SkipButton(controller: controller),
-          Row(
+          const SkipButton(),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [const PreviousButton(), const NextButton()],
+            children: [PreviousButton(), NextButton()],
           ),
         ],
       ),

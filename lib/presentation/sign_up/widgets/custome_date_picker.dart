@@ -101,7 +101,7 @@ class _CustomeDatePickerFieldState extends State<CustomeDatePickerField> {
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: DateTime(2030),
+      lastDate: DateTime(2050),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(

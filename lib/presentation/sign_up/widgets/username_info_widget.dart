@@ -10,8 +10,8 @@ class UserNameInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<SignUpViewModel>();
     return Obx(() {
-      final controller = Get.find<SignUpViewModel>();
       return Column(
         children: [
           Text(
