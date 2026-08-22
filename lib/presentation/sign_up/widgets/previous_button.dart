@@ -10,7 +10,7 @@ class PreviousButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<SignUpViewModel>();
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: ElevatedButton(
         onPressed: () {
           controller.perviousStep();

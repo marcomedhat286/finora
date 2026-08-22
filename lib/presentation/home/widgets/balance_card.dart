@@ -31,13 +31,7 @@ class BalanceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const TotalBalance(),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-              ],
-            ),
+            const TotalBalance(),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [DisplayIncome(), DisplayExpense()],

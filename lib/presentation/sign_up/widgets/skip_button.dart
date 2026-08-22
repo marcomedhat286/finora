@@ -18,17 +18,18 @@ class SkipButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            "Skip",
+            "Skip this for now",
             style: TextStyle(
               color: kPrimaryColor,
-              fontSize: middleSizeFont,
+              fontSize: smallSizeFont - 2,
               fontWeight: FontWeight.bold,
             ),
           ),
+          const SizedBox(width: 3),
           FaIcon(
             FontAwesomeIcons.angleRight,
             color: kPrimaryColor,
-            size: middleSizeFont,
+            size: smallSizeFont - 4,
           ),
         ],
       ),

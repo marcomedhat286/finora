@@ -19,7 +19,7 @@ class DisplayCurrentBalance extends StatelessWidget {
         const SizedBox(width: 7),
         Obx(() {
           final currentBalance =
-              AuthUserController.to.defaultAccount.currentBalance.value;
+              AuthUserController.to.defaultAccount?.currentBalance.value;
           return Text(
             "$currentBalance",
             style: const TextStyle(

@@ -158,7 +158,7 @@ class SignUpViewModel extends GetxController {
       }
 
       AuthUserController.to.setUser(newUser);
-      AuthUserController.to.setAccount(newAccount);
+      AuthUserController.to.setAccount([newAccount]);
       Get.offAllNamed('/home');
       isLoading.value = false;
     } on EmptyValueException catch (e) {
