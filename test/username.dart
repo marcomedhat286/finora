@@ -1,9 +1,9 @@
 import 'package:test/test.dart';
-import 'package:finora/domain/value_object/user_name.dart';
-import 'package:finora/domain/validators/user_name_validator.dart';
-import 'package:finora/domain/services/user_name_generator.dart';
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/exception/invalid_format_exception.dart';
+import 'package:finora/domain/value_object/user/user_name.dart';
+import 'package:finora/domain/validators/user/user_name_validator.dart';
+import 'package:finora/domain/services/user/user_name_generator.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/user/invalid_format_exception.dart';
 
 void main() {
   group('UserName Value Object & Validator Tests', () {

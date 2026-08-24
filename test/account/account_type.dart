@@ -1,6 +1,6 @@
-import 'package:finora/domain/enum/account_type.dart';
-import 'package:finora/domain/exception/invalid_account_type_exception.dart';
-import 'package:finora/domain/validators/account_type_validator.dart';
+import 'package:finora/domain/enum/account/account_type.dart';
+import 'package:finora/domain/exception/account/invalid_account_type_exception.dart';
+import 'package:finora/domain/validators/account/account_type_validator.dart';
 import 'package:test/test.dart';
 
 void main() {

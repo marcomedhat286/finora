@@ -1,19 +1,19 @@
 import 'package:finora/domain/entities/user.dart';
-import 'package:finora/domain/exception/cannot_update_initial_balance_exception.dart';
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/exception/invalid_amount_exception.dart';
+import 'package:finora/domain/exception/account/cannot_update_initial_balance_exception.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/account/invalid_amount_exception.dart';
 
-import 'package:finora/domain/exception/invalid_birthdate_exception.dart';
-import 'package:finora/domain/validators/invalid_double_format_exception.dart';
+import 'package:finora/domain/exception/user/invalid_birthdate_exception.dart';
+import 'package:finora/domain/exception/account/invalid_double_format_exception.dart';
 
-import 'package:finora/domain/exception/invalid_format_exception.dart';
-import 'package:finora/domain/exception/invalid_image_path_exception.dart';
-import 'package:finora/domain/exception/taken_user_name_exception.dart';
+import 'package:finora/domain/exception/user/invalid_format_exception.dart';
+import 'package:finora/domain/exception/user/invalid_image_path_exception.dart';
+import 'package:finora/domain/exception/user/taken_user_name_exception.dart';
 import 'package:finora/core/utils/parse/money_input_parser.dart';
 // import 'package:finora/domain/usecases/update_initial_balance_use_case.dart';
 // import 'package:finora/domain/usecases/user/update_user_info_use_case.dart';
 // import 'package:finora/domain/usecases/user/update_username_usecase.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:get/get.dart';
 
 class UpdateUserProfileViewModel extends GetxController {

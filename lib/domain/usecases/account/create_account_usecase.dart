@@ -1,11 +1,11 @@
 import 'package:finora/core/utils/parse/money_input_parser.dart';
 import 'package:finora/domain/entities/account.dart';
-import 'package:finora/domain/enum/account_type.dart';
+import 'package:finora/domain/enum/account/account_type.dart';
 import 'package:finora/domain/repositories/account_repository.dart';
-import 'package:finora/domain/services/account_id_generator.dart';
-import 'package:finora/domain/value_object/account_name.dart';
-import 'package:finora/domain/value_object/money.dart';
-import 'package:finora/domain/value_object/user_id.dart';
+import 'package:finora/domain/services/account/account_id_generator.dart';
+import 'package:finora/domain/value_object/account/account_name.dart';
+import 'package:finora/domain/value_object/account/money.dart';
+import 'package:finora/domain/value_object/user/user_id.dart';
 
 /// Handles the business workflow for creating a new financial account.
 ///

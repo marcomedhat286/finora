@@ -1,5 +1,5 @@
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/validators/invalid_double_format_exception.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/account/invalid_double_format_exception.dart';
 
 /// Parses raw monetary input from the Presentation Layer into a [double].
 ///

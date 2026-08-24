@@ -1,6 +1,6 @@
-import 'package:finora/domain/enum/account_type.dart';
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/exception/invalid_account_type_exception.dart';
+import 'package:finora/domain/enum/account/account_type.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/account/invalid_account_type_exception.dart';
 
 /// Provides domain-level validation and parsing for [AccountType] values.
 ///

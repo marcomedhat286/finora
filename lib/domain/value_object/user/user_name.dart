@@ -1,4 +1,4 @@
-import 'package:finora/domain/validators/user_name_validator.dart';
+import 'package:finora/domain/validators/user/user_name_validator.dart';
 
 /// Represents a validated username as an immutable Value Object.
 ///

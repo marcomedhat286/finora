@@ -1,4 +1,4 @@
-import 'package:finora/domain/validators/birthdate_validator.dart';
+import 'package:finora/domain/validators/user/birthdate_validator.dart';
 
 class BirthdayDate {
   final DateTime value;

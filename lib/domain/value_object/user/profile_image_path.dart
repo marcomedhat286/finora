@@ -1,4 +1,4 @@
-import 'package:finora/domain/validators/image_path_validator.dart';
+import 'package:finora/domain/validators/user/image_path_validator.dart';
 
 class ProfileImage {
   final String path;

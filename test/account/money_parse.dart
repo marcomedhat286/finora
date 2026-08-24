@@ -1,6 +1,6 @@
-import 'package:finora/domain/exception/empty_value_exception.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
 import 'package:finora/core/utils/parse/money_input_parser.dart';
-import 'package:finora/domain/validators/invalid_double_format_exception.dart';
+import 'package:finora/domain/exception/account/invalid_double_format_exception.dart';
 import 'package:test/test.dart';
 
 void main() {

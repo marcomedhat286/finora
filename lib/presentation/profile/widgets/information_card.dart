@@ -1,6 +1,6 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/profile/widgets/row_card_presentation_info.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

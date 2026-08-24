@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import 'package:finora/domain/value_object/money.dart';
-import 'package:finora/domain/exception/invalid_amount_exception.dart';
+import 'package:finora/domain/value_object/account/money.dart';
+import 'package:finora/domain/exception/account/invalid_amount_exception.dart';
 
 void main() {
   group('Money Value Object & Validator Tests', () {

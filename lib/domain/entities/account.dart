@@ -1,13 +1,13 @@
 import 'package:finora/domain/entities/transaction.dart';
-import 'package:finora/domain/enum/account_type.dart';
-import 'package:finora/domain/exception/cannot_update_initial_balance_exception.dart';
-import 'package:finora/domain/exception/invalid_amount_exception.dart';
-import 'package:finora/domain/exception/invalid_make_transaction.dart';
-import 'package:finora/domain/validators/validate_date.dart';
-import 'package:finora/domain/value_object/account_id.dart';
-import 'package:finora/domain/value_object/account_name.dart';
-import 'package:finora/domain/value_object/money.dart';
-import 'package:finora/domain/value_object/user_id.dart';
+import 'package:finora/domain/enum/account/account_type.dart';
+import 'package:finora/domain/exception/account/cannot_update_initial_balance_exception.dart';
+import 'package:finora/domain/exception/account/invalid_amount_exception.dart';
+import 'package:finora/domain/exception/transaction/invalid_make_transaction.dart';
+import 'package:finora/domain/validators/user/validate_date.dart';
+import 'package:finora/domain/value_object/account/account_id.dart';
+import 'package:finora/domain/value_object/account/account_name.dart';
+import 'package:finora/domain/value_object/account/money.dart';
+import 'package:finora/domain/value_object/user/user_id.dart';
 
 /// Represents a financial account within the Domain.
 ///

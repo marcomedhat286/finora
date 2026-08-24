@@ -1,5 +1,5 @@
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/exception/invalid_birthdate_exception.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/user/invalid_birthdate_exception.dart';
 
 abstract final class BirthdateValidator {
   static DateTime validateOrThrow(DateTime? date) {

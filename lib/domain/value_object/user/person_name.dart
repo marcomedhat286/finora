@@ -1,5 +1,5 @@
 import 'package:finora/domain/Extensions/string_operations.dart';
-import 'package:finora/domain/validators/name_validator.dart';
+import 'package:finora/domain/validators/user/name_validator.dart';
 
 /// Immutable value object representing a person's name within the domain.
 ///

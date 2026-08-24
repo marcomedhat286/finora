@@ -1,5 +1,5 @@
 import 'package:finora/domain/Extensions/string_operations.dart';
-import 'package:finora/domain/validators/account_name_validator.dart';
+import 'package:finora/domain/validators/account/account_name_validator.dart';
 
 /// Represents an account name as an immutable Domain Value Object.
 ///

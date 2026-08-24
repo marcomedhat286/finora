@@ -1,4 +1,4 @@
-import 'package:finora/domain/validators/account_id_validator.dart';
+import 'package:finora/domain/validators/account/account_id_validator.dart';
 
 /// Represents a validated account identifier as an immutable Value Object.
 ///

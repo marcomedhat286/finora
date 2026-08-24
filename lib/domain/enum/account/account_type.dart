@@ -1,4 +1,4 @@
-import 'package:finora/domain/validators/account_type_validator.dart';
+import 'package:finora/domain/validators/account/account_type_validator.dart';
 
 /// Represents the supported account types within the Domain.
 ///

@@ -1,5 +1,5 @@
+import 'package:finora/presentation/home/widgets/animated_options_widget.dart';
 import 'package:finora/presentation/home/widgets/balance_card.dart';
-import 'package:finora/presentation/home/widgets/custome_f_a_b.dart';
 
 import 'package:finora/presentation/home/widgets/home_bar.dart';
 
@@ -21,11 +21,7 @@ class HomeBody extends StatelessWidget {
           alignment: AlignmentGeometry.center,
           child: Row(children: [Text("Transaction History")]),
         ),
-        CustomeFAB(
-          onPressed: () {
-            print("add");
-          },
-        ),
+        Positioned(left: 143, bottom: 85, child: AnimatedOptionsWidget()),
       ],
     );
   }

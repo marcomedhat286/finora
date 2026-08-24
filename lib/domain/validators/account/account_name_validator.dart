@@ -1,5 +1,5 @@
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/exception/invalid_account_name_length_exception.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/account/invalid_account_name_length_exception.dart';
 
 /// Provides domain-level validation rules for account names.
 ///

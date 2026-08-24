@@ -1,7 +1,7 @@
 import 'package:finora/domain/Extensions/random_item.dart';
-import 'package:finora/domain/services/random_digits_generator.dart';
-import 'package:finora/domain/validators/name_validator.dart';
-import 'package:finora/domain/value_object/user_name.dart';
+import 'package:finora/domain/services/user/random_digits_generator.dart';
+import 'package:finora/domain/validators/user/name_validator.dart';
+import 'package:finora/domain/value_object/user/user_name.dart';
 
 /// Generates valid and unique-looking usernames from a user's name.
 ///

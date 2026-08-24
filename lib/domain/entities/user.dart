@@ -1,8 +1,8 @@
-import 'package:finora/domain/value_object/birthday_date.dart';
-import 'package:finora/domain/value_object/person_name.dart';
-import 'package:finora/domain/value_object/profile_image_path.dart';
-import 'package:finora/domain/value_object/user_id.dart';
-import 'package:finora/domain/value_object/user_name.dart';
+import 'package:finora/domain/value_object/user/birthday_date.dart';
+import 'package:finora/domain/value_object/user/person_name.dart';
+import 'package:finora/domain/value_object/user/profile_image_path.dart';
+import 'package:finora/domain/value_object/user/user_id.dart';
+import 'package:finora/domain/value_object/user/user_name.dart';
 
 class User {
   static const Object sentinel = Object();

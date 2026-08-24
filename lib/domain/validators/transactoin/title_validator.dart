@@ -1,5 +1,5 @@
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/exception/invalid_format_exception.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/user/invalid_format_exception.dart';
 import 'package:finora/domain/Extensions/string_validate.dart';
 
 abstract final class TitleValidator {

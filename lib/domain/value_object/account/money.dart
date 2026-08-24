@@ -1,4 +1,4 @@
-import 'package:finora/domain/validators/money_validator.dart';
+import 'package:finora/domain/validators/account/money_validator.dart';
 
 /// Represents a monetary value as an immutable Domain Value Object.
 ///

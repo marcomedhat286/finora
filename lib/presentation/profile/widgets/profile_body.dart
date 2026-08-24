@@ -20,10 +20,14 @@ class ProfileBody extends StatelessWidget {
         const InformationCard(),
         const ProfileAndFullNameUserImage(),
         const CustomeBotttomAppBar(),
-        CustomeFAB(
-          onPressed: () {
-            navigateToEditScreen();
-          },
+        Positioned(
+          left: 143,
+          bottom: 85,
+          child: CustomeFAB(
+            onPressed: () {
+              // navigateToEditScreen();
+            },
+          ),
         ),
       ],
     );

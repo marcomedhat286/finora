@@ -2,7 +2,7 @@ import 'package:finora/core/constants.dart';
 import 'package:finora/domain/entities/user.dart';
 import 'package:finora/presentation/edit_profile/view_model/update_user_profile_view_model.dart';
 import 'package:finora/presentation/profile/widgets/profile_user_image.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

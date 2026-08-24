@@ -1,13 +1,13 @@
 import 'package:finora/domain/entities/user.dart';
-import 'package:finora/domain/exception/taken_user_name_exception.dart';
+import 'package:finora/domain/exception/user/taken_user_name_exception.dart';
 import 'package:finora/domain/repositories/user_repository.dart';
-import 'package:finora/domain/services/identity_generator.dart';
-import 'package:finora/domain/value_object/birthday_date.dart';
-import 'package:finora/domain/value_object/person_name.dart';
-import 'package:finora/domain/value_object/user_id.dart';
-import 'package:finora/domain/value_object/user_name.dart';
+import 'package:finora/domain/services/user/identity_generator.dart';
+import 'package:finora/domain/value_object/user/birthday_date.dart';
+import 'package:finora/domain/value_object/user/person_name.dart';
+import 'package:finora/domain/value_object/user/user_id.dart';
+import 'package:finora/domain/value_object/user/user_name.dart';
 
-import 'package:finora/domain/services/user_name_generator.dart';
+import 'package:finora/domain/services/user/user_name_generator.dart';
 
 class CreateUserUseCase {
   final UserRepository _userRepository;

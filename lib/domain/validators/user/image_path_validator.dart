@@ -1,5 +1,5 @@
-import 'package:finora/domain/exception/empty_value_exception.dart';
-import 'package:finora/domain/exception/invalid_image_path_exception.dart';
+import 'package:finora/domain/exception/user/empty_value_exception.dart';
+import 'package:finora/domain/exception/user/invalid_image_path_exception.dart';
 
 abstract final class ImagePathValidator {
   static String validateOrThrow(String imagePath) {

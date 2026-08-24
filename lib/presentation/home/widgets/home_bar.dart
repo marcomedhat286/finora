@@ -1,7 +1,7 @@
 import 'package:finora/core/constants.dart';
 
 import 'package:finora/presentation/home/widgets/user_full_name.dart';
-import 'package:finora/presentation/sign_up/view_model/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

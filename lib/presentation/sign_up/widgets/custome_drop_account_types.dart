@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/domain/enum/account_type.dart';
+import 'package:finora/domain/enum/account/account_type.dart';
 import 'package:finora/presentation/sign_up/view_model/sign_up_view_model.dart';
 import 'package:finora/presentation/sign_up/widgets/custome_text_field.dart';
 import 'package:flutter/material.dart';

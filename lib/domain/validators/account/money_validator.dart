@@ -1,4 +1,4 @@
-import 'package:finora/domain/exception/invalid_amount_exception.dart';
+import 'package:finora/domain/exception/account/invalid_amount_exception.dart';
 
 /// Provides domain-level validation rules for monetary amounts.
 ///

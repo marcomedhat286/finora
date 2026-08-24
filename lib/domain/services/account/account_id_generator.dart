@@ -1,4 +1,4 @@
-import 'package:finora/domain/value_object/account_id.dart';
+import 'package:finora/domain/value_object/account/account_id.dart';
 import 'package:uuid/uuid.dart';
 
 /// Generates unique [AccountId] Value Objects for accounts.

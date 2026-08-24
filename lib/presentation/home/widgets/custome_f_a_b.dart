@@ -11,23 +11,19 @@ class CustomeFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<BottomAppBarController>();
-    return Positioned(
-      left: 143,
-      bottom: 85,
-      child: SizedBox(
-        height: circleBottonSize,
-        width: circleBottonSize,
-        child: FloatingActionButton(
-          heroTag: null,
-          onPressed: onPressed,
-          shape: CircleBorder(),
-          backgroundColor: kPrimaryColor,
-          child: Obx(
-            () => FaIcon(
-              controller.fabIcon,
-              color: kSecondColor,
-              size: circleBottonSize / 3,
-            ),
+    return SizedBox(
+      height: circleBottonSize,
+      width: circleBottonSize,
+      child: FloatingActionButton(
+        heroTag: null,
+        onPressed: onPressed,
+        shape: CircleBorder(),
+        backgroundColor: kPrimaryColor,
+        child: Obx(
+          () => FaIcon(
+            controller.fabIcon,
+            color: kSecondColor,
+            size: circleBottonSize / 3,
           ),
         ),
       ),

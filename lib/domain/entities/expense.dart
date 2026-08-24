@@ -1,52 +1,68 @@
-import 'package:finora/domain/validators/account_id_validator.dart';
-import 'package:finora/domain/validators/title_validator.dart';
-import 'package:finora/domain/validators/transaction_id_validator.dart';
-import 'package:finora/domain/validators/validate_date.dart';
-import 'package:finora/domain/value_object/money.dart';
+import 'package:finora/domain/entities/transaction.dart';
+import 'package:finora/domain/enum/transaction/expense_category.dart';
+import 'package:finora/domain/validators/user/validate_date.dart';
+import 'package:finora/domain/value_object/account/account_id.dart';
+import 'package:finora/domain/value_object/account/money.dart';
+import 'package:finora/domain/value_object/transaction/transaction_id.dart';
+import 'package:finora/domain/value_object/transaction/transaction_title.dart';
 
-import 'transaction.dart';
-
-class Expense extends Transaction {
-  Expense._({
+class Expense extends Transaction<ExpenseCategory> {
+  const Expense._({
     required super.id,
     required super.title,
     required super.accountId,
     required super.amount,
     required super.createdAt,
+    required super.category,
     super.description,
   });
 
   factory Expense.create({
-    required String id,
-    required String title,
-    required String accountId,
-    required double amount,
+    required TransactionId id,
+    required TransactionTitle title,
+    required AccountId accountId,
+    required Money amount,
     required DateTime createdAt,
+    required ExpenseCategory category,
     String? description,
   }) {
-    final cleanedTransactionId = TransactionIdValidator.validateOrThrow(id);
-    final cleanedTitle = TitleValidator.validateOrThrow(title: title);
-    final cleanedAccountId = AccountIdValidator.validateOrThrow(accountId);
-    final amountMoney = Money.create(value: amount, inclusiveZero: true);
     CreatedAtValidator.validateOrThrow(createdAt);
 
     return Expense._(
-      id: cleanedTransactionId,
-      title: cleanedTitle,
-      accountId: cleanedAccountId,
-      amount: amountMoney,
+      id: id,
+      title: title,
+      accountId: accountId,
+      amount: amount,
       createdAt: createdAt,
+      category: category,
       description: description,
     );
   }
+
+  Expense copyWith({
+    TransactionTitle? title,
+    Money? amount,
+    ExpenseCategory? category,
+    String? description,
+  }) {
+    return Expense._(
+      id: id,
+      title: title ?? this.title,
+      accountId: accountId,
+      amount: amount ?? this.amount,
+      createdAt: createdAt,
+      category: category ?? this.category,
+      description: description ?? this.description,
+    );
+  }
+
   @override
   Money get financialEffect => -amount;
+
   @override
   Money get reversalFinancialEffect => amount;
 
   @override
   String get displayData =>
-      """$runtimeType{id: $id, title: $title, amount: ${amount.value},
-          accountId: $accountId, created At: $createdAt, 
-          description: ${description ?? ""}}""";
+      '''Expense{id: $id, title: $title, amount: ${amount.value}, category: ${category.displayName}, accountId: $accountId, createdAt: $createdAt, description: ${description ?? ""}}''';
 }
