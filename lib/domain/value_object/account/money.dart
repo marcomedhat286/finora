@@ -87,7 +87,11 @@ class Money {
   ///
   /// print(money.value); // 125.46
   /// ```
-  factory Money.create({required double value, bool inclusiveZero = true}) {
+  factory Money.create({
+    required double value,
+    bool inclusiveZero = true,
+    bool allowNegative = false,
+  }) {
     // Round the monetary value to two decimal places before
     // performing validation and storing it.
     //
@@ -103,6 +107,7 @@ class Money {
     MoneyValidator.validateOrThrow(
       amount: roundedValue,
       inclusiveZero: inclusiveZero,
+      allowNegative: allowNegative,
     );
 
     // Create the immutable Money Value Object only after
@@ -166,9 +171,10 @@ class Money {
   /// print(negativeMoney); // -100.00
   /// ```
   ///
-  /// [inclusiveZero] is set to `true` because zero remains a valid monetary
+  /// [inclusiveZero] is set to `false` because zero doesn't remain a valid monetary
   /// value when the sign is inverted.
-  Money operator -() => Money.create(value: -_value, inclusiveZero: true);
+  Money operator -() =>
+      Money.create(value: -_value, inclusiveZero: false, allowNegative: true);
 
   /// Indicates whether the monetary value is exactly zero.
   ///

@@ -8,8 +8,9 @@ import 'package:finora/domain/enum/transaction/income_category.dart';
 import 'package:finora/domain/repositories/account_repository.dart';
 import 'package:finora/domain/repositories/transaction_repository.dart';
 import 'package:finora/domain/services/transaction/transaction_id_generator.dart';
+import 'package:finora/domain/validators/user/validate_date.dart';
 import 'package:finora/domain/value_object/account/money.dart';
-import 'package:finora/domain/value_object/transaction/transaction_id.dart';
+
 import 'package:finora/domain/value_object/transaction/transaction_title.dart';
 
 class TransactionCreationResult {
@@ -36,64 +37,84 @@ class CreateTransactionUseCase {
     required String rawTitle,
     required String rawAmount,
     required String categoryCode,
+    required DateTime createdAt,
     String? description,
   }) async {
+    final transactionId = TransactionIdGenerator.generateTransactionId();
+
+    final title = TransactionTitle.create(rawTitle);
+
+    final category = ExpenseCategory.fromCode(categoryCode);
+
+    CreatedAtValidator.validateOrThrow(time: createdAt);
+
     final doubleValue = MoneyInputParser.parseToDouble(
       value: rawAmount,
       fieldName: 'amount',
     );
+
     final amountMoney = Money.create(value: doubleValue, inclusiveZero: false);
 
     final expense = Expense.create(
-      id: TransactionId.create(TransactionIdGenerator.generateTransactionId()),
-      title: TransactionTitle.create(rawTitle),
+      id: transactionId,
       accountId: account.id,
+      title: title,
+      category: category,
+      createdAt: createdAt,
       amount: amountMoney,
-      category: ExpenseCategory.fromCode(categoryCode),
-      createdAt: DateTime.now(),
       description: description,
     );
-
+    print(expense.financialEffect);
     final updatedAccount = account.applyNewTransaction(expense);
+    print(updatedAccount);
     await _transactionRepository.saveTransaction(expense);
     await _accountRepository.saveAccount(updatedAccount);
-
     return TransactionCreationResult(
       account: updatedAccount,
       transaction: expense,
     );
   }
 
-  Future<Account> createIncome({
+  Future<TransactionCreationResult> createIncome({
     required Account account,
     required String rawTitle,
     required String rawAmount,
     required String categoryCode,
+    required DateTime createdAt,
     String? description,
   }) async {
+    final transactionId = TransactionIdGenerator.generateTransactionId();
+
+    final title = TransactionTitle.create(rawTitle);
+
+    final category = IncomeCategory.fromCode(categoryCode);
+
+    CreatedAtValidator.validateOrThrow(time: createdAt);
+
     final doubleValue = MoneyInputParser.parseToDouble(
       value: rawAmount,
       fieldName: 'amount',
     );
-    final amountMoney = Money.create(value: doubleValue);
+    final amountMoney = Money.create(value: doubleValue, inclusiveZero: false);
 
     final income = Income.create(
-      id: TransactionId.create(TransactionIdGenerator.generateTransactionId()),
-      title: TransactionTitle.create(rawTitle),
+      id: transactionId,
       accountId: account.id,
+      title: title,
+      category: category,
       amount: amountMoney,
-      category: IncomeCategory.fromCode(categoryCode),
-      createdAt: DateTime.now(),
+      createdAt: createdAt,
       description: description,
     );
 
-    // 1. تطبيق الأثر المالي على الـ Account
     final updatedAccount = account.applyNewTransaction(income);
 
-    // 2. حفظ المعاملة وتحديث الحساب المالي
     await _transactionRepository.saveTransaction(income);
     await _accountRepository.saveAccount(updatedAccount);
 
-    return updatedAccount;
+    return TransactionCreationResult(
+      account: updatedAccount,
+      transaction: income,
+    );
   }
 }

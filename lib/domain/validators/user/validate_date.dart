@@ -1,50 +1,77 @@
 import 'package:finora/domain/exception/user/invalid_date_time_exception.dart';
 
-///             15/7
-/// Utility responsible for validating date and time values according
-/// to the application's temporal business rules.
+/// Validates creation timestamps according to the Domain rules.
 ///
-/// A valid date must:
+/// [CreatedAtValidator] is responsible for ensuring that a creation
+/// timestamp represents a valid point in time for an entity.
 ///
-/// - Not be in the future.
-/// - Not be earlier than the minimum supported year (**2026**).
+/// The validator enforces two main business rules:
 ///
-/// Examples of valid dates:
+/// 1. The creation time must not be in the future.
+/// 2. The creation year must not be earlier than [minYear].
+///
+/// By default, the minimum allowed year is 2026.
+///
+/// This validation belongs to the Domain layer because the validity
+/// of an entity's creation timestamp is a business/domain rule and
+/// should not depend on the Presentation or Data layers.
+///
+/// Validation flow:
 ///
 /// ```text
-/// 2026-01-01
-/// 2027-05-12
-/// Current date and time
+/// DateTime
+///    │
+///    ▼
+/// Get current time + small buffer
+///    │
+///    ▼
+/// Is date in the future?
+///    │
+///    ├── Yes ──────────────► InvalidDateTimeException
+///    │
+///    ▼
+/// Is year < minimum year?
+///    │
+///    ├── Yes ──────────────► InvalidDateTimeException
+///    │
+///    ▼
+/// Valid creation timestamp
 /// ```
-///
-/// Examples of invalid dates:
-///
-/// ```text
-/// A future date
-/// 2025-12-31
-/// 2000-01-01
-/// ```
-///
-/// Invalid dates are rejected immediately by throwing
-/// [InvalidDateTimeException], preventing inconsistent temporal
-/// values from entering the Domain layer.
 abstract final class CreatedAtValidator {
-  /// Validates the supplied date and time.
+  /// Validates an entity's creation timestamp.
   ///
-  /// Validation rules:
+  /// [time] is the creation timestamp that needs to be validated.
   ///
-  /// 1. The supplied date must not be in the future.
-  /// 2. The supplied year must not be earlier than **2026**.
+  /// [minYear] defines the earliest allowed year.
+  /// It defaults to `2026`.
   ///
-  /// Throws:
+  /// Throws [InvalidDateTimeException] when:
   ///
-  /// - [InvalidDateTimeException] if the supplied date
-  ///   violates any temporal business rule.
-  static void validateOrThrow(DateTime time) {
-    /// Reject dates that violate the domain's temporal constraints.
-    if (time.isAfter(DateTime.now()) || time.year < 2026) {
+  /// - [time] is later than the current time.
+  /// - [time]'s year is earlier than [minYear].
+  ///
+  /// A one-second buffer is added to the current time to avoid
+  /// rejecting timestamps that are created immediately before
+  /// or during the validation process due to tiny timing differences.
+  static void validateOrThrow({required DateTime time, int minYear = 2026}) {
+    // Add a very small tolerance window to the current time.
+    //
+    // This helps prevent false validation failures caused by
+    // extremely small differences between the timestamp being
+    // validated and DateTime.now() being evaluated.
+    final nowWithBuffer = DateTime.now().add(const Duration(seconds: 1));
+
+    // Reject timestamps that:
+    //
+    // 1. Exist in the future.
+    // 2. Belong to a year earlier than the allowed minimum year.
+    //
+    // Both conditions indicate that the creation timestamp
+    // does not satisfy the Domain rules.
+    if (time.isAfter(nowWithBuffer) || time.year < minYear) {
       throw const InvalidDateTimeException(
-        "Invalid date. The date must not be in the future and must be from 2026 onward.",
+        "Invalid date. The date must not be in the future "
+        "and must be from 2026 onward.",
       );
     }
   }

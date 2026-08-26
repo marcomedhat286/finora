@@ -8,6 +8,7 @@ import 'package:finora/domain/value_object/account/account_id.dart';
 import 'package:finora/domain/value_object/account/account_name.dart';
 import 'package:finora/domain/value_object/account/money.dart';
 import 'package:finora/domain/value_object/user/user_id.dart';
+import 'package:get/get.dart';
 
 /// Represents a financial account within the Domain.
 ///
@@ -141,7 +142,7 @@ class Account {
   }) {
     // Validate the creation date before allowing the Account
     // to enter the Domain.
-    CreatedAtValidator.validateOrThrow(createdAt);
+    CreatedAtValidator.validateOrThrow(time: createdAt);
 
     // Create the Account with the provided current balance,
     // or use the initial balance when no current balance exists.
@@ -208,22 +209,28 @@ class Account {
   /// state, [InvalidAmountException] is caught and converted into
   /// the more meaningful Domain exception [InvalidMakeTransaction].
   Account applyNewTransaction(Transaction tx) {
-    try {
-      // Calculate the new balance by applying the transaction's
-      // financial effect to the current balance.
-      final updatedValue = currentBalance + tx.financialEffect;
+    if (_id == tx.accountId) {
+      try {
+        // Calculate the new balance by applying the transaction's
+        // financial effect to the current balance.
+        final updatedValue = currentBalance + tx.financialEffect;
 
-      // Return a new Account with the updated balance and mark
-      // the account as containing transactions.
-      return copyWith(
-        newCurrentBalance: updatedValue,
-        newHasTransactions: true,
-      );
-    } on InvalidAmountException {
-      // Convert the low-level Money validation failure into a
-      // Domain-specific transaction failure.
+        // Return a new Account with the updated balance and mark
+        // the account as containing transactions.
+        return copyWith(
+          newCurrentBalance: updatedValue,
+          newHasTransactions: true,
+        );
+      } on InvalidAmountException {
+        // Convert the low-level Money validation failure into a
+        // Domain-specific transaction failure.
+        throw InvalidMakeTransaction(
+          'Transaction rejected: Insufficient funds in account $_id.',
+        );
+      }
+    } else {
       throw InvalidMakeTransaction(
-        'Transaction rejected: Insufficient funds in account $_id.',
+        'This transcation with accout id ${tx.accountId} not allowed to this account $_id',
       );
     }
   }
@@ -243,22 +250,28 @@ class Account {
     Transaction tx, {
     required bool remainingHasTransactions,
   }) {
-    try {
-      // Apply the transaction's reversal effect to undo
-      // its financial impact on the account.
-      final updatedValue = currentBalance + tx.reversalFinancialEffect;
+    if (_id == tx.accountId) {
+      try {
+        // Apply the transaction's reversal effect to undo
+        // its financial impact on the account.
+        final updatedValue = currentBalance + tx.reversalFinancialEffect;
 
-      // Return a new Account with the recalculated balance and
-      // updated transaction state.
-      return copyWith(
-        newCurrentBalance: updatedValue,
-        newHasTransactions: remainingHasTransactions,
-      );
-    } on InvalidAmountException {
-      // Convert the Money-level validation failure into a
-      // transaction-level Domain exception.
+        // Return a new Account with the recalculated balance and
+        // updated transaction state.
+        return copyWith(
+          newCurrentBalance: updatedValue,
+          newHasTransactions: remainingHasTransactions,
+        );
+      } on InvalidAmountException {
+        // Convert the Money-level validation failure into a
+        // transaction-level Domain exception.
+        throw InvalidMakeTransaction(
+          'Transaction rejected: Insufficient funds in account $_id.',
+        );
+      }
+    } else {
       throw InvalidMakeTransaction(
-        'Transaction rejected: Insufficient funds in account $_id.',
+        'This transcation with accout id ${tx.accountId} not allowed to this account $_id',
       );
     }
   }
@@ -284,29 +297,38 @@ class Account {
   /// [InvalidMakeTransaction] is thrown.
   Account recalculateFromLedger(List<Transaction> allTransactions) {
     // Start the accumulated transaction effect at zero.
-    Money totalEffect = Money.create(value: 0.0);
+    final invalidTxAccountId = allTransactions.firstWhereOrNull(
+      (tx) => _id != tx.accountId,
+    );
+    if (invalidTxAccountId == null) {
+      Money totalEffect = Money.create(value: 0.0);
 
-    try {
-      // Accumulate the financial effect of every transaction
-      // in the ledger.
-      for (final tx in allTransactions) {
-        totalEffect += tx.financialEffect;
+      try {
+        // Accumulate the financial effect of every transaction
+        // in the ledger.
+        for (final tx in allTransactions) {
+          totalEffect += tx.financialEffect;
+        }
+
+        // Reconstruct the current balance from the original
+        // balance and the total effect of all transactions.
+        final finalValue = initialBalance + totalEffect;
+
+        // Return a new Account with the recalculated balance.
+        return copyWith(
+          newCurrentBalance: finalValue,
+          newHasTransactions: allTransactions.isNotEmpty,
+        );
+      } on InvalidAmountException {
+        // Convert the Money validation failure into a meaningful
+        // transaction-level Domain exception.
+        throw InvalidMakeTransaction(
+          'Transaction rejected: Insufficient funds in account $_id.',
+        );
       }
-
-      // Reconstruct the current balance from the original
-      // balance and the total effect of all transactions.
-      final finalValue = initialBalance + totalEffect;
-
-      // Return a new Account with the recalculated balance.
-      return copyWith(
-        newCurrentBalance: finalValue,
-        newHasTransactions: allTransactions.isNotEmpty,
-      );
-    } on InvalidAmountException {
-      // Convert the Money validation failure into a meaningful
-      // transaction-level Domain exception.
+    } else {
       throw InvalidMakeTransaction(
-        'Transaction rejected: Insufficient funds in account $_id.',
+        'This transcation with accout id ${invalidTxAccountId.accountId} not allowed to this account $_id',
       );
     }
   }

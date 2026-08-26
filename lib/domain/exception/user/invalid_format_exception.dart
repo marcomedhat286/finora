@@ -1,46 +1,27 @@
-/// Exception thrown when a domain value does not match the
-/// required format defined by the application's business rules.
+/// Thrown when a user-related value does not follow the required
+/// Domain format.
 ///
-/// [InvalidFormatException] is a Domain Layer exception used to
-/// indicate that a provided value has a valid presence but does not
-/// follow the expected structural or formatting rules.
+/// This exception represents a format validation failure.
 ///
-/// For example, this exception may be thrown when:
+/// Examples:
 ///
-/// - A username does not follow the required username pattern.
-/// - An account ID does not match the required ID format.
-/// - A value object receives a string with an invalid structure.
-///
-/// Example:
-///
-/// ```dart
-/// throw const InvalidFormatException(
-///   'Invalid username format.',
-/// );
+/// ```text
+/// Invalid username format
+/// Invalid name format
+/// Invalid identifier format
 /// ```
 ///
-/// The exception stores a descriptive [message] explaining the reason
-/// for the validation failure.
-///
-/// Keeping this exception inside the Domain Layer allows domain
-/// validators to communicate validation failures without depending
-/// on the Presentation Layer or any Flutter-specific implementation.
+/// The specific validation rule is defined by the corresponding
+/// Domain Validator.
 final class InvalidFormatException implements Exception {
-  /// A descriptive message explaining why the provided value
-  /// was rejected by the domain validation rules.
+  /// A human-readable description explaining the expected format.
   final String message;
 
-  /// Creates an [InvalidFormatException] with the given [message].
-  ///
-  /// The message should clearly describe the validation rule that
-  /// was violated so that the upper layers can handle or display
-  /// the error appropriately.
+  /// Creates an [InvalidFormatException] with the specified [message].
   const InvalidFormatException(this.message);
 
-  /// Returns the exception message as its String representation.
-  ///
-  /// This makes the exception easier to log, debug, or inspect when
-  /// it is converted to a String.
+  /// Returns the exception message when the exception is converted
+  /// to a String.
   @override
   String toString() => message;
 }

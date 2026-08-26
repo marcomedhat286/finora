@@ -3,7 +3,7 @@ import 'package:finora/domain/exception/user/invalid_format_exception.dart';
 
 abstract final class TransactionIdValidator {
   static final RegExp _transactionIdRegex = RegExp(
-    r'^tx__[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
+    r'^tx_[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$',
   );
 
   static String validateOrThrow(String transactionId) {
@@ -14,9 +14,7 @@ abstract final class TransactionIdValidator {
     }
 
     if (!_transactionIdRegex.hasMatch(trimmedTransactionId)) {
-      throw const InvalidFormatException(
-        "Invalid transaction ID format. Expected: tx_<1-10 digits>.",
-      );
+      throw const InvalidFormatException("Invalid transaction ID format");
     }
 
     return trimmedTransactionId;

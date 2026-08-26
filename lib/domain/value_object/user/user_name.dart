@@ -1,78 +1,62 @@
 import 'package:finora/domain/validators/user/user_name_validator.dart';
 
-/// Represents a validated username as an immutable Value Object.
+/// Represents a validated username within the Domain layer.
 ///
-/// The [UserName] class is responsible for representing a username
-/// inside the Domain Layer in a valid and controlled form.
+/// [UserName] is a Value Object that encapsulates the username value
+/// and guarantees that every instance is created through the
+/// [UserNameValidator].
 ///
-/// Instead of allowing raw [String] values to be used throughout the
-/// application, this Value Object guarantees that every [UserName]
-/// instance has already passed the required domain validation rules.
+/// Instead of allowing the application to pass raw `String` values
+/// everywhere, [UserName] provides a strongly typed representation
+/// of a valid username.
 ///
-/// The validation is performed when the object is created through
-/// [UserName.create]. If the provided username is invalid, the
-/// [UserNameValidator] throws the appropriate domain exception and
-/// the object will not be created.
+/// The creation flow is:
 ///
-/// This approach follows the principles of:
-/// - Domain-Driven Design (DDD)
-/// - Value Objects
-/// - Clean Architecture
-/// - Encapsulation
-///
-/// The class is immutable, meaning that once a [UserName] object is
-/// created, its value cannot be changed.
-///
-/// Example:
-/// ```dart
-/// final userName = UserName.create(value: 'marco@123');
-///
-/// print(userName.value); // marco@123
+/// ```text
+/// Raw String
+///     ↓
+/// UserName.create()
+///     ↓
+/// UserNameValidator
+///     ↓
+/// Validated String
+///     ↓
+/// UserName
 /// ```
 ///
-/// Invalid values are rejected during creation:
-/// ```dart
-/// UserName.create(value: 'invalid username');
-/// // Throws a domain validation exception.
-/// ```
+/// Once a [UserName] object is successfully created, its value cannot
+/// be changed because the internal value is immutable.
+///
+/// As a Value Object, two [UserName] instances are considered equal
+/// when they contain the same username value, regardless of whether
+/// they are the same object instance.
 class UserName {
-  /// The internally stored username value.
+  /// Stores the validated username internally.
   ///
-  /// This field is private to prevent external code from modifying
-  /// or bypassing the validation rules of the Value Object.
-  ///
-  /// The value can only be assigned through the private constructor
-  /// after it has successfully passed [UserNameValidator].
+  /// The field is private to prevent external code from modifying
+  /// the username without going through the Domain validation rules.
   final String _value;
 
-  /// Private constructor used to create a [UserName] instance.
+  /// Private constructor used only after the username has been
+  /// successfully validated.
   ///
-  /// The constructor is intentionally private so that objects cannot
-  /// be created directly without going through [UserName.create].
-  ///
-  /// This guarantees that every [UserName] object is created only after
-  /// the required domain validation has been successfully completed.
+  /// Keeping this constructor private ensures that callers cannot
+  /// bypass [UserNameValidator].
   const UserName._({required this._value});
 
-  /// Creates a validated [UserName] Value Object.
+  /// Creates a validated [UserName] from a raw String.
   ///
-  /// The provided [value] is passed to [UserNameValidator.validateOrThrow]
-  /// which is responsible for validating the username according to the
-  /// application's domain rules.
+  /// The provided value is passed to [UserNameValidator], which is
+  /// responsible for checking and cleaning the username according
+  /// to the Domain rules.
   ///
-  /// The validator also returns the processed username value, which is
-  /// stored inside the Value Object.
-  ///
-  /// If the username is invalid, a domain exception is thrown and
-  /// no [UserName] object is created.
-  ///
-  /// This factory method acts as the single controlled entry point
-  /// for creating valid [UserName] objects.
+  /// If the username is invalid, the validator throws the appropriate
+  /// Domain exception and no [UserName] object is created.
   factory UserName.create({required String value}) {
-    // Validate the username before creating the Value Object.
+    // Validate the raw username before allowing it into the Domain.
     //
-    // The validator is responsible for enforcing the domain rules
-    // and returning the validated/trimmed value.
+    // The validator also returns the cleaned/trimmed value so the
+    // Value Object stores a normalized representation.
     final trimmedUserName = UserNameValidator.validateOrThrow(value);
 
     // Create the Value Object only after successful validation.
@@ -81,46 +65,44 @@ class UserName {
 
   /// Returns the username as a String.
   ///
-  /// This allows the Value Object to be easily used in places where
-  /// a String representation of the username is required, such as
-  /// logging, UI display, serialization, or debugging.
+  /// This allows the Value Object to be used naturally in places
+  /// where its textual representation is required.
   @override
   String toString() => value;
 
-  /// Determines whether two [UserName] objects represent the same value.
+  /// Determines whether two [UserName] objects represent the same
+  /// username value.
   ///
-  /// Value Objects are compared by their value rather than by their
-  /// object identity.
+  /// Value Objects use value-based equality rather than identity-based
+  /// equality.
   ///
-  /// Therefore, two different [UserName] instances containing the
-  /// same username are considered equal.
+  /// Therefore:
   ///
-  /// Example:
   /// ```dart
-  /// final first = UserName.create(value: 'marco@123');
-  /// final second = UserName.create(value: 'marco@123');
-  ///
-  /// print(first == second); // true
+  /// UserName.create(value: 'marco@123') ==
+  /// UserName.create(value: 'marco@123')
   /// ```
+  ///
+  /// evaluates to `true`.
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other is UserName && other._value == _value);
   }
 
-  /// Returns a hash code based on the username value.
+  /// Generates a hash code based on the username value.
   ///
-  /// Since equality is determined by [_value], the hash code must also
-  /// be generated from [_value].
+  /// This is required to keep [hashCode] consistent with the custom
+  /// equality implementation above.
   ///
-  /// This ensures that [UserName] behaves correctly when used inside
-  /// collections such as [Set] or as a key inside a [Map].
+  /// Objects with equal username values must produce the same
+  /// hash code.
   @override
   int get hashCode => _value.hashCode;
 
-  /// Returns the validated username value.
+  /// Exposes the validated username value.
   ///
-  /// The getter exposes the value without exposing the private field
-  /// itself, while keeping the Value Object immutable.
+  /// The returned String cannot modify the internal state because
+  /// Strings and the Value Object itself are immutable.
   String get value => _value;
 }

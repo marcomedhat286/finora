@@ -82,6 +82,7 @@ abstract final class MoneyValidator {
   static void validateOrThrow({
     required double amount,
     bool inclusiveZero = true,
+    bool allowNegative = false,
   }) {
     // Reject NaN and infinite values because they do not represent
     // valid finite monetary amounts.
@@ -104,7 +105,7 @@ abstract final class MoneyValidator {
     //
     // Negative monetary amounts are rejected.
     if (inclusiveZero) {
-      if (amount < 0) {
+      if (amount < 0 && !allowNegative) {
         throw const InvalidAmountException('Amount cannot be negative.');
       }
     } else {
@@ -112,7 +113,7 @@ abstract final class MoneyValidator {
       // greater than zero.
       //
       // Both zero and negative values are rejected.
-      if (amount <= 0) {
+      if (amount <= 0 && !allowNegative) {
         throw const InvalidAmountException(
           'Amount must be strictly greater than zero.',
         );

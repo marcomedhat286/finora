@@ -4,9 +4,9 @@ import 'package:finora/presentation/edit_profile/view_model/update_user_profile_
 import 'package:finora/presentation/edit_profile/widgets/edit_user_profile.dart';
 import 'package:finora/presentation/edit_profile/widgets/save_changes_button.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
-import 'package:finora/presentation/sign_up/widgets/custome_app_bar.dart';
-import 'package:finora/presentation/sign_up/widgets/custome_date_picker.dart';
-import 'package:finora/presentation/sign_up/widgets/custome_text_field.dart';
+import 'package:finora/presentation/screens/sign_up/widgets/custome_app_bar.dart';
+import 'package:finora/presentation/screens/sign_up/widgets/custome_date_picker.dart';
+import 'package:finora/presentation/screens/sign_up/widgets/custome_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

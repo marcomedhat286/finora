@@ -1,0 +1,98 @@
+import 'package:finora/core/constants.dart';
+import 'package:finora/domain/entities/transaction.dart';
+
+import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/screens/home/widgets/transaction_card.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class RecentTransactions extends StatelessWidget {
+  const RecentTransactions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Transaction> transactions =
+        AuthUserController.to.userTransactions;
+    final recentTransactions = transactions.reversed.take(10).toList();
+
+    if (recentTransactions.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.only(top: 40),
+          child: Text(
+            'No Transactions Yet',
+            style: TextStyle(
+              color: kPrimaryColor2,
+              fontSize: smallSizeFont,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: SizedBox(
+            height: 35,
+            child: Row(
+              children: [
+                Text(
+                  "All Transactions (${transactions.length})",
+                  style: const TextStyle(
+                    color: kPrimaryColor2,
+                    fontSize: smallSizeFont,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(flex: 1),
+                (transactions.length > 10)
+                    ? TextButton(
+                        onPressed: () {
+                          print("all transactions");
+                        },
+                        child: Text(
+                          "See All",
+                          style: const TextStyle(
+                            color: kPrimaryColor2,
+                            fontSize: smallSizeFont,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+                IconButton(
+                  onPressed: () {},
+                  icon: FaIcon(
+                    FontAwesomeIcons.ellipsis,
+                    color: kPrimaryColor,
+                    size: smallSizeFont * 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        SizedBox(
+          height: 300,
+          child: SingleChildScrollView(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: recentTransactions.length,
+              itemBuilder: (context, index) {
+                final transaction = recentTransactions[index];
+                return TransactionCard(transaction: transaction);
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

@@ -3,117 +3,126 @@ import 'package:finora/domain/services/user/random_digits_generator.dart';
 import 'package:finora/domain/validators/user/name_validator.dart';
 import 'package:finora/domain/value_object/user/user_name.dart';
 
-/// Generates valid and unique-looking usernames from a user's name.
+/// Generates valid [UserName] Value Objects from a user's name.
 ///
-/// [UserNameGenerator] is a Domain Service responsible for generating
-/// usernames according to the application's business rules.
+/// [UserNameGenerator] is a Domain Service responsible for creating
+/// usernames automatically when the user does not provide one manually.
 ///
-/// The generated username follows this structure:
+/// The generated username follows the Domain format:
 ///
 /// ```text
-/// <validated name><random separator><random digits>
+/// First Name + Random Symbol + Random Digits
 /// ```
 ///
 /// Example:
 ///
 /// ```text
-/// marco@482
-/// adam_7
-/// john-91342
+/// marco + @ + 472
+///       ↓
+/// marco@472
 /// ```
 ///
-/// The generator does not accept the provided name blindly.
-/// The name is first validated using [NameValidator] to ensure that
-/// only a valid name can be used as the base of the username.
+/// The generation process is:
 ///
-/// After validating the name:
+/// ```text
+/// First Name
+///     ↓
+/// NameValidator
+///     ↓
+/// Validated Name
+///     ↓
+/// Random Symbol
+///     ↓
+/// Random Digits
+///     ↓
+/// Combine All Parts
+///     ↓
+/// UserName.create()
+///     ↓
+/// UserNameValidator
+///     ↓
+/// Valid UserName
+/// ```
 ///
-/// 1. A random separator is selected from the supported symbols.
-/// 2. A random numeric suffix is generated.
-/// 3. The components are combined into a complete username.
-/// 4. The final username is passed through [UserName.create].
+/// This service does not directly construct a username through
+/// a public constructor. Instead, the final value is passed through
+/// [UserName.create] so the complete username is validated before
+/// entering the Domain.
 ///
-/// Passing the generated value through [UserName.create] provides an
-/// additional domain-level safety guarantee: the generated username
-/// must satisfy all [UserName] validation rules before it can exist
-/// as a valid Domain object.
+/// This keeps username generation and username validation as two
+/// separate responsibilities:
 ///
-/// This class is intentionally stateless and contains only static
-/// behavior because username generation does not require maintaining
-/// any object-specific state.
+/// - [UserNameGenerator] → Generates a candidate username.
+/// - [UserName] → Represents a valid username.
+/// - [UserNameValidator] → Enforces the username format rules.
 abstract final class UserNameGenerator {
-  /// Supported separators that can appear between the name and
-  /// the numeric part of the generated username.
+  /// Symbols that can be placed between the user's name and
+  /// the generated numeric suffix.
   ///
-  /// The available separators are:
+  /// A symbol is selected randomly during username generation.
   ///
-  /// - `@`
-  /// - `_`
-  /// - `-`
+  /// Supported separators:
   ///
-  /// A separator is selected randomly every time a username is generated.
+  /// ```text
+  /// @
+  /// _
+  /// -
+  /// ```
   static const List<String> _symbols = ['@', '_', '-'];
 
-  /// Generates a valid [UserName] based on the provided [name].
+  /// Generates a new [UserName] based on the provided [name].
   ///
-  /// The [name] is first validated using [NameValidator].
-  /// This ensures that the name used as the base of the username
-  /// satisfies the application's name-related domain rules.
+  /// The provided name is first validated using [NameValidator].
+  /// This ensures that the name used as the username prefix is valid
+  /// according to the Domain name rules.
   ///
-  /// After successful validation, the method:
+  /// A random separator is then selected from [_symbols], followed
+  /// by a randomly generated sequence of digits.
   ///
-  /// - Selects a random separator.
-  /// - Generates a random numeric suffix.
-  /// - Combines all components into a username string.
-  /// - Creates a validated [UserName] Value Object.
+  /// The three components are combined to produce the final username.
   ///
   /// Example:
   ///
-  /// ```dart
-  /// final userName = UserNameGenerator.generate(
-  ///   name: 'marco',
-  /// );
+  /// ```text
+  /// name   = "marco"
+  /// symbol = "@"
+  /// number = "472"
   ///
-  /// print(userName.value);
-  /// // Possible output: marco@583
+  /// Result:
+  /// "marco@472"
   /// ```
   ///
-  /// Because both the input name and the final username are validated
-  /// through Domain components, invalid data cannot silently enter
-  /// the Domain.
+  /// The generated String is finally passed to [UserName.create],
+  /// which performs the final username validation before creating
+  /// the Value Object.
   static UserName generate({required String name}) {
-    // Validate the provided name before using it as the base
-    // of the generated username.
+    // Validate and clean the name before using it as the
+    // username prefix.
     //
-    // The validator also returns the cleaned/validated value,
-    // which is used in the username generation process.
+    // This prevents invalid names from being used to generate
+    // invalid usernames.
     final cleanedFirstName = NameValidator.validateOrThrow(
       name: name,
       nameType: 'first name be used in generate username.',
     );
 
-    // Select a random separator from the supported username symbols.
-    //
-    // The randomItem extension encapsulates the logic of selecting
-    // one item randomly from the list.
+    // Select one separator randomly from the supported symbols.
     final symbol = _symbols.randomItem();
 
-    // Generate the numeric part of the username.
+    // Generate a random numeric suffix.
     //
-    // RandomDigitsGenerator is responsible for generating the
-    // required random sequence of digits according to its own
-    // domain/service rules.
+    // The generated value is a String so that numeric formatting,
+    // including possible leading zeros, is preserved.
     final number = RandomDigitsGenerator.generate();
 
-    // Combine the validated name, random separator, and random
-    // numeric suffix into the final username string.
+    // Combine the validated name, random symbol, and random digits
+    // into the candidate username.
     final userName = '$cleanedFirstName$symbol$number';
 
-    // Convert the generated String into a UserName Value Object.
+    // Create the final UserName Value Object.
     //
-    // UserName.create performs the final domain validation,
-    // ensuring that the generated value conforms to all username
-    // business rules before returning it.
+    // UserName.create() performs the final validation of the complete
+    // username before allowing it to enter the Domain.
     return UserName.create(value: userName);
   }
 }

@@ -1,106 +1,141 @@
 import 'package:finora/domain/Extensions/string_operations.dart';
 import 'package:finora/domain/validators/user/name_validator.dart';
 
-/// Immutable value object representing a person's name within the domain.
+/// Represents a validated and normalized person's name.
 ///
-/// A [PersonName] guarantees that its underlying value is both
-/// **validated** and **normalized** before it can exist.
+/// [PersonName] is a Value Object used to represent names such as:
 ///
-/// Rather than allowing raw strings to flow through the domain,
-/// this class encapsulates a person's name as a dedicated type,
-/// ensuring that every instance always represents a valid business concept.
+/// ```text
+/// First Name
+/// Middle Name
+/// Last Name
+/// ```
 ///
-/// ## Responsibilities
+/// Instead of allowing raw [String] values to enter the Domain,
+/// [PersonName] guarantees that the provided name passes through
+/// [NameValidator] before an instance is created.
 ///
-/// - Encapsulate a person's name.
-/// - Enforce the domain's validation rules.
-/// - Store the normalized (trimmed) representation of the name.
-/// - Prevent invalid values from entering the domain model.
-/// - Provide value-based equality.
+/// The creation process also normalizes the name by capitalizing
+/// its first character.
 ///
-/// ## Validation & Normalization
+/// Example:
 ///
-/// Validation and normalization are delegated to [NameValidator].
+/// ```dart
+/// final name = PersonName.create(
+///   value: 'marco',
+///   nameType: 'first name',
+/// );
 ///
-/// Before an instance is created:
+/// print(name); // Marco
+/// ```
 ///
-/// - Leading and trailing whitespace is removed.
-/// - The normalized value is validated against the domain rules.
-/// - If validation fails, object creation is aborted and a domain
-///   exception is thrown.
+/// The overall flow is:
 ///
-/// ## Domain Invariant
+/// ```text
+/// Raw String
+///     ↓
+/// PersonName.create()
+///     ↓
+/// NameValidator
+///     ↓
+/// Validated Name
+///     ↓
+/// capitalizeFirst()
+///     ↓
+/// PersonName
+/// ```
 ///
-/// > An invalid or non-normalized person's name must never exist
-/// > inside the Domain layer.
-///
-/// This class represents a **Value Object** in Domain-Driven Design (DDD)
-/// and belongs to the Domain layer of the application's
-/// Clean Architecture.
+/// As a Value Object, equality is based on the name's value rather
+/// than the object's memory identity.
 class PersonName {
   /// Stores the validated and normalized name.
   ///
-  /// Once created, this value cannot be modified, preserving
-  /// the immutability of the value object.
+  /// The field is final, which makes the [PersonName] immutable after
+  /// creation.
   final String value;
 
-  /// Creates a validated [PersonName].
+  /// Private constructor used only after the name has successfully
+  /// passed validation.
   ///
-  /// This constructor is intentionally private to guarantee that
-  /// every instance is created through [PersonName.create], where
-  /// validation and normalization are enforced.
+  /// Keeping this constructor private prevents external code from
+  /// creating a [PersonName] without using [PersonName.create].
   const PersonName._({required this.value});
 
-  /// Creates a new [PersonName] value object.
+  /// Creates a validated and normalized [PersonName].
   ///
-  /// The supplied value is first validated and normalized using
-  /// [NameValidator].
+  /// [value] is the raw name provided by the caller.
   ///
-  /// Parameters:
+  /// [nameType] describes the role of the name and is passed to
+  /// [NameValidator] so validation errors can provide more meaningful
+  /// information.
   ///
-  /// - [value] The person's name.
-  /// - [nameType] Optional descriptive label used when constructing
-  ///   validation error messages.
+  /// Examples:
   ///
-  /// Returns:
+  /// ```dart
+  /// PersonName.create(
+  ///   value: 'marco',
+  ///   nameType: 'first name',
+  /// );
   ///
-  /// A validated and normalized [PersonName].
+  /// PersonName.create(
+  ///   value: 'medhat',
+  ///   nameType: 'last name',
+  /// );
+  /// ```
   ///
-  /// Throws:
-  ///
-  /// - Any exception raised by [NameValidator] when the supplied
-  ///   value violates the domain rules.
+  /// The name is validated first and then normalized by capitalizing
+  /// its first character.
   factory PersonName.create({required String value, String nameType = "name"}) {
-    /// Validate and normalize the supplied value before allowing it
-    /// to become part of the domain model.
+    // Validate the raw name before allowing it to enter the Domain.
+    //
+    // The validator also handles trimming and the Domain-specific
+    // name validation rules.
     final cleanName = NameValidator.validateOrThrow(
       name: value,
       nameType: nameType,
     );
 
+    // Normalize the validated name by capitalizing its first character.
+    //
+    // Example:
+    //
+    // "marco" → "Marco"
+    //
+    // The normalized value is then stored inside the Value Object.
     return PersonName._(value: cleanName.capitalizeFirst());
   }
 
-  /// Returns the normalized name.
+  /// Returns the person's name as a String.
   ///
-  /// This is the canonical string representation of the value object.
+  /// This makes the Value Object convenient to use when displaying
+  /// names or converting them to textual representations.
   @override
   String toString() => value;
 
-  /// Compares two [PersonName] objects by their underlying value.
+  /// Determines whether two [PersonName] objects represent the same
+  /// name value.
   ///
-  /// Two instances are considered equal when they contain the same
-  /// normalized name, regardless of whether they are different
-  /// objects in memory.
+  /// Since [PersonName] is a Value Object, equality is based on
+  /// the contained value rather than object identity.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final first = PersonName.create(value: 'marco');
+  /// final second = PersonName.create(value: 'marco');
+  ///
+  /// first == second; // true
+  /// ```
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PersonName && other.value == value);
   }
 
-  /// Hash code derived from the normalized value.
+  /// Generates a hash code based on the name value.
   ///
-  /// This guarantees consistency with the overridden equality operator.
+  /// This keeps the hash code consistent with the custom equality
+  /// implementation.
   @override
   int get hashCode => value.hashCode;
 }

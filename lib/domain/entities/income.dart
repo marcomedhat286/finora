@@ -6,7 +6,7 @@ import 'package:finora/domain/value_object/account/money.dart';
 import 'package:finora/domain/value_object/transaction/transaction_id.dart';
 import 'package:finora/domain/value_object/transaction/transaction_title.dart';
 
-class Income extends Transaction<IncomeCategory> {
+class Income extends Transaction {
   const Income._({
     required super.id,
     required super.title,
@@ -26,7 +26,7 @@ class Income extends Transaction<IncomeCategory> {
     required IncomeCategory category,
     String? description,
   }) {
-    CreatedAtValidator.validateOrThrow(createdAt);
+    CreatedAtValidator.validateOrThrow(time: createdAt);
 
     return Income._(
       id: id,
