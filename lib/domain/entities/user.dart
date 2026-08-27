@@ -196,11 +196,11 @@ class User {
 
       // Use the new username if provided;
       // otherwise preserve the current username.
-      userName: userName == null ? _userName : userName,
+      userName: userName ?? _userName,
 
       // Use the new first name if provided;
       // otherwise preserve the current first name.
-      firstName: firstName == null ? _firstName : firstName,
+      firstName: firstName ?? _firstName,
 
       // The original creation timestamp must remain unchanged.
       createdAt: _createdAt,

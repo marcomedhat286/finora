@@ -1,28 +1,12 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/edit_profile/view_model/update_user_profile_view_model.dart';
-
+import 'package:finora/presentation/screens/edit_profile/view_model/update_user_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SaveChangesButton extends StatelessWidget {
-  final controller = Get.find<UpdateUserProfileViewModel>();
-  SaveChangesButton({
-    super.key,
-    required this.firstName,
-    required this.middleName,
-    required this.lastName,
-    required this.initialBalance,
-    required this.userName,
-    this.birthdayDate,
-  });
-
-  final TextEditingController firstName;
-  final TextEditingController middleName;
-  final TextEditingController lastName;
-  final TextEditingController initialBalance;
-  final TextEditingController userName;
-  final DateTime? birthdayDate;
+  final controller = Get.find<UpdateUserInfoViewModel>();
+  SaveChangesButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +14,7 @@ class SaveChangesButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 50.0),
       child: ElevatedButton(
         onPressed: () async {
-          await controller.submitUpdatedInfo(
-            firstName: firstName.text,
-            middleName: (middleName.text.isEmpty) ? null : middleName.text,
-            lastName: (lastName.text.isEmpty) ? null : lastName.text,
-            birthDate: birthdayDate,
-          );
-          await controller.sumbitChangeUserName(newUserName: userName.text);
-          await controller.sumbitChangeInitalBalance(
-            initalBalance: initialBalance.text,
-          );
+          await controller.submitUpdate();
         },
 
         style: ElevatedButton.styleFrom(

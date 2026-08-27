@@ -43,8 +43,8 @@ class AnimatedOptionsWidgetState extends State<AnimatedOptionsWidget>
             child: AddTransactionButton(
               icon: FontAwesomeIcons.moneyBill1,
               text: "Add Income",
-              onPressed: () {
-                Get.toNamed("/addincome");
+              onPressed: () async {
+                await _openPage("/addincome");
               },
             ),
           ),
@@ -57,8 +57,8 @@ class AnimatedOptionsWidgetState extends State<AnimatedOptionsWidget>
             child: AddTransactionButton(
               icon: FontAwesomeIcons.receipt,
               text: "Add Expense",
-              onPressed: () {
-                Get.toNamed("/addexpense");
+              onPressed: () async {
+                await _openPage("/addexpense");
               },
             ),
           ),
@@ -115,6 +115,16 @@ class AnimatedOptionsWidgetState extends State<AnimatedOptionsWidget>
       _animationController.forward();
     } else {
       _animationController.reverse();
+    }
+  }
+
+  Future<void> _openPage(String route) async {
+    await Get.toNamed(route);
+
+    if (!mounted) return;
+
+    if (isOpen) {
+      toggleMenu();
     }
   }
 }

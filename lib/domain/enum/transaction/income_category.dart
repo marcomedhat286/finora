@@ -1,59 +1,71 @@
 import 'package:finora/domain/enum/transaction/transaction_category_type.dart';
-import 'package:finora/domain/validators/transactoin/income_type_validator.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:finora/domain/validators/transaction/income_type_validator.dart';
 
+/// Represents the supported categories for income transactions.
+///
+/// [IncomeCategory] implements [TransactionCategoryType], which means every
+/// income category provides:
+///
+/// - [code] → A stable internal identifier used for persistence,
+///   serialization, and comparison.
+/// - [displayName] → A human-readable name intended for presentation.
+///
+/// Keeping the internal [code] separate from the [displayName] allows the
+/// displayed text to change without affecting stored data.
+///
+/// Example:
+///
+/// ```dart
+/// IncomeCategory.salary.code
+/// // 'salary'
+///
+/// IncomeCategory.salary.displayName
+/// // 'Salary'
+/// ```
 enum IncomeCategory implements TransactionCategoryType {
-  salary(
-    code: 'salary',
-    displayName: 'Salary',
-    icon: FontAwesomeIcons.sackDollar,
-    iconColor: Color(0xFF10ac84),
-  ),
-  freelance(
-    code: 'freelance',
-    displayName: 'Freelance',
-    icon: FontAwesomeIcons.upwork,
-    iconColor: Color(0xFF2e86de),
-  ),
-  investments(
-    code: 'investments',
-    displayName: 'Investments',
-    icon: FontAwesomeIcons.moneyBillTrendUp,
-    iconColor: Color(0xFF10ac84),
-  ),
-  gifts(
-    code: 'gifts',
-    displayName: 'Gifts',
-    icon: FontAwesomeIcons.gifts,
-    iconColor: Color(0xFFf368e0),
-  ),
-  other(
-    code: 'other',
-    displayName: 'other',
-    icon: FontAwesomeIcons.ellipsis,
-    iconColor: Color(0xFF1dd1a1),
-  );
+  /// Represents income received as a regular salary.
+  salary(code: 'salary', displayName: 'Salary'),
 
+  /// Represents income earned from freelance work.
+  freelance(code: 'freelance', displayName: 'Freelance'),
+
+  /// Represents income generated from investments.
+  investments(code: 'investments', displayName: 'Investments'),
+
+  /// Represents money received as a gift.
+  gifts(code: 'gifts', displayName: 'Gifts'),
+
+  /// Represents income that does not belong to any of the predefined
+  /// categories.
+  other(code: 'other', displayName: 'Other');
+
+  /// Stable identifier used to represent the category internally.
   @override
   final String code;
 
+  /// Human-readable name used when displaying the category to the user.
   @override
   final String displayName;
 
-  @override
-  final FaIconData icon;
+  /// Creates an [IncomeCategory] with its internal [code] and display name.
+  const IncomeCategory({required this.code, required this.displayName});
 
-  @override
-  final Color iconColor;
-
-  const IncomeCategory({
-    required this.code,
-    required this.displayName,
-    required this.icon,
-    required this.iconColor,
-  });
-
+  /// Converts a stored category code into its corresponding
+  /// [IncomeCategory].
+  ///
+  /// The code is passed to [IncomeTypeValidator], which is responsible for
+  /// validating the value and returning the matching enum member.
+  ///
+  /// Throws an exception when the supplied code does not represent a
+  /// supported income category.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final category = IncomeCategory.fromCode('salary');
+  ///
+  /// print(category); // IncomeCategory.salary
+  /// ```
   factory IncomeCategory.fromCode(String code) {
     return IncomeTypeValidator.validateAndParse(code);
   }

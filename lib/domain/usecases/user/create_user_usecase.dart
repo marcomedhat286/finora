@@ -191,7 +191,7 @@ class CreateUserUseCase {
       final newUserName = UserNameGenerator.generate(name: firstName);
 
       // Check whether the generated username already exists.
-      final isTaken = await _userRepository.isUsernameTaken(newUserName.value);
+      final isTaken = await _userRepository.isUserNameTaken(newUserName.value);
 
       // If nobody is using the username, it can safely be assigned.
       if (!isTaken) {
@@ -218,7 +218,7 @@ class CreateUserUseCase {
 
     // Check the repository only after the username has passed domain
     // validation.
-    final isTaken = await _userRepository.isUsernameTaken(
+    final isTaken = await _userRepository.isUserNameTaken(
       validatedUserName.value,
     );
 

@@ -1,6 +1,8 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/dependencies/add_transaction_dependence.dart';
 import 'package:finora/presentation/dependencies/bottom_app_bar_controller_dependence.dart';
+import 'package:finora/presentation/dependencies/edit_user_info_dependence.dart';
+import 'package:finora/presentation/screens/edit_profile/view/edit_user_profile_view.dart';
 import 'package:finora/presentation/screens/add_transaction/view/add_transaction_view.dart';
 import 'package:finora/presentation/screens/home/view/home_view.dart';
 import 'package:finora/presentation/dependencies/signup_model_dependence.dart';
@@ -54,6 +56,13 @@ class FionarApp extends StatelessWidget {
           transition: Transition.fade,
           transitionDuration: Duration(seconds: kTranstionDuration),
           binding: BottomAppBarControllerDependence(),
+        ),
+        GetPage(
+          name: '/edituserinfo',
+          page: () => EditUserProfile(),
+          transition: Transition.fade,
+          transitionDuration: Duration(seconds: kTranstionDuration),
+          binding: EditUserInfoDependence(),
         ),
         GetPage(
           name: '/addincome',

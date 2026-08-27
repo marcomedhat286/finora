@@ -4,7 +4,7 @@ abstract interface class UserRepository {
   factory UserRepository() => FakeUserRepository();
   Future<void> saveUser(User user);
   Future<void> updateUser(User user);
-  Future<bool> isUsernameTaken(String username);
+  Future<bool> isUserNameTaken(String username);
 }
 
 class FakeUserRepository implements UserRepository {
@@ -21,7 +21,7 @@ class FakeUserRepository implements UserRepository {
   }
 
   @override
-  Future<bool> isUsernameTaken(String username) async {
+  Future<bool> isUserNameTaken(String username) async {
     final list = ['marco_123', 'marco_1', "marco_34342", "marco_1223"];
     return (list.contains(username));
   }

@@ -4,21 +4,21 @@ import 'package:finora/domain/Extensions/string_operations.dart';
 import 'package:finora/domain/entities/user.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 
 class ProfileAndFullNameUserImage extends StatelessWidget {
   const ProfileAndFullNameUserImage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 150),
-      child: Obx(() {
-        final currentUser = AuthUserController.to.currentUser;
-        if (currentUser == null) return const SizedBox();
-        return _setTheImageAndTextState(currentUser);
-      }),
-    );
+    return Obx(() {
+      final currentUser = AuthUserController.to.currentUser;
+      if (currentUser == null) return const SizedBox();
+      return Padding(
+        padding: EdgeInsets.only(top: 150),
+        child: _setTheImageAndTextState(currentUser),
+      );
+    });
   }
 
   Row _setTheImageAndTextState(User currentUser) {
@@ -34,9 +34,10 @@ class ProfileAndFullNameUserImage extends StatelessWidget {
             Text(
               currentUser.fullName,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: middleSizeFont,
                 fontWeight: FontWeight.bold,
+                color: kPrimaryColor2,
               ),
             ),
           ],
@@ -45,8 +46,8 @@ class ProfileAndFullNameUserImage extends StatelessWidget {
     );
   }
 
-  static Widget setStateUserProfile(User user) {
-    if (user.profileImage == null) {
+  static Widget setStateUserProfile(User user, {bool isRemoved = false}) {
+    if (user.profileImage == null || isRemoved) {
       return CircleAvatar(
         backgroundColor: Colors.grey[300],
         radius: circleAvatarRadius,

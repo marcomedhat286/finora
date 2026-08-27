@@ -3,6 +3,7 @@ import 'package:finora/domain/entities/income.dart';
 import 'package:finora/domain/entities/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:finora/presentation/extensions/category_ui_extension.dart';
 
 class DisplayInfoCardView extends StatelessWidget {
   const DisplayInfoCardView({super.key, required this._transaction});

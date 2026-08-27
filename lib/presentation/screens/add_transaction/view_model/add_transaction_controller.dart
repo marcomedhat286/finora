@@ -46,13 +46,11 @@ class AddTransactionController extends GetxController {
         categoryCode: incomeCategory.value!.code,
         rawAmount: amount.text,
       );
-      print(result.transaction.displayData);
-      print(result.account);
 
       AuthUserController.to.updateDefaultAccount(result.account);
       AuthUserController.to.addTransaction(result.transaction);
 
-      Get.offAllNamed('/home');
+      Get.back();
       isLoading.value = false;
     } on EmptyValueException catch (e) {
       _setErrors(e);

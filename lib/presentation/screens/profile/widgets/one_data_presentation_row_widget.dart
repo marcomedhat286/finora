@@ -21,18 +21,19 @@ class OneDataPresentationRowWidget extends StatelessWidget {
           dataName,
           style: const TextStyle(
             fontSize: smallSizeFont,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.bold,
+            color: kPrimaryColor2,
           ),
         ),
         SizedBox(
           width: 150,
           child: Text(
             data,
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.left,
             style: const TextStyle(
               overflow: TextOverflow.fade,
               fontSize: smallSizeFont,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
               color: Colors.grey,
             ),
           ),
