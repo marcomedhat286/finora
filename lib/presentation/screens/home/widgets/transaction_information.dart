@@ -42,6 +42,6 @@ class TransactionInformation extends StatelessWidget {
   }
 
   String _formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
+    return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
   }
 }

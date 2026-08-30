@@ -17,10 +17,10 @@ class AddTransactionButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () async {
           switch (_type) {
-            case TransactionType.Income:
+            case TransactionType.income:
               await controller.sumbitAddIncome();
               break;
-            case TransactionType.Expense:
+            case TransactionType.expense:
               await controller.sumbitAddExpense();
               break;
           }

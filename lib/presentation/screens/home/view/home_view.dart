@@ -1,4 +1,5 @@
 import 'package:finora/core/constants.dart';
+import 'package:finora/presentation/screens/display_all_accounts/widgets/display_all_accounts_body.dart';
 import 'package:finora/presentation/screens/home/view_model.dart/bottom_app_bar_controller.dart';
 import 'package:finora/presentation/screens/home/widgets/home_body.dart';
 import 'package:finora/presentation/screens/profile/widgets/profile_body.dart';
@@ -7,7 +8,12 @@ import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
-  final pages = [const HomeBody(), Scaffold(), Scaffold(), const ProfileBody()];
+  final pages = [
+    const HomeBody(),
+    const DisplayAllAccountsBody(),
+    Scaffold(),
+    const ProfileBody(),
+  ];
 
   @override
   Widget build(BuildContext context) {

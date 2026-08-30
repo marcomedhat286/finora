@@ -1,12 +1,24 @@
-// import 'package:finora/data/models/acoount_model.dart';
-// import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
-// @Collection()
-// class UserModel {
-//   late String userName;
-//   late String firstName;
-//   String? middleName;
-//   String? lastName;
-//   late DateTime dateTime;
-//   late AcoountModel acoountModel;
-// }
+part 'user_model.g.dart';
+
+@collection
+class UserModel {
+  Id isarId = Isar.autoIncrement;
+
+  late String id;
+
+  late String userName;
+
+  late String firstName;
+
+  String? middleName;
+
+  String? lastName;
+
+  late DateTime createdAt;
+
+  String? image;
+
+  late DateTime birthdayDate;
+}

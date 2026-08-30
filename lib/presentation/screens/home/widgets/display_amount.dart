@@ -1,4 +1,5 @@
 import 'package:finora/domain/entities/transaction.dart';
+import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 
 class DisplayAmount extends StatelessWidget {
@@ -13,6 +14,9 @@ class DisplayAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final assiostedAccount = AuthUserController.to.getByAccountId(
+      transaction.accountId,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -28,7 +32,14 @@ class DisplayAmount extends StatelessWidget {
         const SizedBox(height: 4),
 
         const Text('EGP', style: TextStyle(fontSize: 11, color: Colors.grey)),
+        Text(assiostedAccount.name.value, style: TextStyle(fontSize: 11)),
+        Text(
+          accountIdFormat,
+          style: TextStyle(fontSize: 11, color: Colors.grey),
+        ),
       ],
     );
   }
+
+  String get accountIdFormat => transaction.accountId.value.split("-").last;
 }

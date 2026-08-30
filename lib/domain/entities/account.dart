@@ -460,4 +460,12 @@ class Account {
         'created at: $_createdAt'
         ')';
   }
+
+  static double calcAllCurrentBalanceAccounts(List<Account> accounts) {
+    Money totalCurrentBalance = Money.create(value: 0.0);
+    for (var account in accounts) {
+      totalCurrentBalance += account._currentBalance;
+    }
+    return totalCurrentBalance.value;
+  }
 }

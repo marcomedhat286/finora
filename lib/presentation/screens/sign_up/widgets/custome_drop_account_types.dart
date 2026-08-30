@@ -1,20 +1,21 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/domain/enum/account/account_type.dart';
-import 'package:finora/presentation/screens/sign_up/view_model/sign_up_view_model.dart';
 import 'package:finora/presentation/screens/sign_up/widgets/custome_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CustomrDropAccountTypes extends StatelessWidget {
-  const CustomrDropAccountTypes({
+class CustomeDropAccountTypes extends StatelessWidget {
+  const CustomeDropAccountTypes({
     super.key,
     required this.dataName,
     required this.errorText,
-    required this.controller,
+    required this.onChanged,
+    this.initialValue,
   });
   final String dataName;
   final String? errorText;
-  final SignUpViewModel controller;
+  final AccountType? initialValue;
+  final ValueChanged<AccountType?> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class CustomrDropAccountTypes extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           DropdownButtonFormField<AccountType>(
-            initialValue: controller.accountType.value,
+            initialValue: initialValue,
             dropdownColor: kPrimaryColor,
             decoration: InputDecoration(
               hintMaxLines: 3,
@@ -78,9 +79,7 @@ class CustomrDropAccountTypes extends StatelessWidget {
                 );
               }).toList();
             },
-            onChanged: (value) {
-              controller.accountType.value = value;
-            },
+            onChanged: onChanged,
           ),
         ],
       ),

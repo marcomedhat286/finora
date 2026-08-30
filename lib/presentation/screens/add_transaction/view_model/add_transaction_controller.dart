@@ -73,7 +73,6 @@ class AddTransactionController extends GetxController {
     _resetErrors();
     isLoading.value = true;
     final account = AuthUserController.to.defaultAccount;
-    print(account?.currentBalance);
     if (account == null) return;
     try {
       final result = await _createTransactionUseCase.createExpense(

@@ -19,9 +19,9 @@ class DisplayCurrentBalance extends StatelessWidget {
         const SizedBox(width: 7),
         Obx(() {
           final currentBalance =
-              AuthUserController.to.defaultAccount?.currentBalance.value;
+              AuthUserController.to.totalCurrentBalanceAccounts;
           return Text(
-            currentBalance?.toString() ?? "0.0",
+            currentBalance.toString(),
             style: const TextStyle(
               color: kSecondColor,
               fontSize: smallSizeFont + 15,

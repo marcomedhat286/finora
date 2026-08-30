@@ -28,10 +28,13 @@ class AccountInfoStepWidget extends StatelessWidget {
             textEditingController: controller.accountNameController,
             errorText: controller.accountNameError.value,
           ),
-          CustomrDropAccountTypes(
+          CustomeDropAccountTypes(
             dataName: "account type",
             errorText: controller.accountTypeError.value,
-            controller: controller,
+            onChanged: (value) {
+              controller.accountType.value = value;
+            },
+            initialValue: controller.accountType.value,
           ),
           CustomeTextField(
             dataName: "Initial Balance",

@@ -1,4 +1,5 @@
 import 'package:finora/core/constants.dart';
+import 'package:finora/presentation/screens/display_all_accounts/widgets/card_design_painter.dart';
 import 'package:finora/presentation/screens/home/widgets/display_expense.dart';
 import 'package:finora/presentation/screens/home/widgets/display_income.dart';
 
@@ -15,7 +16,8 @@ class BalanceCard extends StatelessWidget {
       child: Container(
         height: 220,
         margin: const EdgeInsets.symmetric(horizontal: 15),
-        padding: const EdgeInsets.all(30),
+        // padding: const EdgeInsets.all(30),
+        isAntiAlias: false,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: kPrimaryColor2,
@@ -26,15 +28,28 @@ class BalanceCard extends StatelessWidget {
               spreadRadius: 2,
             ),
           ],
+          gradient: RadialGradient(
+            center: AlignmentGeometry.bottomLeft,
+            colors: cardPalettesMap["primaryCardBalance"] ?? defaultColors,
+            radius: 1.7,
+          ),
         ),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: const Stack(
           children: [
-            TotalBalance(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [DisplayIncome(), DisplayExpense()],
+            Positioned.fill(child: CustomPaint(painter: CardDesignPainter())),
+            Padding(
+              padding: EdgeInsets.all(30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TotalBalance(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [DisplayIncome(), DisplayExpense()],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

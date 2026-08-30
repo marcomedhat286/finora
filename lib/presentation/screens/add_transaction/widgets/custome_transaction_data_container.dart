@@ -81,10 +81,10 @@ class CustomeTransactionDataContainer extends StatelessWidget {
 
   Widget buildCategoryDropdown(AddTransactionController controller) {
     switch (_type) {
-      case TransactionType.Income:
+      case TransactionType.income:
         return _buildIncomeCategoryDropdown(controller);
 
-      case TransactionType.Expense:
+      case TransactionType.expense:
         return _buildExpenseCategoryDropdown(controller);
     }
   }

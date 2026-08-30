@@ -6,17 +6,19 @@ class CustomeTextField extends StatelessWidget {
     super.key,
     required this.dataName,
     required this.prefixIcon,
-    required this.textEditingController,
+    this.textEditingController,
     this.errorText,
     this.hinitMessage,
     this.type,
+    this.onChanged,
   });
   final String? errorText;
   final String dataName;
   final String? hinitMessage;
   final IconData prefixIcon;
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
   final TextInputType? type;
+  final ValueChanged<String>? onChanged;
   static final textStyleDataName = TextStyle(
     color: Colors.grey.withAlpha(alphaValue * 4),
     fontSize: smallSizeFont,
@@ -55,6 +57,7 @@ class CustomeTextField extends StatelessWidget {
                 borderSide: const BorderSide(color: kPrimaryColor),
               ),
             ),
+            onChanged: onChanged,
           ),
         ],
       ),
