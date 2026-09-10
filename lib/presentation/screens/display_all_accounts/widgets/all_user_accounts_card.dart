@@ -11,8 +11,6 @@ class AllUserAccountsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final accounts = AuthUserController.to.userAccounts;
-      final defualtAccount = AuthUserController.to.defaultAccount;
-      if (defualtAccount == null) return const SizedBox();
       if (accounts.isEmpty) return const SizedBox();
       return Align(
         alignment: AlignmentGeometry.xy(0, 0.9),
@@ -28,13 +26,14 @@ class AllUserAccountsCard extends StatelessWidget {
               builder: (context, index) {
                 final account = accounts[index];
                 return GradientCard(
+                  account: account,
                   title: account.name.value,
                   type: account.type.displayName,
                   currentBalance: "${account.currentBalance.value}",
                   accountId: account.id.value,
                   createdAt: account.createdAt,
                   colors: cardPalettes[index],
-                  isDefault: account == defualtAccount,
+                  isDefault: account.isDefault,
                 );
               },
             ),

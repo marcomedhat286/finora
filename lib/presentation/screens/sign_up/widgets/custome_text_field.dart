@@ -11,6 +11,7 @@ class CustomeTextField extends StatelessWidget {
     this.hinitMessage,
     this.type,
     this.onChanged,
+    this.borderColor = Colors.grey,
   });
   final String? errorText;
   final String dataName;
@@ -19,6 +20,7 @@ class CustomeTextField extends StatelessWidget {
   final TextEditingController? textEditingController;
   final TextInputType? type;
   final ValueChanged<String>? onChanged;
+  final Color borderColor;
   static final textStyleDataName = TextStyle(
     color: Colors.grey.withAlpha(alphaValue * 4),
     fontSize: smallSizeFont,
@@ -49,7 +51,7 @@ class CustomeTextField extends StatelessWidget {
 
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(circleBorderRadius),
-                borderSide: const BorderSide(color: Colors.grey),
+                borderSide: BorderSide(color: borderColor),
               ),
 
               focusedBorder: OutlineInputBorder(

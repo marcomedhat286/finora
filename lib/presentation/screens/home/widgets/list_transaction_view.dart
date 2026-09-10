@@ -69,30 +69,34 @@ class RecentTransactions extends StatelessWidget {
                       : SizedBox(),
                   IconButton(
                     onPressed: () async {
-                      final savedUser = await Get.find<Isar>().userModels
-                          .filter()
-                          .idEqualTo(
-                            AuthUserController.to.currentUser?.id.value ?? "",
-                          )
-                          .findFirst();
+                      final isar = Get.find<Isar>();
+                      print(isar.isOpen);
+                      print(isar.name);
+                      print(isar.directory);
+                      print(isar.path);
+                      final users = await isar.userModels.where().findAll();
+                      print('========== ALL USERS ==========');
+                      print('Users count: ${users.length}');
 
-                      print('===== USER FROM DATABASE =====');
-                      print('===== USER SAVED =====');
-                      print('Isar ID: ${savedUser?.isarId}');
-                      print('ID: ${savedUser?.id}');
-                      print('Username: ${savedUser?.userName}');
-                      print('First Name: ${savedUser?.firstName}');
-                      print('Middle Name: ${savedUser?.middleName}');
-                      print('Last Name: ${savedUser?.lastName}');
-                      print('Created At: ${savedUser?.createdAt}');
-                      print('Image: ${savedUser?.image}');
-                      print('Birthday: ${savedUser?.birthdayDate}');
-                      print('======================');
-
-                      if (savedUser == null) {
-                        print('User was NOT found!');
-                        return;
+                      for (final user in users) {
+                        print('-------------------------------');
+                        print('Isar ID      : ${user.isarId}');
+                        print('ID           : ${user.id}');
+                        print('Username     : ${user.userName}');
+                        print('First Name   : ${user.firstName}');
+                        print('Middle Name  : ${user.middleName}');
+                        print('Last Name    : ${user.lastName}');
+                        print('Created At   : ${user.createdAt}');
+                        print('Image        : ${user.image}');
+                        print('Birthday     : ${user.birthdayDate}');
                       }
+
+                      print('===============================');
+
+                      // if (savedUser == null) {
+                      //   print('User was NOT found!');
+                      //   return;
+                      // }
                     },
                     icon: FaIcon(
                       FontAwesomeIcons.ellipsis,

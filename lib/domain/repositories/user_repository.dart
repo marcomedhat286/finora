@@ -6,4 +6,6 @@ abstract interface class UserRepository {
   Future<void> updateUser(User user);
 
   Future<bool> isUserNameTaken(String username);
+
+  Future<User?> getUserByUsername(String userName);
 }

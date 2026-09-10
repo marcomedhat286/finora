@@ -76,7 +76,7 @@ class SignUpViewModel extends GetxController {
   ///
   /// Rxn means the value can be reactive AND nullable.
   /// Before the user selects a date, its value is null.
-  final birthDate = Rxn<DateTime>();
+  final birthDate = Rx<DateTime>(DateTime(2000));
 
   /// Stores the account name entered by the user.
   final accountNameController = TextEditingController();
@@ -337,6 +337,7 @@ class SignUpViewModel extends GetxController {
           rawAccountName: accountNameController.text,
           accountTypeCode: accountType.value!.code,
           rawInitialBalance: initialBalanceController.text,
+          isDefault: true,
         );
       } else {
         // User skipped account configuration.

@@ -1,5 +1,6 @@
 import 'package:finora/core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LogInButton extends StatelessWidget {
   const LogInButton({super.key});
@@ -14,8 +15,8 @@ class LogInButton extends StatelessWidget {
           style: TextStyle(fontSize: smallSizeFont),
         ),
         TextButton(
-          onPressed: () {
-            print("log in screen ");
+          onPressed: () async {
+            await navigateToLogIn();
           },
           child: const Text(
             "Log In",
@@ -28,5 +29,9 @@ class LogInButton extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> navigateToLogIn() async {
+    await Get.toNamed('/login');
   }
 }

@@ -144,7 +144,7 @@ class CreateTransactionUseCase {
     await _transactionRepository.saveTransaction(expense);
 
     // Persist the account containing the updated balance.
-    await _accountRepository.saveAccount(updatedAccount);
+    await _accountRepository.updateAccount(updatedAccount);
 
     // Return both results so the caller can immediately update its state.
     return TransactionCreationResult(
@@ -211,7 +211,7 @@ class CreateTransactionUseCase {
     await _transactionRepository.saveTransaction(income);
 
     // Persist the account with its new balance.
-    await _accountRepository.saveAccount(updatedAccount);
+    await _accountRepository.updateAccount(updatedAccount);
 
     // Return both the created income and the updated account.
     return TransactionCreationResult(

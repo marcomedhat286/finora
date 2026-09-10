@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/screens/display_all_accounts/widgets/display_all_accounts_body.dart';
+import 'package:finora/presentation/screens/display_all_accounts/display_all_accounts_body/display_all_accounts_body.dart';
 import 'package:finora/presentation/screens/home/view_model.dart/bottom_app_bar_controller.dart';
 import 'package:finora/presentation/screens/home/widgets/home_body.dart';
 import 'package:finora/presentation/screens/profile/widgets/profile_body.dart';

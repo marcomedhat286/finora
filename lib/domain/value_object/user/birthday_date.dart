@@ -53,7 +53,7 @@ class BirthdayDate {
   ///
   /// If the date is invalid, the validator throws the appropriate
   /// Domain exception and the object is not created.
-  factory BirthdayDate.create(DateTime? date) {
+  factory BirthdayDate.create(DateTime date) {
     // Validate the raw date before allowing it to enter the Domain.
     final validDate = BirthdateValidator.validateOrThrow(date);
 

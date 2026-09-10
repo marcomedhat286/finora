@@ -15,13 +15,20 @@ class AuthUserController extends GetxController {
 
   User? get currentUser => _currentUser.value;
 
-  bool get isAuthenticated => (_currentUser.value != null);
   ///////////////////////////////////////////////////////////////////////
 
   /////////////////////////// Accounts //////////////////////////////////
   final RxList<Account> _userAccounts = <Account>[].obs;
   void setAccount(List<Account> accounts) {
-    _userAccounts.assignAll(accounts);
+    final defaultAccount = accounts.firstWhere(
+      (account) => account.isDefault,
+      orElse: () => accounts.first,
+    );
+    final isRemoved = accounts.remove(defaultAccount);
+    _userAccounts.insert(0, defaultAccount);
+    if (isRemoved) {
+      _userAccounts.insertAll(1, accounts);
+    }
   }
 
   void addAccount(Account account) {
@@ -37,14 +44,12 @@ class AuthUserController extends GetxController {
   }
 
   void setNewDefaultAccount(Account newDefaultAccount) {
-    if (_currentUser.value != null &&
-        newDefaultAccount.userId == _currentUser.value?.id) {
-      _userAccounts.insert(0, newDefaultAccount);
-    }
+    _userAccounts.insert(0, newDefaultAccount);
   }
 
-  Account? get defaultAccount =>
-      _userAccounts.isNotEmpty ? _userAccounts.first : null;
+  Account? get defaultAccount => _userAccounts.isNotEmpty
+      ? _userAccounts.firstWhere((account) => account.isDefault)
+      : null;
 
   Account getByAccountId(AccountId id) {
     return _userAccounts.firstWhere((account) => account.id == id);

@@ -2,6 +2,7 @@ import 'package:finora/domain/entities/user.dart';
 import 'package:finora/domain/exception/user/empty_value_exception.dart';
 import 'package:finora/domain/exception/user/invalid_birthdate_exception.dart';
 import 'package:finora/domain/exception/user/invalid_format_exception.dart';
+import 'package:finora/domain/exception/user/not_valid_identical_user_id.dart';
 import 'package:finora/domain/exception/user/taken_user_name_exception.dart';
 import 'package:finora/domain/usecases/user/update_user_usecase.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
@@ -378,11 +379,11 @@ class UpdateUserInfoViewModel extends GetxController {
 
     // Username already exists.
     if (e is TakenUserNameException) {
-      userNameError.value = e.message;
+      userNameError.value = message;
 
       // Birthday violates Domain rules.
     } else if (e is InvalidBirthdateException) {
-      birthDateError.value = e.message;
+      birthDateError.value = message;
 
       // Generic value/format validation errors.
     } else if (e is EmptyValueException || e is InvalidFormatException) {
@@ -400,6 +401,8 @@ class UpdateUserInfoViewModel extends GetxController {
       } else if (message.contains("username")) {
         userNameError.value = message;
       }
+    } else if (e is NotValidIdenticalUserId) {
+      userNameError.value = message;
     }
   }
 

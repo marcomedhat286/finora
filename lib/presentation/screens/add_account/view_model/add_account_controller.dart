@@ -79,7 +79,9 @@ class AddAccountController extends GetxController {
         rawAccountName: accountName.value ?? "",
         accountTypeCode: accountType.value.code,
         rawInitialBalance: accountInitialBalance.value ?? "",
+        isDefault: isDefault.value,
       );
+
       if (isDefault.value) {
         AuthUserController.to.setNewDefaultAccount(newAccount);
       } else {

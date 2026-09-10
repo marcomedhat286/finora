@@ -1,6 +1,8 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/core/database/isar_database.dart';
 import 'package:finora/presentation/dependencies/initial_binding.dart';
+import 'package:finora/presentation/dependencies/login_dependence.dart';
+import 'package:finora/presentation/screens/login/view/login_view.dart';
 import 'package:finora/presentation/screens/add_account/view/add_account_view.dart';
 import 'package:finora/presentation/dependencies/add_transaction_dependence.dart';
 import 'package:finora/presentation/dependencies/bottom_app_bar_controller_dependence.dart';
@@ -11,7 +13,6 @@ import 'package:finora/presentation/screens/add_transaction/view/add_transaction
 import 'package:finora/presentation/screens/home/view/home_view.dart';
 import 'package:finora/presentation/dependencies/signup_model_dependence.dart';
 import 'package:finora/presentation/screens/sign_up/view/sign_up.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:finora/presentation/screens/welcome/view/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,8 +22,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await IsarDatabase.init();
-
-  Get.put(AuthUserController(), permanent: true);
 
   runApp(const FionarApp());
 }
@@ -44,12 +43,18 @@ class FionarApp extends StatelessWidget {
           transitionDuration: Duration(seconds: kTranstionDuration),
           binding: InitialBinding(),
         ),
-
         GetPage(
           name: '/welcome',
           page: () => const Welcome(),
           transition: Transition.fade,
           transitionDuration: Duration(seconds: kTranstionDuration),
+        ),
+        GetPage(
+          name: '/login',
+          page: () => const LoginView(),
+          transition: Transition.fade,
+          transitionDuration: Duration(seconds: kTranstionDuration),
+          binding: LoginDependence(),
         ),
         GetPage(
           name: '/signup',

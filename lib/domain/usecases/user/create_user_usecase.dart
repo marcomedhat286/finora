@@ -77,7 +77,7 @@ class CreateUserUseCase {
   Future<User> execute({
     String? userName,
     required String firstName,
-    required DateTime? birthDate,
+    required DateTime birthDate,
     String? middleName,
     String? lastName,
   }) async {

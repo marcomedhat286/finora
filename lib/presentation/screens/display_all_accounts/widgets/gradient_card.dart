@@ -1,11 +1,14 @@
+import 'package:finora/domain/entities/account.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/card_content.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/card_design_painter.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/default_card_widget.dart';
+import 'package:finora/presentation/view_account/view/view_account.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class GradientCard extends StatelessWidget {
+  final Account? _account;
   final String type;
-
   final String title;
   final String accountId;
   final DateTime createdAt;
@@ -22,6 +25,7 @@ class GradientCard extends StatelessWidget {
     required this.currentBalance,
     required this.colors,
     this.isDefault = false,
+    this._account,
   });
 
   @override
@@ -31,7 +35,7 @@ class GradientCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            print("hello card");
+            navigateToViewAccount();
           },
           child: Container(
             height: 200,
@@ -87,5 +91,10 @@ class GradientCard extends StatelessWidget {
         (isDefault) ? const DefaultCardWidget() : const SizedBox(),
       ],
     );
+  }
+
+  void navigateToViewAccount() {
+    if (_account == null) return;
+    Get.to(() => ViewAccount(account: _account, colors: colors));
   }
 }

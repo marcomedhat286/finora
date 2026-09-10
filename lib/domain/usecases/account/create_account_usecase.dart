@@ -84,6 +84,7 @@ class CreateAccountUseCase {
     required String rawAccountName,
     required String accountTypeCode,
     required String rawInitialBalance,
+    required bool isDefault,
   }) async {
     // Convert the raw user ID into a validated Domain Value Object.
     //
@@ -137,6 +138,7 @@ class CreateAccountUseCase {
       accountType: accountType,
       initialBalance: initialBalance,
       createdAt: DateTime.now(),
+      isDefault: isDefault,
     );
 
     // Persist the newly created Account through the repository.
@@ -170,6 +172,7 @@ class CreateAccountUseCase {
       rawAccountName: 'cash wallet',
       accountTypeCode: AccountType.cash.code,
       rawInitialBalance: '0.0',
+      isDefault: true,
     );
   }
 }

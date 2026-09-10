@@ -90,6 +90,8 @@ class Account {
   /// Defines the category/type of the account.
   final AccountType _accountType;
 
+  final bool isDefault;
+
   /// Private constructor used internally to create an [Account].
   ///
   /// The constructor is private to prevent external code from creating
@@ -103,6 +105,7 @@ class Account {
     required this._accountName,
     required this._accountType,
     this.hasTransactions = false,
+    this.isDefault = false,
   });
 
   /// Creates a new [Account] after validating its required Domain data.
@@ -139,6 +142,8 @@ class Account {
     required AccountType accountType,
     required DateTime createdAt,
     Money? currentBalance,
+    bool hasTransactions = false,
+    bool isDefault = false,
   }) {
     // Validate the creation date before allowing the Account
     // to enter the Domain.
@@ -154,6 +159,8 @@ class Account {
       accountName: accountName,
       accountType: accountType,
       createdAt: createdAt,
+      hasTransactions: hasTransactions,
+      isDefault: isDefault,
     );
   }
 
@@ -396,6 +403,7 @@ class Account {
     AccountName? newAccountName,
     AccountType? newAccountType,
     bool? newHasTransactions,
+    bool? newIsDefault,
   }) {
     // Create a new Account using the existing values unless
     // replacement values were explicitly provided.
@@ -408,6 +416,7 @@ class Account {
       accountType: newAccountType ?? _accountType,
       createdAt: _createdAt,
       hasTransactions: newHasTransactions ?? hasTransactions,
+      isDefault: newIsDefault ?? isDefault,
     );
   }
 
@@ -429,7 +438,8 @@ class Account {
             other._accountName == _accountName &&
             other._accountType == _accountType &&
             other.hasTransactions == hasTransactions &&
-            other.userId == _userId);
+            other.userId == _userId &&
+            other.isDefault == isDefault);
   }
 
   /// Generates a hash code based on the Account's relevant state.
@@ -445,6 +455,7 @@ class Account {
     hasTransactions,
     _accountName,
     _accountType,
+    isDefault,
   );
 
   /// Returns a readable String representation of the Account.
