@@ -32,7 +32,7 @@ class AllUserAccountsCard extends StatelessWidget {
                   currentBalance: "${account.currentBalance.value}",
                   accountId: account.id.value,
                   createdAt: account.createdAt,
-                  colors: cardPalettes[index],
+                  colors: cardPalettes[index % cardPalettes.length],
                   isDefault: account.isDefault,
                 );
               },

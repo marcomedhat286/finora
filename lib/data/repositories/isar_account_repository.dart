@@ -1,6 +1,7 @@
 import 'package:finora/data/mapper/account_mapper.dart';
 import 'package:finora/data/models/account_model.dart';
 import 'package:finora/domain/entities/account.dart';
+import 'package:finora/domain/exception/account/not_found_account_exception.dart';
 import 'package:finora/domain/repositories/account_repository.dart';
 import 'package:isar_community/isar.dart';
 
@@ -33,7 +34,23 @@ class IsarAccountRepository implements AccountRepository {
   }
 
   @override
-  Future<void> updateAccount(Account account) {
-    throw UnimplementedError();
+  Future<void> updateAccount(Account account) async {
+    await _isar.writeTxn(() async {
+      final existingAccount = await _isar.accountModels
+          .filter()
+          .accountIdEqualTo(account.id.value)
+          .findFirst();
+
+      if (existingAccount == null) {
+        throw NotFoundAccountException(
+          'this account not identical with new one',
+        );
+      }
+
+      final accountModel = AccountMapper.toModel(account);
+
+      accountModel.isarId = existingAccount.isarId;
+      await _isar.accountModels.put(accountModel);
+    });
   }
 }

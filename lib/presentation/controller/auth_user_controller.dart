@@ -25,8 +25,10 @@ class AuthUserController extends GetxController {
       orElse: () => accounts.first,
     );
     final isRemoved = accounts.remove(defaultAccount);
+
     _userAccounts.insert(0, defaultAccount);
     if (isRemoved) {
+      accounts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       _userAccounts.insertAll(1, accounts);
     }
   }
@@ -34,7 +36,7 @@ class AuthUserController extends GetxController {
   void addAccount(Account account) {
     if (currentUser != null) {
       if (currentUser!.id == account.userId) {
-        _userAccounts.add(account);
+        _userAccounts.insert(1, account);
       }
     }
   }
@@ -44,7 +46,15 @@ class AuthUserController extends GetxController {
   }
 
   void setNewDefaultAccount(Account newDefaultAccount) {
+    final oldDefaultAccount = defaultAccount;
+    if (oldDefaultAccount == null) return;
+    final indexDefault = _userAccounts.indexOf(oldDefaultAccount);
+    _userAccounts[indexDefault] = oldDefaultAccount.copyWith(
+      newIsDefault: false,
+    );
+    _userAccounts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     _userAccounts.insert(0, newDefaultAccount);
+    _userAccounts.refresh();
   }
 
   Account? get defaultAccount => _userAccounts.isNotEmpty

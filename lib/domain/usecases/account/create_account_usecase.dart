@@ -6,6 +6,7 @@ import 'package:finora/domain/services/account/account_id_generator.dart';
 import 'package:finora/domain/value_object/account/account_name.dart';
 import 'package:finora/domain/value_object/account/money.dart';
 import 'package:finora/domain/value_object/user/user_id.dart';
+import 'package:finora/presentation/controller/auth_user_controller.dart';
 
 /// Handles the business workflow for creating a new financial account.
 ///
@@ -141,6 +142,15 @@ class CreateAccountUseCase {
       isDefault: isDefault,
     );
 
+    if (isDefault) {
+      final oldDefualtAccount = AuthUserController.to.defaultAccount;
+      if (oldDefualtAccount != null) {
+        final oldNotDefaultAccount = oldDefualtAccount.copyWith(
+          newIsDefault: false,
+        );
+        await _accountRepository.updateAccount(oldNotDefaultAccount);
+      }
+    }
     // Persist the newly created Account through the repository.
     //
     // The Use Case does not know how or where the account is stored.
