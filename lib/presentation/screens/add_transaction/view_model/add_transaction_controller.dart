@@ -9,6 +9,7 @@ import 'package:finora/domain/exception/user/empty_value_exception.dart';
 import 'package:finora/domain/exception/user/invalid_date_time_exception.dart';
 import 'package:finora/domain/exception/user/invalid_format_exception.dart';
 import 'package:finora/domain/usecases/transaction/create_transaction_usecase.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class AddTransactionController extends GetxController {
   Future<void> sumbitAddIncome() async {
     _resetErrors();
     isLoading.value = true;
-    final account = AuthUserController.to.defaultAccount;
+    final account = AuthAccountsController.to.defaultAccount;
     if (account == null) return;
     try {
       final result = await _createTransactionUseCase.createIncome(
@@ -47,7 +48,7 @@ class AddTransactionController extends GetxController {
         rawAmount: amount.text,
       );
 
-      AuthUserController.to.updateDefaultAccount(result.account);
+      AuthAccountsController.to.updateDefaultAccount(result.account);
       AuthUserController.to.addTransaction(result.transaction);
 
       Get.back();
@@ -72,7 +73,7 @@ class AddTransactionController extends GetxController {
   Future<void> sumbitAddExpense() async {
     _resetErrors();
     isLoading.value = true;
-    final account = AuthUserController.to.defaultAccount;
+    final account = AuthAccountsController.to.defaultAccount;
     if (account == null) return;
     try {
       final result = await _createTransactionUseCase.createExpense(
@@ -83,7 +84,7 @@ class AddTransactionController extends GetxController {
         categoryCode: expenseCategory.value!.code,
         rawAmount: amount.text,
       );
-      AuthUserController.to.updateDefaultAccount(result.account);
+      AuthAccountsController.to.updateDefaultAccount(result.account);
       AuthUserController.to.addTransaction(result.transaction);
       Get.offAllNamed('/home');
       isLoading.value = false;

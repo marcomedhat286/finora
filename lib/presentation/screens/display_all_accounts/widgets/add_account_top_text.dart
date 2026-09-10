@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 import 'package:finora/presentation/screens/sign_up/widgets/custome_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class AddAccountTopText extends StatelessWidget {
             child: Text(
               "Manage all your accounts in one place."
               " Create new accounts effortlessly and keep your finances organized, clear, and under control. "
-              "You have ${AuthUserController.to.userAccounts.length} accounts.",
+              "You have ${AuthAccountsController.to.userAccounts.length} accounts.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: kSecondColor,

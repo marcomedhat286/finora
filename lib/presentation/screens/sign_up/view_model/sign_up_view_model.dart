@@ -21,6 +21,7 @@ import 'package:finora/domain/validators/user/name_validator.dart';
 
 import 'package:finora/domain/exception/user/invalid_format_exception.dart';
 import 'package:finora/domain/exception/account/invalid_double_format_exception.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 
 import 'package:finora/presentation/controller/auth_user_controller.dart';
 
@@ -355,7 +356,7 @@ class SignUpViewModel extends GetxController {
       AuthUserController.to.setUser(newUser);
 
       // Store the newly created Account in the global account state.
-      AuthUserController.to.addAccount(newAccount);
+      AuthAccountsController.to.addAccount(newAccount);
 
       // ---------------------------------------------------------------------
       // NAVIGATION

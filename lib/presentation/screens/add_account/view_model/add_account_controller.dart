@@ -11,7 +11,7 @@ import 'package:finora/domain/usecases/account/create_account_usecase.dart';
 import 'package:finora/domain/validators/account/account_name_validator.dart';
 import 'package:finora/domain/validators/account/account_type_validator.dart';
 import 'package:finora/domain/value_object/account/money.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 
@@ -83,9 +83,9 @@ class AddAccountController extends GetxController {
       );
 
       if (isDefault.value) {
-        AuthUserController.to.setNewDefaultAccount(newAccount);
+        AuthAccountsController.to.setNewDefaultAccount(newAccount);
       } else {
-        AuthUserController.to.addAccount(newAccount);
+        AuthAccountsController.to.addAccount(newAccount);
       }
       Get.back();
     } on Exception catch (e) {

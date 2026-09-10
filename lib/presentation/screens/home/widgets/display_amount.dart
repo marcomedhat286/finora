@@ -1,5 +1,5 @@
 import 'package:finora/domain/entities/transaction.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 import 'package:flutter/material.dart';
 
 class DisplayAmount extends StatelessWidget {
@@ -14,7 +14,7 @@ class DisplayAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final assiostedAccount = AuthUserController.to.getByAccountId(
+    final assiostedAccount = AuthAccountsController.to.getByAccountId(
       transaction.accountId,
     );
     return Column(

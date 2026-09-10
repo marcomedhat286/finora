@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class DisplayCurrentBalance extends StatelessWidget {
         const SizedBox(width: 7),
         Obx(() {
           final currentBalance =
-              AuthUserController.to.totalCurrentBalanceAccounts;
+              AuthAccountsController.to.totalCurrentBalanceAccounts;
           return Text(
             currentBalance.toString(),
             style: const TextStyle(

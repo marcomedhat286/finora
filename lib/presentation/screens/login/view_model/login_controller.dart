@@ -1,5 +1,6 @@
 import 'package:finora/domain/usecases/account/get_accounts_usecase.dart';
 import 'package:finora/domain/usecases/user/get_user_usecase.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class LoginController extends GetxController {
       );
       final accounts = await _accountsUsecase.execute(user.id.value);
       AuthUserController.to.setUser(user);
-      AuthUserController.to.setAccount(accounts);
+      AuthAccountsController.to.setAccount(accounts);
       Get.offAllNamed('/home');
     } on Exception catch (e) {
       userNameError.value = e.toString();

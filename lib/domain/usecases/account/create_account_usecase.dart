@@ -6,7 +6,7 @@ import 'package:finora/domain/services/account/account_id_generator.dart';
 import 'package:finora/domain/value_object/account/account_name.dart';
 import 'package:finora/domain/value_object/account/money.dart';
 import 'package:finora/domain/value_object/user/user_id.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 
 /// Handles the business workflow for creating a new financial account.
 ///
@@ -143,7 +143,7 @@ class CreateAccountUseCase {
     );
 
     if (isDefault) {
-      final oldDefualtAccount = AuthUserController.to.defaultAccount;
+      final oldDefualtAccount = AuthAccountsController.to.defaultAccount;
       if (oldDefualtAccount != null) {
         final oldNotDefaultAccount = oldDefualtAccount.copyWith(
           newIsDefault: false,
