@@ -14,8 +14,8 @@ class LoginContainerBody extends StatelessWidget {
     final controller = Get.find<LoginController>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-
       children: [
+        const SizedBox(height: 15),
         Obx(
           () => CustomeTextField(
             dataName: "username",
@@ -26,9 +26,7 @@ class LoginContainerBody extends StatelessWidget {
             borderColor: kSecondColor,
           ),
         ),
-        const Spacer(),
-        LoginButton(),
-        const Spacer(),
+        const LoginButton(),
         const SignUpNow(),
       ],
     );

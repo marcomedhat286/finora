@@ -80,7 +80,7 @@ class CreateAccountUseCase {
   /// Any validation failure thrown during the process is allowed to
   /// propagate to the upper layer so it can decide how the error
   /// should be presented to the user.
-  Future<Account> execute({
+  Future<List<Account>> execute({
     required String rawUserId,
     required String rawAccountName,
     required String accountTypeCode,
@@ -142,6 +142,11 @@ class CreateAccountUseCase {
       isDefault: isDefault,
     );
 
+    // Persist the newly created Account through the repository.
+    //
+    // The Use Case does not know how or where the account is stored.
+    await _accountRepository.saveAccount(account);
+
     if (isDefault) {
       final oldDefualtAccount = AuthAccountsController.to.defaultAccount;
       if (oldDefualtAccount != null) {
@@ -151,13 +156,9 @@ class CreateAccountUseCase {
         await _accountRepository.updateAccount(oldNotDefaultAccount);
       }
     }
-    // Persist the newly created Account through the repository.
-    //
-    // The Use Case does not know how or where the account is stored.
-    await _accountRepository.saveAccount(account);
 
     // Return the successfully created Domain Entity to the caller.
-    return account;
+    return await _accountRepository.getAccounts(userId.value);
   }
 
   /// Creates the default cash account for a user.
@@ -174,7 +175,9 @@ class CreateAccountUseCase {
   /// This method is useful when a new user should automatically
   /// receive a default cash account without requiring the user
   /// to manually enter its initial configuration.
-  Future<Account> createDefaultCashAccount({required String rawUserId}) async {
+  Future<List<Account>> createDefaultCashAccount({
+    required String rawUserId,
+  }) async {
     // Reuse the main account creation workflow instead of duplicating
     // the validation and persistence logic.
     return execute(

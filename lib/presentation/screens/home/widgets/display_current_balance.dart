@@ -21,7 +21,7 @@ class DisplayCurrentBalance extends StatelessWidget {
           final currentBalance =
               AuthAccountsController.to.totalCurrentBalanceAccounts;
           return Text(
-            currentBalance.toString(),
+            "${currentBalance.toString()} EG.",
             style: const TextStyle(
               color: kSecondColor,
               fontSize: smallSizeFont + 15,

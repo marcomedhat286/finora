@@ -20,7 +20,7 @@ class CurrentIncome extends StatelessWidget {
         const SizedBox(width: 7),
         Obx(
           () => Text(
-            "${controller.totalIncomes}",
+            "${controller.totalIncomes} EG.",
             style: TextStyle(
               color: kSecondColorwithAlpha,
               fontSize: smallSizeFont + 5,

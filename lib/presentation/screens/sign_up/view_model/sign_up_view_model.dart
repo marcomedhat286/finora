@@ -329,11 +329,11 @@ class SignUpViewModel extends GetxController {
       // CREATE ACCOUNT
       // ---------------------------------------------------------------------
 
-      final Account newAccount;
+      final List<Account> newAccounts;
 
       if (!_setDefaultAccount) {
         // User chose to create a custom account.
-        newAccount = await createAccountUseCase.execute(
+        newAccounts = await createAccountUseCase.execute(
           rawUserId: newUser.id.value,
           rawAccountName: accountNameController.text,
           accountTypeCode: accountType.value!.code,
@@ -343,7 +343,7 @@ class SignUpViewModel extends GetxController {
       } else {
         // User skipped account configuration.
         // Create a default Cash account instead.
-        newAccount = await createAccountUseCase.createDefaultCashAccount(
+        newAccounts = await createAccountUseCase.createDefaultCashAccount(
           rawUserId: newUser.id.value,
         );
       }
@@ -356,7 +356,7 @@ class SignUpViewModel extends GetxController {
       AuthUserController.to.setUser(newUser);
 
       // Store the newly created Account in the global account state.
-      AuthAccountsController.to.addAccount(newAccount);
+      AuthAccountsController.to.setAccount(newAccounts);
 
       // ---------------------------------------------------------------------
       // NAVIGATION

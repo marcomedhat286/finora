@@ -9,8 +9,23 @@ class IsarAccountRepository implements AccountRepository {
   final Isar _isar;
   IsarAccountRepository(this._isar);
   @override
-  Future<void> deleteAccount(String accountId) {
-    throw UnimplementedError();
+  Future<bool> deleteAccount(String accountId) async {
+    bool isDeleted = false;
+    await _isar.writeTxn(() async {
+      final existingAccount = await _isar.accountModels
+          .filter()
+          .accountIdEqualTo(accountId)
+          .findFirst();
+
+      if (existingAccount == null) {
+        throw NotFoundAccountException(
+          'this account not identical with new one',
+        );
+      }
+
+      isDeleted = await _isar.accountModels.delete(existingAccount.isarId);
+    });
+    return isDeleted;
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:finora/domain/entities/account.dart';
+import 'package:finora/presentation/dependencies/update_delete_account_dependence.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/card_content.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/card_design_painter.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/default_card_widget.dart';
@@ -95,6 +96,9 @@ class GradientCard extends StatelessWidget {
 
   void navigateToViewAccount() {
     if (_account == null) return;
-    Get.to(() => ViewAccount(account: _account, colors: colors));
+    Get.to(
+      () => ViewAccount(account: _account, colors: colors),
+      binding: UpdateDeleteAccountDependence(),
+    );
   }
 }

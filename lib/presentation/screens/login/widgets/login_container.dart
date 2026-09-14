@@ -7,21 +7,18 @@ class LoginContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: AlignmentGeometry.xy(0, 1),
-      child: Container(
-        height: 350,
-        alignment: AlignmentGeometry.topCenter,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
-        decoration: const BoxDecoration(
-          color: kSecondColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(50),
-            topRight: Radius.circular(50),
-          ),
+    return Container(
+      height: 300,
+      alignment: AlignmentGeometry.topCenter,
+      padding: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
+        color: kSecondColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
-        child: const LoginContainerBody(),
       ),
+      child: const LoginContainerBody(),
     );
   }
 }

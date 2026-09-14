@@ -12,10 +12,11 @@ class LoginBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-          colors: cardPalettesMap["addAccountPreviewCard"] ?? defaultColors,
+        gradient: RadialGradient(
+          radius: 2,
+          colors: defaultColors,
+          center: .topRight,
+          focalRadius: 0.9,
         ),
       ),
       child: Stack(

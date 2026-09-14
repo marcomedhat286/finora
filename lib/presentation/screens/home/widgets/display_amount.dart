@@ -14,7 +14,7 @@ class DisplayAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final assiostedAccount = AuthAccountsController.to.getByAccountId(
+    final assiostedAccount = AuthAccountsController.to.getAccountById(
       transaction.accountId,
     );
     return Column(

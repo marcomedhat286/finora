@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoginButton extends StatelessWidget {
-  final controller = Get.find<LoginController>();
-  LoginButton({super.key});
+  const LoginButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<LoginController>();
     return ElevatedButton(
       onPressed: () async {
         await controller.sumbitLogin();
@@ -19,11 +19,11 @@ class LoginButton extends StatelessWidget {
         fixedSize: const Size(200, 50),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
-      child: Obx(() => _returnButtonState),
+      child: Obx(() => _returnButtonState(controller)),
     );
   }
 
-  Widget get _returnButtonState {
+  Widget _returnButtonState(LoginController controller) {
     return (controller.isLoading.value)
         ? LoadingAnimationWidget.staggeredDotsWave(
             color: kSecondColor,

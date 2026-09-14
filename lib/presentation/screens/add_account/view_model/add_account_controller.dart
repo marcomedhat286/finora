@@ -74,7 +74,7 @@ class AddAccountController extends GetxController {
     isLoading.value = true;
     _resetErrors();
     try {
-      final newAccount = await createAccount.execute(
+      final newAccounts = await createAccount.execute(
         rawUserId: user.id.value,
         rawAccountName: accountName.value ?? "",
         accountTypeCode: accountType.value.code,
@@ -82,11 +82,8 @@ class AddAccountController extends GetxController {
         isDefault: isDefault.value,
       );
 
-      if (isDefault.value) {
-        AuthAccountsController.to.setNewDefaultAccount(newAccount);
-      } else {
-        AuthAccountsController.to.addAccount(newAccount);
-      }
+      AuthAccountsController.to.setAccount(newAccounts);
+
       Get.back();
     } on Exception catch (e) {
       _handleErrors(e);

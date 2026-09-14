@@ -1,6 +1,6 @@
 class NotFoundAccountException implements Exception {
-  const NotFoundAccountException(this._message);
-  final String _message;
+  const NotFoundAccountException(this.message);
+  final String message;
   @override
-  String toString() => _message;
+  String toString() => message;
 }
