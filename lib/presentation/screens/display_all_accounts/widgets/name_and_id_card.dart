@@ -1,3 +1,4 @@
+import 'package:finora/core/constants.dart';
 import 'package:flutter/material.dart';
 
 class NameAndIdCard extends StatelessWidget {
@@ -14,13 +15,19 @@ class NameAndIdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Courier',
-            letterSpacing: 1.5,
+        SizedBox(
+          width: 170,
+          child: Text(
+            title,
+            overflow: .ellipsis,
+            textAlign: .left,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: smallSizeFont + 1,
+              fontFamily: 'Courier',
+              letterSpacing: 1.2,
+              fontWeight: .w700,
+            ),
           ),
         ),
 
@@ -34,6 +41,7 @@ class NameAndIdCard extends StatelessWidget {
             fontSize: 10,
             fontFamily: 'Courier',
             letterSpacing: 2,
+            fontWeight: .bold,
           ),
         ),
       ],

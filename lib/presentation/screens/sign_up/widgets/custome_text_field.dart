@@ -12,6 +12,7 @@ class CustomeTextField extends StatelessWidget {
     this.type,
     this.onChanged,
     this.borderColor = Colors.grey,
+    this.paddingSpace = 0,
   });
   final String? errorText;
   final String dataName;
@@ -21,6 +22,7 @@ class CustomeTextField extends StatelessWidget {
   final TextInputType? type;
   final ValueChanged<String>? onChanged;
   final Color borderColor;
+  final double paddingSpace;
   static final textStyleDataName = TextStyle(
     color: Colors.grey.withAlpha(alphaValue * 4),
     fontSize: smallSizeFont,
@@ -30,7 +32,11 @@ class CustomeTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.only(
+        bottom: 15,
+        left: paddingSpace,
+        right: paddingSpace,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

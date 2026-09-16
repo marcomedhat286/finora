@@ -26,19 +26,16 @@ class UpdateAccountUsecase {
     if (rawAccountName != null &&
         rawAccountName.trim().toLowerCase() !=
             oldAccount.name.value.toLowerCase()) {
-      print("flag1");
       newAccountName = AccountName.create(rawAccountName);
     }
     if (accountTypeCode != null &&
         accountTypeCode.trim().toLowerCase() !=
             oldAccount.type.code.toLowerCase()) {
-      print("flag2");
       newAccountType = AccountType.fromCode(accountTypeCode);
     }
 
     if (rawInitialBalance != null &&
         rawInitialBalance != "${oldAccount.currentBalance.value}") {
-      print("flag3");
       final doubleValue = MoneyInputParser.parseToDouble(
         value: rawInitialBalance,
         fieldName: 'initial Balance',
@@ -50,7 +47,6 @@ class UpdateAccountUsecase {
         newAccountType != null ||
         newInitialBalance != null ||
         (isDefault != null && isDefault != oldAccount.isDefault)) {
-      print("flag4");
       newAccount = oldAccount.copyWith(
         newAccountName: newAccountName,
         newAccountType: newAccountType,
@@ -59,6 +55,7 @@ class UpdateAccountUsecase {
       if (newInitialBalance != null) {
         newAccount = newAccount.updateInitialBalance(newInitialBalance);
       }
+
       await _accountRepository.updateAccount(newAccount);
     }
 

@@ -11,25 +11,27 @@ class AddAccountTopText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomeAppBar(screenName: "Accounts"),
-        SizedBox(height: 10),
+        const Spacer(),
+        CustomeAppBar(screenName: "Accounts", needBack: false),
+        const SizedBox(height: 20),
         Obx(
           () => Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               "Manage all your accounts in one place."
               " Create new accounts effortlessly and keep your finances organized, clear, and under control. "
               "You have ${AuthAccountsController.to.userAccounts.length} accounts.",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: kSecondColor,
-                fontSize: smallSizeFont,
+                fontSize: smallSizeFont + 1,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 1,
               ),
             ),
           ),
         ),
+        const Spacer(flex: 3),
       ],
     );
   }

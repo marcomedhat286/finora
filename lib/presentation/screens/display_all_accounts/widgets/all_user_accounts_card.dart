@@ -13,9 +13,9 @@ class AllUserAccountsCard extends StatelessWidget {
       final accounts = AuthAccountsController.to.userAccounts;
       if (accounts.isEmpty) return const SizedBox();
       return Align(
-        alignment: AlignmentGeometry.xy(0, 0.9),
+        alignment: AlignmentGeometry.xy(0, 1),
         child: SizedBox(
-          height: 600,
+          height: 570,
           child: ListWheelScrollView.useDelegate(
             itemExtent: 250,
             perspective: 0.003,

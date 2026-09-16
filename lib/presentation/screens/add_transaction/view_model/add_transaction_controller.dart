@@ -1,3 +1,4 @@
+import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/enum/transaction/expense_category.dart';
 import 'package:finora/domain/enum/transaction/income_category.dart';
 import 'package:finora/domain/exception/account/invalid_amount_exception.dart';
@@ -11,6 +12,7 @@ import 'package:finora/domain/exception/user/invalid_format_exception.dart';
 import 'package:finora/domain/usecases/transaction/create_transaction_usecase.dart';
 import 'package:finora/presentation/controller/auth_accounts_controller.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/screens/add_transaction/widgets/custome_transaction_data_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,79 +33,80 @@ class AddTransactionController extends GetxController {
   final amountError = RxnString();
   final otherErrors = RxnString();
 
+  // state
   final isLoading = false.obs;
+  final selectedType = TransactionType.income.obs;
+  final isExpanded = false.obs;
+  final selectedAccount = Rxn<Account>();
 
   Future<void> sumbitAddIncome() async {
-    _resetErrors();
-    isLoading.value = true;
-    final account = AuthAccountsController.to.defaultAccount;
-    if (account == null) return;
-    try {
-      final result = await _createTransactionUseCase.createIncome(
-        account: account,
-        rawTitle: title.text,
-        description: (description.text.isNotEmpty) ? description.text : null,
-        createdAt: createdAt.value ?? DateTime.now(),
-        categoryCode: incomeCategory.value!.code,
-        rawAmount: amount.text,
-      );
+    if (selectedAccount.value != null) {
+      _resetErrors();
+      isLoading.value = true;
+      try {
+        final result = await _createTransactionUseCase.createIncome(
+          account: selectedAccount.value!,
+          rawTitle: title.text,
+          description: (description.text.isNotEmpty) ? description.text : null,
+          createdAt: createdAt.value ?? DateTime.now(),
+          categoryCode: incomeCategory.value!.code,
+          rawAmount: amount.text,
+        );
 
-      AuthAccountsController.to.updateDefaultAccount(result.account);
-      AuthUserController.to.addTransaction(result.transaction);
-
-      Get.back();
-      isLoading.value = false;
-    } on EmptyValueException catch (e) {
-      _setErrors(e);
-    } on InvalidFormatException catch (e) {
-      _setErrors(e);
-    } on InvalidIncomeTypeException catch (e) {
-      categoryError.value = e.message;
-    } on InvalidDateTimeException catch (e) {
-      createdAtError.value = e.message;
-    } on InvalidDoubleFormatException catch (e) {
-      amountError.value = e.message;
-    } on InvalidAmountException catch (e) {
-      amountError.value = e.message;
-    } finally {
-      isLoading.value = false;
+        AuthAccountsController.to.setAccount(result.accounts);
+        AuthUserController.to.addTransaction(result.transaction);
+        Get.back();
+      } on EmptyValueException catch (e) {
+        _setErrors(e);
+      } on InvalidFormatException catch (e) {
+        _setErrors(e);
+      } on InvalidIncomeTypeException catch (e) {
+        categoryError.value = e.message;
+      } on InvalidDateTimeException catch (e) {
+        createdAtError.value = e.message;
+      } on InvalidDoubleFormatException catch (e) {
+        amountError.value = e.message;
+      } on InvalidAmountException catch (e) {
+        amountError.value = e.message;
+      } finally {
+        isLoading.value = false;
+      }
     }
   }
 
   Future<void> sumbitAddExpense() async {
     _resetErrors();
     isLoading.value = true;
-    final account = AuthAccountsController.to.defaultAccount;
-    if (account == null) return;
-    try {
-      final result = await _createTransactionUseCase.createExpense(
-        account: account,
-        rawTitle: title.text,
-        description: (description.text.isNotEmpty) ? description.text : null,
-        createdAt: createdAt.value ?? DateTime.now(),
-        categoryCode: expenseCategory.value!.code,
-        rawAmount: amount.text,
-      );
-      AuthAccountsController.to.updateDefaultAccount(result.account);
-      AuthUserController.to.addTransaction(result.transaction);
-      Get.offAllNamed('/home');
-      isLoading.value = false;
-    } on EmptyValueException catch (e) {
-      _setErrors(e);
-    } on InvalidFormatException catch (e) {
-      _setErrors(e);
-    } on InvalidExpenseTypeException catch (e) {
-      categoryError.value = e.message;
-    } on InvalidDateTimeException catch (e) {
-      createdAtError.value = e.message;
-    } on InvalidDoubleFormatException catch (e) {
-      amountError.value = e.message;
-    } on InvalidAmountException catch (e) {
-      amountError.value = e.message;
-    } on InvalidMakeTransaction catch (e) {
-      otherErrors.value = e.message;
-    } finally {
-      isLoading.value = false;
+    if (selectedAccount.value != null) {
+      try {
+        final result = await _createTransactionUseCase.createExpense(
+          account: selectedAccount.value!,
+          rawTitle: title.text,
+          description: (description.text.isNotEmpty) ? description.text : null,
+          createdAt: createdAt.value ?? DateTime.now(),
+          categoryCode: expenseCategory.value!.code,
+          rawAmount: amount.text,
+        );
+        AuthAccountsController.to.setAccount(result.accounts);
+        AuthUserController.to.addTransaction(result.transaction);
+        Get.back();
+      } on EmptyValueException catch (e) {
+        _setErrors(e);
+      } on InvalidFormatException catch (e) {
+        _setErrors(e);
+      } on InvalidExpenseTypeException catch (e) {
+        categoryError.value = e.message;
+      } on InvalidDateTimeException catch (e) {
+        createdAtError.value = e.message;
+      } on InvalidDoubleFormatException catch (e) {
+        amountError.value = e.message;
+      } on InvalidAmountException catch (e) {
+        amountError.value = e.message;
+      } on InvalidMakeTransaction catch (e) {
+        otherErrors.value = e.message;
+      } finally {
+        isLoading.value = false;
+      }
     }
   }
 
@@ -135,5 +138,18 @@ class AddTransactionController extends GetxController {
     categoryError.value = null;
     createdAtError.value = null;
     otherErrors.value = null;
+  }
+
+  @override
+  void onInit() {
+    final accountsController = AuthAccountsController.to;
+    try {
+      selectedAccount.value =
+          accountsController.defaultAccount ??
+          accountsController.userAccounts.first;
+    } on StateError catch (_) {
+      selectedAccount.value = null;
+    }
+    super.onInit();
   }
 }

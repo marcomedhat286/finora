@@ -25,16 +25,18 @@ class AddTransactionButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FaIcon(icon, color: kSecondColor, size: circleBottonSize / 3),
-            const SizedBox(height: 2),
+            FaIcon(icon, color: kSecondColor, size: circleBottonSize / 2.56),
             Text(
               text,
+              overflow: .fade,
+              textAlign: .center,
               style: const TextStyle(
                 color: kSecondColor,
-                fontSize: smallSizeFont / 1.5,
+                fontSize: smallSizeFont / 1.39,
                 fontWeight: FontWeight.w500,
               ),
             ),
+            const SizedBox(height: 4),
           ],
         ),
       ),

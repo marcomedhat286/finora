@@ -30,13 +30,13 @@ import 'package:finora/domain/value_object/transaction/transaction_title.dart';
 /// balance or retrieve the transaction again.
 class TransactionCreationResult {
   /// The account after the transaction has been applied.
-  final Account account;
+  final List<Account> accounts;
 
   /// The newly created transaction.
   final Transaction transaction;
 
   const TransactionCreationResult({
-    required this.account,
+    required this.accounts,
     required this.transaction,
   });
 }
@@ -146,11 +146,12 @@ class CreateTransactionUseCase {
     // Persist the account containing the updated balance.
     await _accountRepository.updateAccount(updatedAccount);
 
-    // Return both results so the caller can immediately update its state.
-    return TransactionCreationResult(
-      account: updatedAccount,
-      transaction: expense,
+    final accounts = await _accountRepository.getAccounts(
+      updatedAccount.userId.value,
     );
+
+    // Return both results so the caller can immediately update its state.
+    return TransactionCreationResult(accounts: accounts, transaction: expense);
   }
 
   /// Creates and persists a new [Income].
@@ -213,10 +214,11 @@ class CreateTransactionUseCase {
     // Persist the account with its new balance.
     await _accountRepository.updateAccount(updatedAccount);
 
-    // Return both the created income and the updated account.
-    return TransactionCreationResult(
-      account: updatedAccount,
-      transaction: income,
+    final accounts = await _accountRepository.getAccounts(
+      updatedAccount.userId.value,
     );
+
+    // Return both the created income and the updated account.
+    return TransactionCreationResult(accounts: accounts, transaction: income);
   }
 }

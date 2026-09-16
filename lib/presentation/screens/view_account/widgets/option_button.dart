@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/view_account/view_model/update_delete_account_controller.dart';
+import 'package:finora/presentation/screens/view_account/view_model/update_delete_account_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

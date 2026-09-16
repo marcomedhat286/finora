@@ -3,7 +3,7 @@ import 'package:finora/presentation/dependencies/update_delete_account_dependenc
 import 'package:finora/presentation/screens/display_all_accounts/widgets/card_content.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/card_design_painter.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/default_card_widget.dart';
-import 'package:finora/presentation/view_account/view/view_account.dart';
+import 'package:finora/presentation/screens/view_account/view/view_account.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +16,7 @@ class GradientCard extends StatelessWidget {
   final String currentBalance;
   final List<Color> colors;
   final bool isDefault;
+  final VoidCallback? _onTap;
 
   const GradientCard({
     super.key,
@@ -27,6 +28,7 @@ class GradientCard extends StatelessWidget {
     required this.colors,
     this.isDefault = false,
     this._account,
+    this._onTap,
   });
 
   @override
@@ -36,12 +38,16 @@ class GradientCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            navigateToViewAccount();
+            if (_onTap != null) {
+              _onTap();
+            } else {
+              navigateToViewAccount();
+            }
           },
           child: Container(
             height: 200,
             width: double.infinity,
-            margin: const EdgeInsets.all(16),
+            margin: EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
 

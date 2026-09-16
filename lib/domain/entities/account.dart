@@ -201,6 +201,8 @@ class Account {
       accountName: _accountName,
       accountType: _accountType,
       createdAt: _createdAt,
+      hasTransactions: hasTransactions,
+      isDefault: isDefault,
     );
   }
 
@@ -232,7 +234,7 @@ class Account {
         // Convert the low-level Money validation failure into a
         // Domain-specific transaction failure.
         throw InvalidMakeTransaction(
-          'Transaction rejected: Insufficient funds in account $_id.',
+          'Transaction rejected: Insufficient funds in account with ${currentBalance.value} and transaction ${tx.amount.value}.',
         );
       }
     } else {
@@ -469,6 +471,7 @@ class Account {
         'balance: $_initialBalance, '
         'current: $_currentBalance, '
         'created at: $_createdAt'
+        'is Default:$isDefault'
         ')';
   }
 

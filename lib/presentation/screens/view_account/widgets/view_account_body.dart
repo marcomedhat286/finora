@@ -1,9 +1,9 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/presentation/screens/sign_up/widgets/custome_app_bar.dart';
-import 'package:finora/presentation/view_account/view_model/update_delete_account_controller.dart';
-import 'package:finora/presentation/view_account/widgets/account_option_buttons.dart';
-import 'package:finora/presentation/view_account/widgets/update_account_content.dart';
+import 'package:finora/presentation/screens/view_account/view_model/update_delete_account_controller.dart';
+import 'package:finora/presentation/screens/view_account/widgets/account_option_buttons.dart';
+import 'package:finora/presentation/screens/view_account/widgets/update_account_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

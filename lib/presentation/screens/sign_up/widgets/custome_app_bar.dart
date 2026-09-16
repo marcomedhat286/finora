@@ -8,9 +8,11 @@ class CustomeAppBar extends StatelessWidget {
     super.key,
     required this.screenName,
     this.color = kSecondColor,
+    this.needBack = true,
   });
   final String screenName;
   final Color color;
+  final bool needBack;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +20,14 @@ class CustomeAppBar extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 35, 16, 0),
       child: Row(
         children: [
-          IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: FaIcon(FontAwesomeIcons.angleLeft, color: color),
-          ),
+          needBack
+              ? IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: FaIcon(FontAwesomeIcons.angleLeft, color: color),
+                )
+              : const SizedBox(width: 7),
           const Spacer(),
           Text(
             screenName,

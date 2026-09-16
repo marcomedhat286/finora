@@ -21,6 +21,12 @@ class ManyCirclesContainer extends StatelessWidget {
           borderRadius: BorderRadius.vertical(
             bottom: Radius.elliptical(screenWidth / 2, screenHeight * .05),
           ),
+          gradient: LinearGradient(
+            begin: .topRight,
+            end: .bottomLeft,
+            colors: cardPalettesMap['primaryCardBalance'] ?? defaultColors,
+            stops: [0.2, 0.4, 0.8],
+          ),
         ),
         child: Stack(
           children: [const ConcatnateCircles(), body ?? const SizedBox()],

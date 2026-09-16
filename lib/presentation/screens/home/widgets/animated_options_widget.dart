@@ -15,9 +15,9 @@ class AnimatedOptionsWidgetState extends State<AnimatedOptionsWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
   late final Animation<Offset> _option1Slide;
-  late final Animation<Offset> _option2Slide;
+
   late final Animation<double> _option1Fade;
-  late final Animation<double> _option2Fade;
+
   bool isOpen = false;
   @override
   void initState() {
@@ -42,23 +42,9 @@ class AnimatedOptionsWidgetState extends State<AnimatedOptionsWidget>
             position: _option1Slide,
             child: AddTransactionButton(
               icon: FontAwesomeIcons.moneyBill1,
-              text: "Add Income",
+              text: "Add Transaction",
               onPressed: () async {
-                await _openPage("/addincome");
-              },
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        FadeTransition(
-          opacity: _option2Fade,
-          child: SlideTransition(
-            position: _option2Slide,
-            child: AddTransactionButton(
-              icon: FontAwesomeIcons.receipt,
-              text: "Add Expense",
-              onPressed: () async {
-                await _openPage("/addexpense");
+                await _openPage("/addtransaction");
               },
             ),
           ),
@@ -87,22 +73,9 @@ class AnimatedOptionsWidgetState extends State<AnimatedOptionsWidget>
           ),
         );
 
-    _option2Slide = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-        .animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: const Interval(0.3, 0.7),
-          ),
-        );
-
     _option1Fade = CurvedAnimation(
       parent: _animationController,
       curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
-    );
-
-    _option2Fade = CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.35, 1.0, curve: Curves.easeIn),
     );
   }
 

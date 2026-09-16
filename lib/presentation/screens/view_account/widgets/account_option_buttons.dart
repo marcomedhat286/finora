@@ -1,4 +1,4 @@
-import 'package:finora/presentation/view_account/widgets/option_button.dart';
+import 'package:finora/presentation/screens/view_account/widgets/option_button.dart';
 import 'package:flutter/material.dart';
 
 class AccountOptionButtons extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:finora/presentation/screens/add_account/widgets/check_default_account.dart';
 import 'package:finora/presentation/screens/sign_up/widgets/custome_drop_account_types.dart';
 import 'package:finora/presentation/screens/sign_up/widgets/custome_text_field.dart';
-import 'package:finora/presentation/view_account/view_model/update_delete_account_controller.dart';
+import 'package:finora/presentation/screens/view_account/view_model/update_delete_account_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,7 +1,7 @@
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/presentation/screens/display_all_accounts/widgets/gradient_card.dart';
-import 'package:finora/presentation/view_account/view_model/update_delete_account_controller.dart';
-import 'package:finora/presentation/view_account/widgets/account_content_fields.dart';
+import 'package:finora/presentation/screens/view_account/view_model/update_delete_account_controller.dart';
+import 'package:finora/presentation/screens/view_account/widgets/account_content_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

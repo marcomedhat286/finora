@@ -4,8 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class AddTransactionBar extends StatelessWidget {
-  const AddTransactionBar({super.key, required this.transactionType});
-  final String transactionType;
+  const AddTransactionBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class AddTransactionBar extends StatelessWidget {
                 ),
               ),
               Text(
-                "Add $transactionType",
+                "Add Transaction",
                 style: const TextStyle(
                   color: kSecondColor,
                   fontSize: middleSizeFont,

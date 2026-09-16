@@ -85,15 +85,8 @@ class FionarApp extends StatelessWidget {
           binding: AddAccountDependence(),
         ),
         GetPage(
-          name: '/addincome',
-          page: () => AddTransactionView(type: TransactionType.income),
-          transition: Transition.fade,
-          transitionDuration: Duration(seconds: kTranstionDuration),
-          binding: AddTransactionBinding(),
-        ),
-        GetPage(
-          name: '/addexpense',
-          page: () => AddTransactionView(type: TransactionType.expense),
+          name: '/addtransaction',
+          page: () => const AddTransactionView(),
           transition: Transition.fade,
           transitionDuration: Duration(seconds: kTranstionDuration),
           binding: AddTransactionBinding(),

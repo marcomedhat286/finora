@@ -9,11 +9,13 @@ class CustomeDatePickerField extends StatefulWidget {
     required this.errorText,
     required this.onDateSelected,
     this.initialDate,
+    this.paddingSpace = 0,
   });
   final String dataName;
   final String? errorText;
   final void Function(DateTime date) onDateSelected;
   final DateTime? initialDate;
+  final double paddingSpace;
 
   @override
   State<CustomeDatePickerField> createState() => _CustomeDatePickerFieldState();
@@ -35,7 +37,11 @@ class _CustomeDatePickerFieldState extends State<CustomeDatePickerField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.only(
+        bottom: 15,
+        left: widget.paddingSpace,
+        right: widget.paddingSpace,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
