@@ -20,9 +20,7 @@ import 'package:finora/presentation/screens/splash_view/view/splash_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await IsarDatabase.init();
-
   runApp(const FionarApp());
 }
 
@@ -68,7 +66,7 @@ class FionarApp extends StatelessWidget {
           page: () => HomeView(),
           transition: Transition.fade,
           transitionDuration: Duration(seconds: kTranstionDuration),
-          binding: BottomAppBarControllerDependence(),
+          binding: HomeControllersDependence(),
         ),
         GetPage(
           name: '/edituserinfo',

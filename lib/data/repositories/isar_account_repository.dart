@@ -42,8 +42,8 @@ class IsarAccountRepository implements AccountRepository {
 
   @override
   Future<void> saveAccount(Account account) async {
-    final accountModel = AccountMapper.toModel(account);
     await _isar.writeTxn(() async {
+      final accountModel = AccountMapper.toModel(account);
       await _isar.accountModels.put(accountModel);
     });
   }

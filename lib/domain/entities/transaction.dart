@@ -146,4 +146,8 @@ abstract class Transaction {
     amount,
     category,
   );
+
+  static void sortByCreatedTime(List<Transaction> txs) {
+    txs.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  }
 }

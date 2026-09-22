@@ -1,5 +1,6 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/presentation/controller/auth_accounts_controller.dart';
+import 'package:finora/presentation/controller/auth_transactions_controller.dart';
 
 import 'package:finora/presentation/screens/home/widgets/user_full_name.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
@@ -23,6 +24,7 @@ class HomeBar extends StatelessWidget {
               onPressed: () {
                 AuthUserController.to.logout();
                 AuthAccountsController.to.logout();
+                AuthTransactionsController.to.logOut();
               },
               icon: const FaIcon(
                 FontAwesomeIcons.rightFromBracket,

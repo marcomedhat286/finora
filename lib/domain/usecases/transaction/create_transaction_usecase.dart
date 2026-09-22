@@ -1,3 +1,4 @@
+import 'package:finora/core/constants.dart';
 import 'package:finora/core/utils/parse/money_input_parser.dart';
 
 import 'package:finora/domain/entities/account.dart';
@@ -33,11 +34,11 @@ class TransactionCreationResult {
   final List<Account> accounts;
 
   /// The newly created transaction.
-  final Transaction transaction;
+  final GetAllTransactionsResult transactionsResult;
 
   const TransactionCreationResult({
     required this.accounts,
-    required this.transaction,
+    required this.transactionsResult,
   });
 }
 
@@ -141,17 +142,26 @@ class CreateTransactionUseCase {
     final updatedAccount = account.applyNewTransaction(expense);
 
     // Persist the transaction only after the domain operation succeeds.
-    await _transactionRepository.saveTransaction(expense);
-
-    // Persist the account containing the updated balance.
-    await _accountRepository.updateAccount(updatedAccount);
+    await _transactionRepository.saveTransaction(
+      transaction: expense,
+      account: updatedAccount,
+    );
 
     final accounts = await _accountRepository.getAccounts(
       updatedAccount.userId.value,
     );
 
+    final transactionsResult = await _transactionRepository
+        .getAllTransactionsForUser(
+          accounts: accounts,
+          limit: limitTransactionView,
+        );
+
     // Return both results so the caller can immediately update its state.
-    return TransactionCreationResult(accounts: accounts, transaction: expense);
+    return TransactionCreationResult(
+      accounts: accounts,
+      transactionsResult: transactionsResult,
+    );
   }
 
   /// Creates and persists a new [Income].
@@ -209,16 +219,25 @@ class CreateTransactionUseCase {
     final updatedAccount = account.applyNewTransaction(income);
 
     // Persist the newly created income transaction.
-    await _transactionRepository.saveTransaction(income);
-
-    // Persist the account with its new balance.
-    await _accountRepository.updateAccount(updatedAccount);
+    await _transactionRepository.saveTransaction(
+      transaction: income,
+      account: updatedAccount,
+    );
 
     final accounts = await _accountRepository.getAccounts(
       updatedAccount.userId.value,
     );
 
+    final transactionsResult = await _transactionRepository
+        .getAllTransactionsForUser(
+          accounts: accounts,
+          limit: limitTransactionView,
+        );
+
     // Return both the created income and the updated account.
-    return TransactionCreationResult(accounts: accounts, transaction: income);
+    return TransactionCreationResult(
+      accounts: accounts,
+      transactionsResult: transactionsResult,
+    );
   }
 }

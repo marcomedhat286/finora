@@ -1,5 +1,5 @@
 import 'package:finora/core/constants.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_transactions_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ class CurrentIncome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = AuthUserController.to;
+    final controller = AuthTransactionsController.to;
     return Row(
       children: [
         FaIcon(

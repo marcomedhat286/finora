@@ -1,16 +1,21 @@
+import 'package:finora/core/constants.dart';
 import 'package:finora/domain/usecases/account/get_accounts_usecase.dart';
+import 'package:finora/domain/usecases/transaction/get_transaction_usecase.dart';
 import 'package:finora/domain/usecases/user/get_user_usecase.dart';
 import 'package:finora/presentation/controller/auth_accounts_controller.dart';
+import 'package:finora/presentation/controller/auth_transactions_controller.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   final GetUserByUsernameUseCase _getUserByUsernameUseCase;
-  final GetAccountsUsecase _accountsUsecase;
+  final GetAccountsUsecase _getAccountsUsecase;
+  final GetTransactionUsecase _getTransactionUsecase;
   LoginController({
     required this._getUserByUsernameUseCase,
-    required this._accountsUsecase,
+    required this._getAccountsUsecase,
+    required this._getTransactionUsecase,
   });
 
   final TextEditingController userNameController = TextEditingController();
@@ -24,9 +29,19 @@ class LoginController extends GetxController {
       final user = await _getUserByUsernameUseCase.execute(
         userNameController.text,
       );
-      final accounts = await _accountsUsecase.execute(user.id.value);
       AuthUserController.to.setUser(user);
-      AuthAccountsController.to.setAccount(accounts);
+
+      final accountsResult = await _getAccountsUsecase.execute(user.id.value);
+
+      final transactionsResult = await _getTransactionUsecase
+          .getLimitTransactions(
+            accounts: accountsResult,
+            limit: limitTransactionView,
+          );
+
+      AuthAccountsController.to.setAccount(accountsResult);
+      AuthTransactionsController.to.setTransactions(transactionsResult);
+
       Get.offAllNamed('/home');
     } on Exception catch (e) {
       userNameError.value = e.toString();

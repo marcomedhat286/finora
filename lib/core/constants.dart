@@ -19,6 +19,7 @@ final int alphaValue = 40;
 const double circleBottonSize = 80;
 const double bottomAppBarHeight = 120;
 const double circleAvatarRadius = 100;
+const int limitTransactionView = 5;
 const defaultColors = [
   Color.fromARGB(255, 44, 97, 92),
   Color.fromARGB(255, 218, 165, 32),
@@ -34,6 +35,11 @@ final Map<String, List<Color>> cardPalettesMap = {
     Color.fromARGB(255, 44, 97, 92),
     Color.fromARGB(255, 184, 115, 51),
     Color.fromARGB(255, 38, 42, 43),
+  ],
+  "viewTransaction": [
+    Color.fromARGB(255, 44, 97, 92),
+    Color.fromARGB(255, 160, 67, 84),
+    Color.fromARGB(255, 235, 220, 190),
   ],
 };
 

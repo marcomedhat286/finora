@@ -1,14 +1,35 @@
 // domain/repositories/transaction_repository.dart
+import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/entities/transaction.dart';
 
-abstract class TransactionRepository {
-  Future<void> saveTransaction(Transaction transaction);
+final class GetAllTransactionsResult {
+  final int allTransactionsLength;
+  final List<Transaction> alltransactions;
+  final double totalExpense;
+  final double totalIncome;
+  const GetAllTransactionsResult({
+    required this.allTransactionsLength,
+    required this.alltransactions,
+    required this.totalExpense,
+    required this.totalIncome,
+  });
 }
 
-class FakeTransactionRepository implements TransactionRepository {
-  @override
-  Future<void> saveTransaction(Transaction transaction) async {
-    await Future.delayed(Duration(seconds: 4));
-    print("the new transaction has been saved : ${transaction.id}");
-  }
+abstract class TransactionRepository {
+  Future<void> saveTransaction({
+    required Transaction transaction,
+    required Account account,
+  });
+  Future<void> updateTransaction(Transaction tx);
+  Future<void> deleteTransaction(String txId);
+
+  Future<GetAllTransactionsResult> getAllTransactionsForUser({
+    required List<Account> accounts,
+    int? limit,
+  });
+
+  Future<GetAllTransactionsResult> getAllTransactionsForAccount({
+    required String accountId,
+    int? limit,
+  });
 }

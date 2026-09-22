@@ -3,6 +3,7 @@ import 'package:finora/domain/enum/transaction/expense_category.dart';
 import 'package:finora/domain/enum/transaction/income_category.dart';
 import 'package:finora/domain/exception/account/invalid_amount_exception.dart';
 import 'package:finora/domain/exception/account/invalid_double_format_exception.dart';
+import 'package:finora/domain/exception/account/not_found_account_exception.dart';
 import 'package:finora/domain/exception/transaction/invalid_expense_type_exception.dart';
 import 'package:finora/domain/exception/transaction/invalid_income_type_exception.dart';
 import 'package:finora/domain/exception/transaction/invalid_make_transaction.dart';
@@ -11,7 +12,7 @@ import 'package:finora/domain/exception/user/invalid_date_time_exception.dart';
 import 'package:finora/domain/exception/user/invalid_format_exception.dart';
 import 'package:finora/domain/usecases/transaction/create_transaction_usecase.dart';
 import 'package:finora/presentation/controller/auth_accounts_controller.dart';
-import 'package:finora/presentation/controller/auth_user_controller.dart';
+import 'package:finora/presentation/controller/auth_transactions_controller.dart';
 import 'package:finora/presentation/screens/add_transaction/widgets/custome_transaction_data_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,7 +55,11 @@ class AddTransactionController extends GetxController {
         );
 
         AuthAccountsController.to.setAccount(result.accounts);
-        AuthUserController.to.addTransaction(result.transaction);
+
+        AuthTransactionsController.to.setTransactions(
+          result.transactionsResult,
+        );
+
         Get.back();
       } on EmptyValueException catch (e) {
         _setErrors(e);
@@ -68,6 +73,8 @@ class AddTransactionController extends GetxController {
         amountError.value = e.message;
       } on InvalidAmountException catch (e) {
         amountError.value = e.message;
+      } on NotFoundAccountException catch (e) {
+        otherErrors.value = e.message;
       } finally {
         isLoading.value = false;
       }
@@ -88,7 +95,10 @@ class AddTransactionController extends GetxController {
           rawAmount: amount.text,
         );
         AuthAccountsController.to.setAccount(result.accounts);
-        AuthUserController.to.addTransaction(result.transaction);
+        AuthTransactionsController.to.setTransactions(
+          result.transactionsResult,
+        );
+
         Get.back();
       } on EmptyValueException catch (e) {
         _setErrors(e);
@@ -103,6 +113,8 @@ class AddTransactionController extends GetxController {
       } on InvalidAmountException catch (e) {
         amountError.value = e.message;
       } on InvalidMakeTransaction catch (e) {
+        otherErrors.value = e.message;
+      } on NotFoundAccountException catch (e) {
         otherErrors.value = e.message;
       } finally {
         isLoading.value = false;

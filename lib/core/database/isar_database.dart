@@ -1,7 +1,7 @@
 import 'package:finora/data/models/account_model.dart';
+import 'package:finora/data/models/transaction_model.dart';
 import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../../data/models/user_model.dart';
 
 class IsarDatabase {
@@ -15,7 +15,7 @@ class IsarDatabase {
     final directory = await getApplicationDocumentsDirectory();
 
     _instance = await Isar.open(
-      [UserModelSchema, AccountModelSchema],
+      [UserModelSchema, AccountModelSchema, TransactionModelSchema],
       name: 'Finora',
       directory: directory.path,
       inspector: true,
