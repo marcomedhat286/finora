@@ -19,27 +19,23 @@ class UpdateAccountContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final updateAccountController = Get.find<UpdateDeleteAccountController>();
-    return Flexible(
-      child: SingleChildScrollView(
-        child: Obx(
-          () => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GradientCard(
-                type:
-                    updateAccountController.accountType.value?.displayName ??
-                    "Type",
-                title: updateAccountController.accountName.value ?? "Card Name",
-                accountId: _account.id.value,
-                createdAt: _account.createdAt,
-                currentBalance:
-                    "${updateAccountController.accountInitialBalance.value}",
-                colors: _colors,
-              ),
-              const AccountContentFields(),
-            ],
+    return Obx(
+      () => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GradientCard(
+            type:
+                updateAccountController.accountType.value?.displayName ??
+                "Type",
+            title: updateAccountController.accountName.value ?? "Card Name",
+            accountId: _account.id.value,
+            createdAt: _account.createdAt,
+            currentBalance:
+                "${updateAccountController.accountInitialBalance.value}",
+            colors: _colors,
           ),
-        ),
+          const AccountContentFields(),
+        ],
       ),
     );
   }

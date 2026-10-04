@@ -1,5 +1,5 @@
+import 'package:finora/domain/criteria/get_all_transactions_result.dart';
 import 'package:finora/domain/entities/transaction.dart';
-import 'package:finora/domain/repositories/transaction_repository.dart';
 import 'package:get/get.dart';
 
 class AuthTransactionsController extends GetxController {
@@ -10,7 +10,6 @@ class AuthTransactionsController extends GetxController {
   final transactionLength = 0.obs;
   final _totalIncome = 0.0.obs;
   final _totalExpense = 0.0.obs;
-  late Worker _transactionsWorker;
 
   void setTransactions(GetAllTransactionsResult result) {
     _userTransaction.clear();
@@ -25,23 +24,12 @@ class AuthTransactionsController extends GetxController {
   double get totalExpenses => _totalExpense.value;
 
   List<Transaction> get userTransactions => _userTransaction.toList();
+  RxList<Transaction> get RxUserTransactions => _userTransaction;
 
-  void logOut() {
-    print("-" * 30);
+  void logout() {
     _userTransaction.clear();
     transactionLength.value = 0;
     _totalExpense.value = 0;
     _totalIncome.value = 0;
-    super.dispose();
-  }
-
-  void updateState(WorkerCallback<List<Transaction>> callback) {
-    _transactionsWorker = ever(_userTransaction, callback);
-  }
-
-  @override
-  void onClose() {
-    _transactionsWorker.dispose();
-    super.onClose();
   }
 }

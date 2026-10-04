@@ -34,7 +34,7 @@ class LoginController extends GetxController {
       final accountsResult = await _getAccountsUsecase.execute(user.id.value);
 
       final transactionsResult = await _getTransactionUsecase
-          .getLimitTransactions(
+          .getLimitTransactionsUser(
             accounts: accountsResult,
             limit: limitTransactionView,
           );

@@ -13,38 +13,27 @@ class DisplayInfoCardBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = cardPalettesMap["primaryCardBalance"]?.sublist(0, 2);
     colors?.add(Colors.white);
-    return Align(
-      alignment: AlignmentGeometry.xy(0, -0.3),
-      child: Container(
-        width: double.infinity,
-        height: 600,
-        margin: const EdgeInsets.symmetric(horizontal: 30),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            colors: colors ?? defaultColors,
-            transform: const GradientRotation(-0.75),
-            stops: [0.3, 0.7, 0.9],
-            begin: .topRight,
-            end: .centerLeft,
-          ),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 50,
-              color: Colors.blueGrey,
-              offset: Offset.zero,
-            ),
-          ],
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.horizontal(
+          left: Radius.circular(20),
+          right: Radius.circular(20),
         ),
+        gradient: LinearGradient(
+          colors: colors ?? defaultColors,
+          transform: const GradientRotation(-0.75),
+          stops: [0.3, 0.7, 0.9],
+          begin: .topRight,
+          end: .centerLeft,
+        ),
+      ),
 
-        child: Column(
-          children: [
-            TransactionIcon(categoryType: _transaction.category),
-            const SizedBox(height: 10),
-            TransactionInformationContainer(transaction: _transaction),
-          ],
-        ),
+      child: Column(
+        children: [
+          TransactionIcon(categoryType: _transaction.category),
+          const SizedBox(height: 10),
+          TransactionInformationContainer(transaction: _transaction),
+        ],
       ),
     );
   }

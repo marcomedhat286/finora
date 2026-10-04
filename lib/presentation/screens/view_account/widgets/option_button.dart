@@ -18,7 +18,7 @@ class OptionButton extends StatelessWidget {
             await controller.sumbitUpdate();
             break;
           case "delete":
-            await controller.sumbitDelete();
+            await showConfirmMessage(controller);
             break;
           default:
         }
@@ -51,5 +51,45 @@ class OptionButton extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           );
+  }
+
+  Future<void> showConfirmMessage(
+    UpdateDeleteAccountController controller,
+  ) async {
+    const style = TextStyle(color: kPrimaryColor, fontWeight: .bold);
+    final result = await Get.dialog<bool>(
+      AlertDialog(
+        backgroundColor: kPrimaryColor3,
+        title: const Text('Confirm', style: style),
+        content: const Text(
+          "If u delete this account, you will also delete all its transactions. "
+          "Are you sure you want to delete this account?",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(result: false),
+            child: const Text('Cancel', style: style),
+          ),
+          ElevatedButton(
+            onPressed: () => Get.back(result: true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kPrimaryColor,
+              fixedSize: const Size(150, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: kSecondColor, fontWeight: .bold),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true) {
+      await controller.sumbitDelete();
+    }
   }
 }

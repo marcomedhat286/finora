@@ -1,5 +1,5 @@
 import 'package:finora/domain/enum/transaction/transaction_category_type.dart';
-import 'package:finora/presentation/extensions/category_ui_extension.dart';
+import 'package:finora/presentation/extensions/category_transaction_ui_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -12,7 +12,7 @@ class TransactionIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     const double fullRadiusCricle = 175;
     return Padding(
-      padding: const EdgeInsets.only(top: 40.0),
+      padding: const EdgeInsets.only(top: 30.0),
       child: SizedBox(
         height: fullRadiusCricle,
         width: fullRadiusCricle,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const appName = "Fionra";
 const kPrimaryColor = Color.fromARGB(255, 77, 126, 122);
-const kPrimaryColorShadow = Color.fromARGB(255, 132, 158, 89);
+const kPrimaryColor3 = Color.fromARGB(255, 225, 205, 160);
 const kPrimaryColor2 = Color.fromARGB(255, 44, 97, 92);
 const kSecondColor = Colors.white;
 final kSecondColorwithAlpha = kSecondColor.withAlpha(alphaValue * 5);
@@ -19,6 +19,7 @@ final int alphaValue = 40;
 const double circleBottonSize = 80;
 const double bottomAppBarHeight = 120;
 const double circleAvatarRadius = 100;
+final double radiusIcon = 48;
 const int limitTransactionView = 5;
 const defaultColors = [
   Color.fromARGB(255, 44, 97, 92),

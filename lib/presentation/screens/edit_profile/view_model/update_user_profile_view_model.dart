@@ -188,7 +188,8 @@ class UpdateUserInfoViewModel extends GetxController {
   ///
   /// The UI calls this method after the user selects a date
   /// from a date picker.
-  void setBirthDate(DateTime date) {
+  void setBirthDate(DateTime? date) {
+    if (date == null) return;
     birthDate.value = date;
   }
 

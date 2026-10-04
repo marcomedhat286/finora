@@ -13,6 +13,5 @@ class AuthUserController extends GetxController {
   User? get currentUser => _currentUser.value;
   void logout() {
     _currentUser.value = null;
-    Get.offAllNamed('/welcome');
   }
 }

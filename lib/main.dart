@@ -5,7 +5,7 @@ import 'package:finora/presentation/dependencies/login_dependence.dart';
 import 'package:finora/presentation/screens/login/view/login_view.dart';
 import 'package:finora/presentation/screens/add_account/view/add_account_view.dart';
 import 'package:finora/presentation/dependencies/add_transaction_dependence.dart';
-import 'package:finora/presentation/dependencies/bottom_app_bar_controller_dependence.dart';
+import 'package:finora/presentation/dependencies/home_controllers_dependence.dart';
 import 'package:finora/presentation/dependencies/edit_user_info_dependence.dart';
 import 'package:finora/presentation/dependencies/add_account_dependence.dart';
 import 'package:finora/presentation/screens/edit_profile/view/edit_user_profile_view.dart';
@@ -51,7 +51,6 @@ class FionarApp extends StatelessWidget {
           name: '/login',
           page: () => const LoginView(),
           transition: Transition.fade,
-          transitionDuration: Duration(seconds: kTranstionDuration),
           binding: LoginDependence(),
         ),
         GetPage(
@@ -79,14 +78,12 @@ class FionarApp extends StatelessWidget {
           name: '/addaccount',
           page: () => AddAccountView(),
           transition: Transition.fade,
-          transitionDuration: Duration(seconds: kTranstionDuration),
           binding: AddAccountDependence(),
         ),
         GetPage(
           name: '/addtransaction',
           page: () => const AddTransactionView(),
           transition: Transition.fade,
-          transitionDuration: Duration(seconds: kTranstionDuration),
           binding: AddTransactionBinding(),
         ),
       ],

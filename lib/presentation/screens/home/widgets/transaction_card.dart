@@ -1,12 +1,12 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/domain/entities/transaction.dart';
 import 'package:finora/domain/enum/transaction/income_category.dart';
-import 'package:finora/presentation/display_transaction_info_card.dart/view/display_info_card_view.dart';
+import 'package:finora/presentation/core/show_dialog.dart';
+import 'package:finora/presentation/display_transaction_info_card.dart/widgets/display_transaction_info_card_body.dart';
 import 'package:finora/presentation/screens/home/widgets/category_icon.dart';
 import 'package:finora/presentation/screens/home/widgets/display_amount.dart';
 import 'package:finora/presentation/screens/home/widgets/transaction_information.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
@@ -18,12 +18,11 @@ class TransactionCard extends StatelessWidget {
     final isIncome = transaction.category.runtimeType == IncomeCategory;
 
     return InkWell(
-      onTap: () {
-        Get.to(
-          () => DisplayInfoCardView(transaction: transaction),
-          transition: Transition.fade,
-          duration: Duration(seconds: kTranstionDuration),
-          opaque: false,
+      onTap: () async {
+        await ShowDialog.showFlitterOptionsDialog(
+          buildContext: context,
+          body: DisplayInfoCardBody(transaction: transaction),
+          ratio: 0.75,
         );
       },
       child: Container(

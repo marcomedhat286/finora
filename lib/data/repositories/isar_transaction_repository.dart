@@ -2,8 +2,11 @@ import 'package:finora/data/mapper/account_mapper.dart';
 import 'package:finora/data/mapper/transaction_mapper.dart';
 import 'package:finora/data/models/account_model.dart';
 import 'package:finora/data/models/transaction_model.dart';
+import 'package:finora/domain/criteria/get_all_transactions_result.dart';
+import 'package:finora/domain/criteria/transaction_search_criteria.dart';
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/entities/transaction.dart';
+import 'package:finora/domain/enum/transaction/transaction_sort_option.dart';
 import 'package:finora/domain/exception/account/not_found_account_exception.dart';
 
 import 'package:finora/domain/repositories/transaction_repository.dart';
@@ -40,6 +43,280 @@ class IsarTransactionRepository implements TransactionRepository {
   }
 
   @override
+  Future<GetAllTransactionsResult> getAllTransactionsUser({
+    required List<Account> accounts,
+    int? limit,
+  }) async {
+    if (accounts.isNotEmpty) {
+      final accountIds = accounts.map((account) => account.id.value).toList();
+
+      final txModels = await _isar.transactionModels
+          .filter()
+          .anyOf(
+            accountIds,
+            (query, accountId) => query.accountIdEqualTo(accountId),
+          )
+          .sortByCreatedAtDesc()
+          .findAll();
+
+      final transactions = txModels.map(TransactionMapper.toEntity).toList();
+
+      if (limit != null && transactions.length > limit) {
+        return GetAllTransactionsResult(
+          allTransactionsLength: transactions.length,
+          alltransactions: transactions.take(limit).toList(),
+          totalExpense: Transaction.getTotalExpenseAmount(transactions),
+          totalIncome: Transaction.getTotalIncomesAmount(transactions),
+        );
+      } else {
+        return GetAllTransactionsResult(
+          allTransactionsLength: transactions.length,
+          alltransactions: transactions,
+          totalExpense: Transaction.getTotalExpenseAmount(transactions),
+          totalIncome: Transaction.getTotalIncomesAmount(transactions),
+        );
+      }
+    }
+    return GetAllTransactionsResult(
+      allTransactionsLength: 0,
+      alltransactions: [],
+      totalExpense: 0.0,
+      totalIncome: 0.0,
+    );
+  }
+
+  @override
+  Future<List<Transaction>> getOffestLimitTransactionUser({
+    required List<Account> accounts,
+    required int offest,
+    required int limit,
+  }) async {
+    if (accounts.isNotEmpty) {
+      final accountsId = accounts.map((account) => account.id.value).toList();
+      final offestLimitedTransactions = await _isar.transactionModels
+          .filter()
+          .anyOf(
+            accountsId,
+            (query, accountId) => query.accountIdEqualTo(accountId),
+          )
+          .sortByCreatedAtDesc()
+          .offset(offest)
+          .limit(limit)
+          .findAll();
+      return offestLimitedTransactions.map(TransactionMapper.toEntity).toList();
+    }
+    return [];
+  }
+
+  @override
+  Future<GetAllTransactionsResult> getAllTransactionsAccount({
+    required String accountId,
+    int? limit,
+  }) async {
+    final txModels = await _isar.transactionModels
+        .filter()
+        .accountIdEqualTo(accountId)
+        .sortByCreatedAtDesc()
+        .findAll();
+
+    final transactions = txModels.map(TransactionMapper.toEntity).toList();
+
+    if (limit != null && transactions.length > limit) {
+      return GetAllTransactionsResult(
+        allTransactionsLength: transactions.length,
+        alltransactions: transactions.take(limit).toList(),
+        totalExpense: Transaction.getTotalExpenseAmount(transactions),
+        totalIncome: Transaction.getTotalIncomesAmount(transactions),
+      );
+    } else {
+      return GetAllTransactionsResult(
+        allTransactionsLength: transactions.length,
+        alltransactions: transactions,
+        totalExpense: Transaction.getTotalExpenseAmount(transactions),
+        totalIncome: Transaction.getTotalIncomesAmount(transactions),
+      );
+    }
+  }
+
+  @override
+  Future<List<Transaction>> getOffestLimitTransactionAccount({
+    required String accountId,
+    required int offest,
+    required int limit,
+  }) async {
+    final offestLimitedTransactions = await _isar.transactionModels
+        .filter()
+        .accountIdEqualTo(accountId)
+        .sortByCreatedAtDesc()
+        .offset(offest)
+        .limit(limit)
+        .findAll();
+    return offestLimitedTransactions.map(TransactionMapper.toEntity).toList();
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  @override
+  Future<List<Transaction>> searchTransactions(
+    TransactionSearchCriteria criteria,
+  ) async {
+    if (criteria.accountIds != null && criteria.accountIds!.isEmpty) {
+      return [];
+    }
+    final List<TransactionModel> models;
+    if (criteria.sortOption == TransactionSortOption.newest) {
+      models = await _isar.transactionModels
+          .filter()
+          // =========================
+          // Account Filter
+          // =========================
+          .optional(
+            criteria.accountIds != null && criteria.accountIds!.isNotEmpty,
+
+            (query) => query.anyOf(criteria.accountIds!, (query, accountId) {
+              return query.accountIdEqualTo(accountId);
+            }),
+          )
+          // =========================
+          // Transaction Type Filter
+          // =========================
+          .optional(
+            criteria.type != null,
+            (query) => query.typeEqualTo(criteria.type!),
+          )
+          // =========================
+          // Date Range Filter
+          // =========================
+          .optional(
+            criteria.name != null,
+            (query) => query.titleContains(criteria.name!),
+          )
+          .optional(criteria.dateRange != null, (query) {
+            if (criteria.dateRange?.from != null) {
+              final fromDate = criteria.dateRange!.from!;
+              final toDate = criteria.dateRange!.to;
+              query = query.createdAtBetween(
+                fromDate,
+                toDate,
+                includeLower: true,
+                includeUpper: true,
+              );
+            } else {
+              query = query.createdAtLessThan(
+                criteria.dateRange!.to,
+                include: true,
+              );
+            }
+            return query;
+          })
+          // =========================
+          // Amount Range Filter
+          // =========================
+          .optional(criteria.amountRange != null, (query) {
+            final amountRange = criteria.amountRange!;
+
+            if (amountRange.max != null && amountRange.min != null) {
+              query = query.amountBetween(
+                amountRange.min!,
+                amountRange.max!,
+                includeLower: true,
+                includeUpper: true,
+              );
+            } else if (amountRange.max != null && amountRange.min == null) {
+              query = query.amountLessThan(amountRange.max!, include: true);
+            } else if (amountRange.max == null && amountRange.min != null) {
+              query = query.amountGreaterThan(amountRange.min!, include: true);
+            }
+            return query;
+          })
+          // =========================
+          // Sorting
+          // =========================
+          .sortByCreatedAtDesc()
+          // =========================
+          // Execute Query
+          // =========================
+          .findAll();
+    } else {
+      models = await _isar.transactionModels
+          .filter()
+          // =========================
+          // Account Filter
+          // =========================
+          .optional(
+            criteria.accountIds != null && criteria.accountIds!.isNotEmpty,
+
+            (query) => query.anyOf(criteria.accountIds!, (query, accountId) {
+              return query.accountIdEqualTo(accountId);
+            }),
+          )
+          // =========================
+          // Transaction Type Filter
+          // =========================
+          .optional(
+            criteria.type != null,
+            (query) => query.typeEqualTo(criteria.type!),
+          )
+          // =========================
+          // Date Range Filter
+          // =========================
+          .optional(
+            criteria.name != null,
+            (query) => query.titleContains(criteria.name!),
+          )
+          .optional(criteria.dateRange != null, (query) {
+            if (criteria.dateRange?.from != null) {
+              final fromDate = criteria.dateRange!.from!;
+              final toDate = criteria.dateRange!.to;
+              query = query.createdAtBetween(
+                fromDate,
+                toDate,
+                includeLower: true,
+                includeUpper: true,
+              );
+            } else {
+              query = query.createdAtLessThan(
+                criteria.dateRange!.to,
+                include: true,
+              );
+            }
+            return query;
+          })
+          // =========================
+          // Amount Range Filter
+          // =========================
+          .optional(criteria.amountRange != null, (query) {
+            final amountRange = criteria.amountRange!;
+
+            if (amountRange.max != null && amountRange.min != null) {
+              query = query.amountBetween(
+                amountRange.min!,
+                amountRange.max!,
+                includeLower: true,
+                includeUpper: true,
+              );
+            } else if (amountRange.max != null && amountRange.min == null) {
+              query = query.amountLessThan(amountRange.max!, include: true);
+            } else if (amountRange.max == null && amountRange.min != null) {
+              query = query.amountGreaterThan(amountRange.min!, include: true);
+            }
+            return query;
+          })
+          // =========================
+          // Sorting
+          // =========================
+          .sortByCreatedAt()
+          // =========================
+          // Execute Query
+          // =========================
+          .findAll();
+    }
+
+    return models.map(TransactionMapper.toEntity).toList();
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////
+  ///
+  @override
   Future<void> deleteTransaction(String txId) {
     throw UnimplementedError();
   }
@@ -47,70 +324,5 @@ class IsarTransactionRepository implements TransactionRepository {
   @override
   Future<void> updateTransaction(Transaction tx) {
     throw UnimplementedError();
-  }
-
-  @override
-  Future<GetAllTransactionsResult> getAllTransactionsForUser({
-    required List<Account> accounts,
-    int? limit,
-  }) async {
-    List<Transaction> txs = [];
-    if (accounts.isNotEmpty) {
-      for (final account in accounts) {
-        final txsAccount = await getAllTransactionsForAccount(
-          accountId: account.id.value,
-        );
-        txs.addAll(txsAccount.alltransactions);
-      }
-    }
-
-    Transaction.sortByCreatedTime(txs);
-    if (limit != null && txs.length > limit) {
-      return GetAllTransactionsResult(
-        allTransactionsLength: txs.length,
-        alltransactions: txs.take(limit).toList(),
-        totalExpense: Transaction.getTotalExpenseAmount(txs),
-        totalIncome: Transaction.getTotalIncomesAmount(txs),
-      );
-    }
-
-    return GetAllTransactionsResult(
-      allTransactionsLength: txs.length,
-      alltransactions: txs,
-      totalExpense: Transaction.getTotalExpenseAmount(txs),
-      totalIncome: Transaction.getTotalIncomesAmount(txs),
-    );
-  }
-
-  @override
-  Future<GetAllTransactionsResult> getAllTransactionsForAccount({
-    required String accountId,
-    int? limit,
-  }) async {
-    final allTxs = await _isar.transactionModels
-        .filter()
-        .accountIdEqualTo(accountId)
-        .findAll();
-
-    final transactionEntities = allTxs
-        .map((txModel) => TransactionMapper.toEntity(txModel))
-        .toList();
-    Transaction.sortByCreatedTime(transactionEntities);
-
-    if (limit != null && limit > allTxs.length) {
-      return GetAllTransactionsResult(
-        allTransactionsLength: allTxs.length,
-        alltransactions: transactionEntities.take(limit).toList(),
-        totalExpense: Transaction.getTotalExpenseAmount(transactionEntities),
-        totalIncome: Transaction.getTotalIncomesAmount(transactionEntities),
-      );
-    } else {
-      return GetAllTransactionsResult(
-        allTransactionsLength: allTxs.length,
-        alltransactions: transactionEntities,
-        totalExpense: Transaction.getTotalExpenseAmount(transactionEntities),
-        totalIncome: Transaction.getTotalIncomesAmount(transactionEntities),
-      );
-    }
   }
 }

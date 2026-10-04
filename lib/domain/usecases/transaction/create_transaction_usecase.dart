@@ -1,10 +1,10 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/core/utils/parse/money_input_parser.dart';
+import 'package:finora/domain/criteria/transaction_creation_result.dart';
 
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/entities/expense.dart';
 import 'package:finora/domain/entities/income.dart';
-import 'package:finora/domain/entities/transaction.dart';
 
 import 'package:finora/domain/enum/transaction/expense_category.dart';
 import 'package:finora/domain/enum/transaction/income_category.dart';
@@ -18,29 +18,6 @@ import 'package:finora/domain/validators/user/validate_date.dart';
 
 import 'package:finora/domain/value_object/account/money.dart';
 import 'package:finora/domain/value_object/transaction/transaction_title.dart';
-
-/// Represents the result of a successful transaction creation.
-///
-/// Creating a transaction affects two domain objects:
-///
-/// 1. The newly created [Transaction].
-/// 2. The [Account] after applying the transaction's financial effect.
-///
-/// Returning both objects allows the application layer or presentation
-/// layer to update its state without having to recalculate the account
-/// balance or retrieve the transaction again.
-class TransactionCreationResult {
-  /// The account after the transaction has been applied.
-  final List<Account> accounts;
-
-  /// The newly created transaction.
-  final GetAllTransactionsResult transactionsResult;
-
-  const TransactionCreationResult({
-    required this.accounts,
-    required this.transactionsResult,
-  });
-}
 
 /// Application use case responsible for creating financial transactions.
 ///
@@ -152,7 +129,7 @@ class CreateTransactionUseCase {
     );
 
     final transactionsResult = await _transactionRepository
-        .getAllTransactionsForUser(
+        .getAllTransactionsUser(
           accounts: accounts,
           limit: limitTransactionView,
         );
@@ -229,7 +206,7 @@ class CreateTransactionUseCase {
     );
 
     final transactionsResult = await _transactionRepository
-        .getAllTransactionsForUser(
+        .getAllTransactionsUser(
           accounts: accounts,
           limit: limitTransactionView,
         );

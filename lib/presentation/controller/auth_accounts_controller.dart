@@ -50,12 +50,12 @@ class AuthAccountsController extends GetxController {
   }
 
   List<Account> get userAccounts => _userAccounts.toList();
+  RxList<Account> get reactiveUerAccounts => _userAccounts;
 
   double get totalCurrentBalanceAccounts =>
       Account.calcAllCurrentBalanceAccounts(userAccounts);
 
   void logout() {
     _userAccounts.clear();
-    super.dispose();
   }
 }

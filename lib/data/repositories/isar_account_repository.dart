@@ -1,5 +1,6 @@
 import 'package:finora/data/mapper/account_mapper.dart';
 import 'package:finora/data/models/account_model.dart';
+import 'package:finora/data/models/transaction_model.dart';
 import 'package:finora/domain/entities/account.dart';
 import 'package:finora/domain/exception/account/not_found_account_exception.dart';
 import 'package:finora/domain/repositories/account_repository.dart';
@@ -11,7 +12,19 @@ class IsarAccountRepository implements AccountRepository {
   @override
   Future<bool> deleteAccount(String accountId) async {
     bool isDeleted = false;
+    int deletedTxLength = 0;
     await _isar.writeTxn(() async {
+      final itsTransactions = await _isar.transactionModels
+          .filter()
+          .accountIdEqualTo(accountId)
+          .findAll();
+      if (itsTransactions.isNotEmpty) {
+        final txIds = itsTransactions.map((txModel) => txModel.isarId).toList();
+        deletedTxLength = await _isar.transactionModels.deleteAll(txIds);
+        if (deletedTxLength != txIds.length) {
+          throw Exception("Delete Faild");
+        }
+      }
       final existingAccount = await _isar.accountModels
           .filter()
           .accountIdEqualTo(accountId)

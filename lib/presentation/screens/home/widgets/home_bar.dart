@@ -6,6 +6,7 @@ import 'package:finora/presentation/screens/home/widgets/user_full_name.dart';
 import 'package:finora/presentation/controller/auth_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class HomeBar extends StatelessWidget {
   const HomeBar({super.key});
@@ -22,9 +23,7 @@ class HomeBar extends StatelessWidget {
             const Spacer(),
             IconButton(
               onPressed: () {
-                AuthUserController.to.logout();
-                AuthAccountsController.to.logout();
-                AuthTransactionsController.to.logOut();
+                logOut();
               },
               icon: const FaIcon(
                 FontAwesomeIcons.rightFromBracket,
@@ -36,5 +35,12 @@ class HomeBar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void logOut() {
+    AuthUserController.to.logout();
+    AuthAccountsController.to.logout();
+    AuthTransactionsController.to.logout();
+    Get.offAllNamed('/welcome');
   }
 }

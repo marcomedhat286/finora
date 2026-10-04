@@ -384,7 +384,8 @@ class SignUpViewModel extends GetxController {
   ///
   /// The UI calls this method after the user chooses a date from
   /// a DatePicker or another date-selection widget.
-  void setBirthDate(DateTime date) {
+  void setBirthDate(DateTime? date) {
+    if (date == null) return;
     birthDate.value = date;
   }
 

@@ -16,7 +16,7 @@ class BottomAppBarController extends GetxController {
         return FontAwesomeIcons.wallet;
 
       case 2:
-        return FontAwesomeIcons.magnifyingGlass;
+        return FontAwesomeIcons.sliders;
 
       case 3:
         return FontAwesomeIcons.penToSquare;

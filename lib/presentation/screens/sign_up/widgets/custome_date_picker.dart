@@ -10,12 +10,16 @@ class CustomeDatePickerField extends StatefulWidget {
     required this.onDateSelected,
     this.initialDate,
     this.paddingSpace = 0,
+    this._suffixCancelIcon,
+    this._onTapIcon,
   });
   final String dataName;
   final String? errorText;
-  final void Function(DateTime date) onDateSelected;
+  final void Function(DateTime? date) onDateSelected;
   final DateTime? initialDate;
   final double paddingSpace;
+  final IconData? _suffixCancelIcon;
+  final VoidCallback? _onTapIcon;
 
   @override
   State<CustomeDatePickerField> createState() => _CustomeDatePickerFieldState();
@@ -68,6 +72,7 @@ class _CustomeDatePickerFieldState extends State<CustomeDatePickerField> {
                 prefixIconColor: kPrimaryColor,
                 errorText: widget.errorText,
                 errorMaxLines: 3,
+                suffixIcon: setSuffixCancelIconButton,
 
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
@@ -120,6 +125,28 @@ class _CustomeDatePickerFieldState extends State<CustomeDatePickerField> {
           child: child!,
         );
       },
+    );
+  }
+
+  void clearDate() {
+    setState(() {
+      selectedDate = null;
+    });
+
+    widget.onDateSelected(null);
+  }
+
+  Widget? get setSuffixCancelIconButton {
+    if (widget._suffixCancelIcon == null) {
+      return null;
+    }
+
+    return IconButton(
+      onPressed: () {
+        widget._onTapIcon?.call();
+        clearDate();
+      },
+      icon: Icon(widget._suffixCancelIcon, color: kPrimaryColor2),
     );
   }
 }

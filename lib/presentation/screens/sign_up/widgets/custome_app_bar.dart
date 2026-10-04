@@ -9,10 +9,14 @@ class CustomeAppBar extends StatelessWidget {
     required this.screenName,
     this.color = kSecondColor,
     this.needBack = true,
+    this.option,
+    this.onPress,
   });
   final String screenName;
   final Color color;
   final bool needBack;
+  final FaIconData? option;
+  final void Function()? onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,12 @@ class CustomeAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
+          (option != null)
+              ? IconButton(
+                  onPressed: onPress,
+                  icon: FaIcon(option, color: color),
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

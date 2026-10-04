@@ -14,6 +14,7 @@ import 'package:finora/domain/validators/account/account_name_validator.dart';
 import 'package:finora/domain/validators/account/account_type_validator.dart';
 import 'package:finora/domain/value_object/account/money.dart';
 import 'package:finora/presentation/controller/auth_accounts_controller.dart';
+import 'package:finora/presentation/controller/auth_transactions_controller.dart';
 import 'package:get/get.dart';
 
 class UpdateDeleteAccountController extends GetxController {
@@ -113,7 +114,10 @@ class UpdateDeleteAccountController extends GetxController {
         );
 
         if (updateAccounts != null) {
-          AuthAccountsController.to.setAccount(updateAccounts);
+          AuthAccountsController.to.setAccount(updateAccounts.existingAccounts);
+          AuthTransactionsController.to.setTransactions(
+            updateAccounts.existingTransactions,
+          );
         }
         Get.back();
       }

@@ -122,7 +122,8 @@ class AddTransactionController extends GetxController {
     }
   }
 
-  void setCreatedAt(DateTime date) {
+  void setCreatedAt(DateTime? date) {
+    if (date == null) return;
     createdAt.value = date;
   }
 

@@ -1,6 +1,8 @@
 import 'package:finora/core/constants.dart';
 import 'package:finora/domain/entities/income.dart';
 import 'package:finora/domain/entities/transaction.dart';
+import 'package:finora/presentation/controller/auth_accounts_controller.dart';
+import 'package:finora/presentation/display_transaction_info_card.dart/widgets/action_transaction_button.dart';
 import 'package:flutter/material.dart';
 
 class TransactionInformationContainer extends StatelessWidget {
@@ -15,6 +17,9 @@ class TransactionInformationContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     const double verticalSpace = 10;
     final isIncome = (_transaction.runtimeType == Income);
+    final account = AuthAccountsController.to.getAccountById(
+      _transaction.accountId,
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
@@ -84,64 +89,52 @@ class TransactionInformationContainer extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: verticalSpace * 2),
+          const SizedBox(height: verticalSpace),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: cardPalettesMap['primaryCardBalance']?[1],
-                ),
-                onPressed: () {
-                  print("edit");
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-
-                  decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: kPrimaryColor,
-                        blurRadius: blurRadius,
-                        spreadRadius: 8,
-                        offset: Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: const Text(
-                    "Edit",
-                    style: TextStyle(color: kPrimaryColor2),
-                    textAlign: TextAlign.center,
-                  ),
+              Text(
+                "account name".toUpperCase(),
+                style: const TextStyle(
+                  fontSize: smallSizeFont,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: cardPalettesMap['primaryCardBalance']?[1],
-                ),
-                onPressed: () {
-                  print("delete");
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-
-                  decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: kPrimaryColor,
-                        blurRadius: blurRadius,
-                        spreadRadius: 8,
-                        offset: Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: const Text(
-                    "Delete",
-                    style: TextStyle(color: kPrimaryColor2),
-                    textAlign: TextAlign.center,
-                  ),
+              const SizedBox(width: 15),
+              Text(
+                account.name.value,
+                style: const TextStyle(
+                  fontSize: smallSizeFont,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
+            ],
+          ),
+          const SizedBox(height: verticalSpace),
+          Row(
+            children: [
+              Text(
+                "account Id".toUpperCase(),
+                style: const TextStyle(
+                  fontSize: smallSizeFont,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              const SizedBox(width: 15),
+              Text(
+                _accountIdFormat(account.id.value),
+                style: const TextStyle(
+                  fontSize: smallSizeFont,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: verticalSpace * 3),
+          Row(
+            mainAxisAlignment: .center,
+            children: [
+              ActionTransactionButton(actionName: "edit"),
+              ActionTransactionButton(actionName: "delete"),
             ],
           ),
         ],
@@ -151,5 +144,9 @@ class TransactionInformationContainer extends StatelessWidget {
 
   String _formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}  ${date.hour}:${date.minute}';
+  }
+
+  String _accountIdFormat(String accountId) {
+    return accountId.split("-").last;
   }
 }
